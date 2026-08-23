@@ -224,15 +224,23 @@ export function Header() {
               </Link>
             ) : (
               <>
-                <Link href="/vhod" className="btn-ghost">
+                <Link href="/vhod" className="btn-ghost px-3 py-1.5 text-[13px]">
                   Войти
                 </Link>
-                <Link href="/registratsiya" className="btn-outline">
-                  Создать аккаунт
-                </Link>
-                <Link href="/demo" className="btn-primary">
-                  Заказать демо
-                </Link>
+                <div className="flex flex-col items-stretch gap-1">
+                  <Link
+                    href="/registratsiya"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-line bg-paper px-2.5 py-[5px] text-[11px] font-semibold leading-none"
+                  >
+                    Создать аккаунт
+                  </Link>
+                  <Link
+                    href="/demo"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-orange px-2.5 py-[5px] text-[11px] font-semibold leading-none text-white"
+                  >
+                    Заказать демо
+                  </Link>
+                </div>
               </>
             )}
           </div>
