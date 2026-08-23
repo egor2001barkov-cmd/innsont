@@ -141,7 +141,7 @@ export function Header() {
       }`}
       onMouseLeave={() => setOpen(null)}
     >
-      <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-5">
+      <div className="mx-auto flex h-[88px] max-w-[1200px] items-center justify-between px-5">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2.5 text-ink">
             <LogoMark className="h-8 w-8" />
@@ -227,16 +227,16 @@ export function Header() {
                 <Link href="/vhod" className="btn-ghost px-3 py-1.5 text-[13px]">
                   Войти
                 </Link>
-                <div className="flex flex-col items-stretch gap-1">
+                <div className="flex flex-col items-stretch gap-1.5">
                   <Link
                     href="/registratsiya"
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-line bg-paper px-2.5 py-[5px] text-[11px] font-semibold leading-none"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-line bg-paper px-3.5 py-2 text-[13px] font-semibold leading-none"
                   >
                     Создать аккаунт
                   </Link>
                   <Link
                     href="/demo"
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-orange px-2.5 py-[5px] text-[11px] font-semibold leading-none text-white"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-orange px-3.5 py-2 text-[13px] font-semibold leading-none text-white"
                   >
                     Заказать демо
                   </Link>
