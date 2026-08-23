@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Кабинет INNSONT: юридические услуги, видимость страниц практики</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INNSONT</text>
+  <text x="36" y="82" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#161513">Юридическая практика · страницы услуг</text>
+  <text x="36" y="112" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b6560">Без обещания «выиграем любое дело» · тексты визирует юрист бюро</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <text x="48" y="150" fill="#6b6560">Услуга</text>
+    <text x="520" y="150" fill="#6b6560">Яндекс</text>
+    <text x="680" y="150" fill="#6b6560">Google</text>
+    <text x="860" y="150" fill="#6b6560">В ответе модели</text>
+    <line x1="36" y1="164" x2="1064" y2="164" stroke="#e6ddd0"/>
+    <text x="48" y="198" fill="#161513">банкротство физлица, этапы и госпошлина</text>
+    <text x="520" y="198" fill="#161513">5</text>
+    <text x="680" y="198" fill="#161513">4</text>
+    <text x="860" y="198" fill="#1f8a4c">называют</text>
+    <line x1="36" y1="216" x2="1064" y2="216" stroke="#e6ddd0"/>
+    <text x="48" y="250" fill="#161513">трудовой спор, восстановление на работе</text>
+    <text x="520" y="250" fill="#161513">8</text>
+    <text x="680" y="250" fill="#161513">12</text>
+    <text x="860" y="250" fill="#c43c2c">молчат</text>
+    <line x1="36" y1="268" x2="1064" y2="268" stroke="#e6ddd0"/>
+    <text x="48" y="302" fill="#161513">наследство, сроки и пошлина</text>
+    <text x="520" y="302" fill="#161513">6</text>
+    <text x="680" y="302" fill="#161513">7</text>
+    <text x="860" y="302" fill="#1f8a4c">называют</text>
+    <line x1="36" y1="320" x2="1064" y2="320" stroke="#e6ddd0"/>
+    <text x="48" y="354" fill="#161513">арбитраж, представительство в суде</text>
+    <text x="520" y="354" fill="#161513">11</text>
+    <text x="680" y="354" fill="#161513">9</text>
+    <text x="860" y="354" fill="#c43c2c">молчат</text>
+  </g>
+</svg>

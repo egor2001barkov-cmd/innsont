@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Кабинет INNSONT: услуги автосервиса, запись и видимость в поиске</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INNSONT</text>
+  <text x="36" y="82" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#161513">Автосервис · запись на подъёмник</text>
+  <text x="36" y="112" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b6560">Москва, ЮАО · Вебмастер и Search Console</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="28" y="140" width="250" height="92" rx="18" fill="#f6f1e8"/>
+    <text x="153" y="186" text-anchor="middle" font-size="32" font-weight="700" fill="#161513">12</text>
+    <text x="153" y="212" text-anchor="middle" font-size="13" fill="#6b6560">услуг в топ-10 Яндекса</text>
+    <rect x="292" y="140" width="250" height="92" rx="18" fill="#f6f1e8"/>
+    <text x="417" y="186" text-anchor="middle" font-size="32" font-weight="700" fill="#161513">7</text>
+    <text x="417" y="212" text-anchor="middle" font-size="13" fill="#6b6560">то же в Google</text>
+    <rect x="556" y="140" width="250" height="92" rx="18" fill="#f6f1e8"/>
+    <text x="681" y="186" text-anchor="middle" font-size="32" font-weight="700" fill="#c43c2c">5</text>
+    <text x="681" y="212" text-anchor="middle" font-size="13" fill="#6b6560">страниц без цены нормочаса</text>
+    <rect x="820" y="140" width="252" height="92" rx="18" fill="#f6f1e8"/>
+    <text x="946" y="186" text-anchor="middle" font-size="32" font-weight="700" fill="#161513">2</text>
+    <text x="946" y="212" text-anchor="middle" font-size="13" fill="#6b6560">закрыты роботу GigaChat</text>
+    <rect x="28" y="250" width="1044" height="48" rx="14" fill="#f6f1e8"/>
+    <text x="48" y="280" font-size="15" fill="#161513">развал-схождение — цена есть, слот записи нет</text>
+    <text x="900" y="280" font-size="13" fill="#c47a12">средний приоритет</text>
+    <rect x="28" y="308" width="1044" height="48" rx="14" fill="#f6f1e8"/>
+    <text x="48" y="338" font-size="15" fill="#161513">кузовной ремонт — на сайте «по запросу», в выдаче берут тех, у кого вилка</text>
+    <text x="900" y="338" font-size="13" fill="#c43c2c">высокий</text>
+  </g>
+</svg>

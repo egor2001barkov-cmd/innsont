@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Кабинет INNSONT: меню ресторана, позиции в Яндексе и упоминания в GigaChat</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INNSONT</text>
+  <text x="36" y="82" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#161513">Ресторан «Северный» · меню и запись</text>
+  <text x="36" y="112" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b6560">Яндекс · Google · GigaChat · район Патриаршие</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <rect x="28" y="136" width="1044" height="50" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="167" fill="#161513">стейк рибай, цена и степень прожарки</text>
+    <text x="620" y="167" fill="#6b6560">Яндекс 4</text>
+    <text x="760" y="167" fill="#6b6560">Google 6</text>
+    <text x="920" y="167" fill="#1f8a4c">GigaChat есть</text>
+    <rect x="28" y="196" width="1044" height="50" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="227" fill="#161513">банкет на 20 человек, зал и депозит</text>
+    <text x="620" y="227" fill="#6b6560">Яндекс 9</text>
+    <text x="760" y="227" fill="#6b6560">Google 11</text>
+    <text x="920" y="227" fill="#c43c2c">GigaChat нет</text>
+    <rect x="28" y="256" width="1044" height="50" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="287" fill="#161513">завтрак в субботу, бронь со стола</text>
+    <text x="620" y="287" fill="#6b6560">Яндекс 3</text>
+    <text x="760" y="287" fill="#6b6560">Google 5</text>
+    <text x="920" y="287" fill="#1f8a4c">GigaChat есть</text>
+    <rect x="28" y="316" width="1044" height="50" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="347" fill="#161513">веранда летом, как добраться</text>
+    <text x="620" y="347" fill="#6b6560">Яндекс 7</text>
+    <text x="760" y="347" fill="#6b6560">Google 8</text>
+    <text x="920" y="347" fill="#c43c2c">GigaChat нет</text>
+  </g>
+</svg>

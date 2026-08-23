@@ -1,0 +1,75 @@
+# INNSONT — открыто для Яндекса, Google и Bing.
+# Кабинет, оплату и API не индексируем.
+
+User-agent: Yandex
+Allow: /
+Allow: /seo
+Allow: /geo
+Allow: /platforma
+Allow: /blog
+Allow: /keysy
+Allow: /tseny
+Allow: /resursy
+Disallow: /kabinet
+Disallow: /kabinet/
+Disallow: /oplata
+Disallow: /oplata/
+Disallow: /vhod
+Disallow: /ui-mock
+Disallow: /api/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext&yclid
+Host: https://innsont.ru
+
+User-agent: YandexBot
+Allow: /
+Disallow: /kabinet
+Disallow: /kabinet/
+Disallow: /oplata
+Disallow: /oplata/
+Disallow: /vhod
+Disallow: /ui-mock
+Disallow: /api/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from&_openstat&ref&etext
+Host: https://innsont.ru
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+Disallow: /kabinet
+Disallow: /kabinet/
+Disallow: /oplata
+Disallow: /oplata/
+Disallow: /vhod
+Disallow: /ui-mock
+Disallow: /api/
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: bingbot
+Allow: /
+Disallow: /kabinet
+Disallow: /kabinet/
+Disallow: /oplata
+Disallow: /oplata/
+Disallow: /vhod
+Disallow: /ui-mock
+Disallow: /api/
+
+User-agent: *
+Allow: /
+Disallow: /kabinet
+Disallow: /kabinet/
+Disallow: /oplata
+Disallow: /oplata/
+Disallow: /vhod
+Disallow: /ui-mock
+Disallow: /api/
+
+Sitemap: https://innsont.ru/sitemap.xml
+Host: https://innsont.ru
