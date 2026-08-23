@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     canonical: SITE.url,
     languages: { "ru-RU": SITE.url },
   },
-  authors: [{ name: SITE.legalName }],
+  authors: [{ name: SITE.name }],
   openGraph: {
     type: "website",
     locale: "ru_RU",

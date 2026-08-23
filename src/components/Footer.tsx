@@ -18,7 +18,7 @@ export function Footer() {
             <Wordmark className="text-[14px] text-ink" />
           </Link>
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            {SITE.tagline}. ООО «Инсонт», Москва. Рубли, 152-ФЗ, Wordstat и Яндекс
+            {SITE.tagline}. Москва. ИНН {SITE.inn}. Рубли, 152-ФЗ, Wordstat и Яндекс
             рядом с Google.
           </p>
           <p className="mt-4 text-sm text-muted">
@@ -157,7 +157,7 @@ export function Footer() {
       <div className="border-t border-line/80">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-2 px-5 py-5 text-xs text-muted md:flex-row md:justify-between">
           <span>
-            © {new Date().getFullYear()} {SITE.legalName}. ИНН {SITE.inn}
+            © {new Date().getFullYear()} INSONT. ИНН {SITE.inn}
           </span>
           <span className="flex flex-wrap gap-x-3 gap-y-1">
             <Link href="/politika" className="hover:text-ink">

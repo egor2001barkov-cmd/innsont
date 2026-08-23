@@ -20,7 +20,7 @@ export default function Page() {
       path="/oferta"
     >
       <p>
-        Редакция от 23 августа 2026 года. Исполнитель: {SITE.legalName}, {SITE.address},
+        Редакция от 23 августа 2026 года. Исполнитель: INSONT, {SITE.address},
         ИНН {SITE.inn}. Сайт: {SITE.url}. Почта: {SITE.email}.
       </p>
       <p>

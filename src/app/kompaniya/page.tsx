@@ -8,7 +8,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "О компании INSONT — кто делает продвижение в поиске и нейросетях",
   description:
-    "ООО «Инсонт», Москва. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
+    "INSONT, Москва, ИНН 773104369017. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
   alternates: { canonical: "/kompaniya" },
   openGraph: {
     title: "О компании INSONT",
@@ -40,7 +40,7 @@ export default function Page() {
       />
       <article className="mx-auto max-w-[800px] px-5 py-14">
         <Breadcrumbs path="/kompaniya" lastName="О компании" />
-        <p className="text-sm text-muted">{SITE.legalName}</p>
+        <p className="text-sm text-muted">ИНН {SITE.inn}</p>
         <h1 className="mt-3 text-4xl leading-[1.1] md:text-5xl">
           Мы из Москвы. Сайт должен находиться в поиске и в ответах.
         </h1>
@@ -51,9 +51,8 @@ export default function Page() {
         </p>
         <dl className="mt-10 border-y border-line">
           {[
-            ["Юрлицо", SITE.legalName],
-            ["Адрес", SITE.address],
             ["ИНН", SITE.inn],
+            ["Адрес", SITE.address],
             ["Почта", SITE.email],
           ].map(([k, v]) => (
             <div key={k} className="flex flex-col gap-1 border-b border-line py-3 last:border-b-0 sm:flex-row sm:gap-8">

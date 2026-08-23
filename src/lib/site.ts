@@ -1,6 +1,6 @@
 export const SITE = {
   name: "INSONT",
-  legalName: "ООО «Инсонт»",
+  legalName: "INSONT",
   domain: "insont.ru",
   url: "https://insont.ru",
   email: "support@insont.ru",
@@ -9,7 +9,7 @@ export const SITE = {
   telegramHandle: "@egorconsult",
   max: "https://max.ru/u/f9LHodD0cOLokrK3yJtWfpkCG_GAlpt4msSkWHp4JR6tI2ahGXrLjBI0Fj4",
   address: "ул. Академика Королёва, 5, Москва",
-  inn: "7708123456",
+  inn: "773104369017",
   tagline: "Продвижение в Яндексе, Google и нейросетях",
   description:
     "Продвигаем сайт в Яндексе, Google и ответах нейросетей. Чтобы вас находили, когда человек ищет услугу или спрашивает, кого выбрать.",

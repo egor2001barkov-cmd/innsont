@@ -16,7 +16,7 @@ export default function Page() {
       lead="Коротко: что за файлы, зачем мы их ставим и как ими управлять. Это не рекламная сеть и не скрытый сбор."
       path="/cookies"
     >
-      <p>Дата публикации: 23 августа 2026 года. Оператор сайта: {SITE.legalName}, {SITE.address}, ИНН {SITE.inn}. Вопросы: {SITE.email}.</p>
+      <p>Дата публикации: 23 августа 2026 года. Оператор сайта: INSONT, {SITE.address}, ИНН {SITE.inn}. Вопросы: {SITE.email}.</p>
 
       <h2 className="mt-10 text-2xl">Что такое cookie</h2>
       <p>
