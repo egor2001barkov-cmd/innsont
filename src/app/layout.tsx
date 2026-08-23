@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Exo_2, Manrope, Michroma } from "next/font/google";
 import { SiteChrome } from "@/components/SiteChrome";
+import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE } from "@/lib/site";
 import { THEME_BOOT } from "@/lib/theme";
 import "./globals.css";
@@ -71,17 +72,22 @@ export const metadata: Metadata = {
     description: SITE.description,
   },
   robots: { index: true, follow: true },
+  verification: {
+    yandex: "eab405796df2103e",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
+      data-theme="light"
       suppressHydrationWarning
       className={`${sans.variable} ${display.variable} ${brand.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+        <YandexMetrika />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

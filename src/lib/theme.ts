@@ -6,7 +6,7 @@ export function readTheme(): Theme {
   if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(KEY);
   if (stored === "dark" || stored === "light") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return "light";
 }
 
 export function applyTheme(theme: Theme) {
@@ -16,4 +16,4 @@ export function applyTheme(theme: Theme) {
   localStorage.setItem(KEY, theme);
 }
 
-export const THEME_BOOT = `(function(){try{var t=localStorage.getItem("insont.theme");if(t!=="dark"&&t!=="light"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t;document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})();`;
+export const THEME_BOOT = `(function(){try{var t=localStorage.getItem("insont.theme");if(t!=="dark"&&t!=="light"){t="light"}document.documentElement.dataset.theme=t;document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})();`;
