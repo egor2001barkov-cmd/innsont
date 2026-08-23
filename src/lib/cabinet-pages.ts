@@ -43,8 +43,8 @@ export const CITY_CATALOG: { name: string; yandexId: number }[] = [
   { name: "Красноярск", yandexId: 62 },
 ];
 
-const LKEY = "innsont.landings.v1";
-const RKEY = "innsont.regions.v1";
+const LKEY = "insont.landings.v1";
+const RKEY = "insont.regions.v1";
 
 function read<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
@@ -63,7 +63,7 @@ export function loadLandings(): LandingPage[] {
 
 export function saveLandings(items: LandingPage[]) {
   localStorage.setItem(LKEY, JSON.stringify(items));
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 export function loadRegions(): RegionPref[] {
@@ -72,7 +72,7 @@ export function loadRegions(): RegionPref[] {
 
 export function saveRegions(items: RegionPref[]) {
   localStorage.setItem(RKEY, JSON.stringify(items));
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 function titleFromUrl(url: string) {

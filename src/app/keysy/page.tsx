@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Разборы СМ-Клиники, МойСклада, Фабрики Окон, Фоксфорда, Центр-инвеста, Нордтеха: что увидели Яндекс и Google и почему сайт стал лучше.",
   alternates: { canonical: "/keysy" },
   openGraph: {
-    title: "Кейсы INNSONT",
+    title: "Кейсы INSONT",
     description:
       "Реальные компании среднего размера. Что сделали на сайте и как это сказалось на поиске и ответах нейросетей.",
     url: "/keysy",
@@ -26,7 +26,7 @@ export default function Page() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Кейсы INNSONT",
+          name: "Кейсы INSONT",
           url: `${SITE.url}/keysy`,
           description:
             "Кейсы белого SEO и видимости в нейросетях для российских компаний.",

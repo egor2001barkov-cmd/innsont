@@ -184,7 +184,7 @@ export default function Page() {
           <h2 className="text-3xl">Генератор и автор — разные вещи</h2>
           <CompareTable
             leftTitle="Обычный чат"
-            rightTitle="Автор INNSONT"
+            rightTitle="Автор INSONT"
             rows={[
               ["Старт", "«Напиши статью»", "Спрос + выдача + ваш прайс"],
               ["Поиск", "Не видит Вебмастер", "Яндекс и Google в том же кабинете"],

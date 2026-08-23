@@ -31,7 +31,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Продвижение сайта в Яндексе и Google — INNSONT",
+    absolute: "Продвижение сайта в Яндексе и Google — INSONT",
   },
   description: SITE.description,
   keywords: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Продвижение сайта в Яндексе и Google — INNSONT",
+    title: "Продвижение сайта в Яндексе и Google — INSONT",
     description: SITE.description,
     url: "/",
     locale: "ru_RU",
@@ -141,7 +141,7 @@ export default function HomePage() {
               },
               {
                 "@type": "Question",
-                name: "Чем SEO в INNSONT заточено под Россию?",
+                name: "Чем SEO в INSONT заточено под Россию?",
                 acceptedAnswer: {
                   "@type": "Answer",
                   text: "Ядро из Wordstat и подсказок Google, регион, витрина, Вебмастер и Search Console, сниппеты, карточки организаций. Тексты без воды. Яндекс и Google ведём вместе, не вместо друг друга.",
@@ -162,7 +162,7 @@ export default function HomePage() {
 
       <section className="rays overflow-hidden">
         <div className="mx-auto max-w-[1200px] px-5 pb-8 pt-14 text-center">
-          <p className="wordmark text-[12px] text-orange sm:text-[13px]">INNSONT</p>
+          <p className="wordmark text-[12px] text-orange sm:text-[13px]">INSONT</p>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-muted">
             Поиск и нейросети
           </p>
@@ -183,7 +183,7 @@ export default function HomePage() {
           </div>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
             Когда человек ищет услугу или спрашивает нейросеть, кого выбрать,
-            он должен попасть к вам, а не к соседу. INNSONT находит, где вас
+            он должен попасть к вам, а не к соседу. INSONT находит, где вас
             нет, готовит страницы и правки, публикует после вашего «ок». Один
             кабинет на Яндекс, Google и ответы GigaChat с ChatGPT.
           </p>
@@ -477,7 +477,7 @@ export default function HomePage() {
         </h2>
         <p className="mt-4 max-w-2xl text-muted">
           Большинство SEO-сервисов и ИИ-трекеров показывают разрыв и
-          останавливаются. INNSONT закрывает его: пишет, оптимизирует, публикует
+          останавливаются. INSONT закрывает его: пишет, оптимизирует, публикует
           и доказывает прирост позиций и цитат.
         </p>
         <div className="mt-10 grid gap-4 md:grid-cols-4">
@@ -580,11 +580,11 @@ export default function HomePage() {
         <p className="mx-auto mt-5 max-w-2xl text-lg text-muted">
           SEO-сервис покажет, на каком вы месте в поиске. Но не скажет, советует
           ли вас GigaChat. Трекер нейросетей покажет упоминания — и всё: сайт в
-          топ сам не выйдет, карточку на витрине никто не поправит. INNSONT
+          топ сам не выйдет, карточку на витрине никто не поправит. INSONT
           смотрит и поиск, и ответы моделей. На неделю одна очередь работ.
         </p>
         <SeoBridge />
-        <Link href="/pochemu-innsont" className="text-sm font-semibold text-orange">
+        <Link href="/pochemu-insont" className="text-sm font-semibold text-orange">
           Почему это один кабинет →
         </Link>
       </section>

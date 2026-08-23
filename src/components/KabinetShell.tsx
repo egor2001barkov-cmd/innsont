@@ -41,8 +41,8 @@ export function KabinetShell({ children }: { children: React.ReactNode }) {
       setSession(s);
     };
     sync();
-    window.addEventListener("innsont-session", sync);
-    return () => window.removeEventListener("innsont-session", sync);
+    window.addEventListener("insont-session", sync);
+    return () => window.removeEventListener("insont-session", sync);
   }, [router]);
 
   if (!session) {

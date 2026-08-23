@@ -11,7 +11,7 @@ export default function LoginPage() {
   return (
     <div className="mx-auto max-w-md px-5 py-16">
       <Breadcrumbs path="/vhod" />
-      <h1 className="text-4xl">Войти в INNSONT</h1>
+      <h1 className="text-4xl">Войти в INSONT</h1>
       <p className="mt-2 text-muted">Кабинет видимости, статей и тарифа.</p>
       <form
         className="card mt-8 p-6"

@@ -70,7 +70,7 @@ function item(icon: AdvIconName, title: string, why: string, value: string): Adv
 
 function cityBlock(city: string, extraWhy: string, extraValue: string): AdvantagesCopy {
   return block(
-    `Почему INNSONT в ${city} сильнее агентства «под ключ»`,
+    `Почему INSONT в ${city} сильнее агентства «под ключ»`,
     `Регион в Вебмастере, карточка и посадочная должны совпадать. Мы не рисуем офис в ${city}, если вас там нет — и не ведём «всю Россию» одной страницей.`,
     [
       item(
@@ -906,7 +906,7 @@ const BY_PATH: Record<string, AdvantagesCopy> = {
   ),
 
   "/seo": block(
-    "Почему белое SEO в INNSONT сильнее пакета ссылок и «гарантии топа»",
+    "Почему белое SEO в INSONT сильнее пакета ссылок и «гарантии топа»",
     "Мы не покупаем ссылки и не накручиваем поведение. Собираем спрос, чиним витрину и технику, пишем страницы, которые не стыдно показать человеку.",
     [
       item(
@@ -1389,7 +1389,7 @@ const BY_PATH: Record<string, AdvantagesCopy> = {
   ),
 
   "/seo/vs-keys-so": block(
-    "Почему INNSONT не вместо Keys.so — а там, где Keys.so заканчивается",
+    "Почему INSONT не вместо Keys.so — а там, где Keys.so заканчивается",
     "Keys.so отлично считает выдачу. Он не напишет карточку, не поправит регион и не увидит ответ GigaChat. Мы берём работу после цифр.",
     [
       item(
@@ -1961,7 +1961,7 @@ const BY_PATH: Record<string, AdvantagesCopy> = {
       item(
         "queue",
         "Находка стыкуется с кабинетом",
-        "Увидели закрытый раздел — в INNSONT это задача недели, не скрин в чат.",
+        "Увидели закрытый раздел — в INSONT это задача недели, не скрин в чат.",
         "От бесплатной проверки к работе. Без потери смысла."
       ),
     ]
@@ -1998,7 +1998,7 @@ const BY_PATH: Record<string, AdvantagesCopy> = {
     ]
   ),
 
-  "/pochemu-innsont": block(
+  "/pochemu-insont": block(
     "Почему один кабинет лучше SEO-сервиса плюс трекера нейросетей",
     "SEO не видит GigaChat. AEO не поднимает сайт в Яндексе. Команда чинит одно и пропускает заявки из другого. Мы смотрим оба места.",
     [
@@ -2311,7 +2311,7 @@ const BY_PATH: Record<string, AdvantagesCopy> = {
 };
 
 const DEFAULT = block(
-  "Почему INNSONT сильнее разрозненного стека",
+  "Почему INSONT сильнее разрозненного стека",
   "Яндекс, Google и ответы моделей в одном кабинете. Очередь на неделю вместо аудита. Без покупки ссылок и без публикации без вашего «ок».",
   [
     item(

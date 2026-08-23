@@ -8,7 +8,7 @@ import { PageAdvantages } from "@/components/Advantages";
 export const metadata: Metadata = {
   title: "Центр действий — что чинить первым",
   description:
-    "Центр действий INNSONT: 5–10 задач недели по влиянию на видимость в Яндексе, Google и нейросетях. Сначала то, что реально двигает заявки.",
+    "Центр действий INSONT: 5–10 задач недели по влиянию на видимость в Яндексе, Google и нейросетях. Сначала то, что реально двигает заявки.",
   alternates: { canonical: "/priorizirovat" },
 };
 

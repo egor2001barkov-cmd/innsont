@@ -29,7 +29,7 @@ const faqs = [
 export const metadata: Metadata = {
   title: "robots.txt: кого пускаем на сайт — Яндекс, Google, GigaChat",
   description:
-    "Как INNSONT читает robots.txt: Яндекс, Google, Bing, роботы моделей. Черновик правок без автопубликации. Закрытый блог «для людей» ломает индекс.",
+    "Как INSONT читает robots.txt: Яндекс, Google, Bing, роботы моделей. Черновик правок без автопубликации. Закрытый блог «для людей» ломает индекс.",
   keywords: [
     "robots.txt",
     "robots txt Яндекс",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo/robots-txt" },
   openGraph: {
-    title: "robots.txt — INNSONT",
+    title: "robots.txt — INSONT",
     description:
       "Смотрим, кого пускает файл и куда робот упирается. Правка только после вашего согласия.",
     url: "/seo/robots-txt",

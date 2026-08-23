@@ -119,7 +119,7 @@ export async function fetchWordstat(token: string, phrase: string, region?: numb
 export async function yandexSuggest(phrase: string): Promise<string[]> {
   const url = `https://suggest.yandex.ru/suggest-ya.cgi?uil=ru&v=4&part=${encodeURIComponent(phrase)}`;
   const res = await fetch(url, {
-    headers: { "User-Agent": "Innsont/1.0", Accept: "application/json" },
+    headers: { "User-Agent": "Insont/1.0", Accept: "application/json" },
     signal: AbortSignal.timeout(7000),
   });
   if (!res.ok) return [];

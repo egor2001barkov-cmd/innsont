@@ -20,9 +20,9 @@ type Result = {
   landings: FoundLanding[];
 };
 
-const TOKEN_KEY = "innsont.wordstat.token";
-const EXTRA_KEY = "innsont.wordstat.hosts";
-const SAVED_KEY = "innsont.wordstat.saved";
+const TOKEN_KEY = "insont.wordstat.token";
+const EXTRA_KEY = "insont.wordstat.hosts";
+const SAVED_KEY = "insont.wordstat.saved";
 
 export default function KeysPage() {
   const { session, setSession, project, plan, ready } = useWorkspace();

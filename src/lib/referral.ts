@@ -1,6 +1,6 @@
 export const REF_BONUS = 0.2;
 export const REF_CAP = 8;
-export const PENDING_KEY = "innsont.pendingRef";
+export const PENDING_KEY = "insont.pendingRef";
 
 export function makeRefCode(email: string) {
   const base = email
@@ -49,6 +49,6 @@ export function clearPendingRef() {
 }
 
 export function referralLink(code: string, origin?: string) {
-  const base = origin || (typeof window !== "undefined" ? window.location.origin : "https://innsont.ru");
+  const base = origin || (typeof window !== "undefined" ? window.location.origin : "https://insont.ru");
   return `${base}/registratsiya?ref=${encodeURIComponent(code)}`;
 }

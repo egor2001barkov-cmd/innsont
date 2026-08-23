@@ -39,7 +39,7 @@ export function PricingCards({
       {expired && (
         <div className="text-center">
           <h2 className="text-[32px] font-bold tracking-tight text-[#111827]">Срок тарифа истёк</h2>
-          <p className="mt-1 text-[15px] text-[#6b7280]">Выберите план, чтобы продолжить работу в INNSONT</p>
+          <p className="mt-1 text-[15px] text-[#6b7280]">Выберите план, чтобы продолжить работу в INSONT</p>
         </div>
       )}
 
@@ -140,7 +140,7 @@ export function PricingCards({
       </div>
       <p className="mt-8 text-center text-[14px] text-[#ea580c]">
         Нужно больше?{" "}
-        <a href="mailto:sales@innsont.ru" className="font-medium underline-offset-2 hover:underline">
+        <a href="mailto:sales@insont.ru" className="font-medium underline-offset-2 hover:underline">
           Написать в продажи
         </a>
       </p>

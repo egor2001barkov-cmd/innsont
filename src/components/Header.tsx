@@ -393,8 +393,8 @@ export function Header() {
               <Link href="/strategiya" className="rounded-xl px-3 py-2.5 font-medium">
                 Стратегии
               </Link>
-              <Link href="/pochemu-innsont" className="rounded-xl px-3 py-2.5 font-medium">
-                Почему INNSONT
+              <Link href="/pochemu-insont" className="rounded-xl px-3 py-2.5 font-medium">
+                Почему INSONT
               </Link>
               <Link href="/dlya-komand" className="rounded-xl px-3 py-2.5 font-medium">
                 Для команд

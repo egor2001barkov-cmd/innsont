@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/geo" },
   openGraph: {
-    title: "Продвижение в GigaChat, ChatGPT и Алисе — INNSONT",
+    title: "Продвижение в GigaChat, ChatGPT и Алисе — INSONT",
     description:
       "Как попасть в ответы моделей на русском. Вместе с обычным поиском, не вместо него.",
     url: "/geo",

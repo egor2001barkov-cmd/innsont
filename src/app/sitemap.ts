@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/karta-sayta", priority: 0.4 },
     { path: "/priorizirovat", priority: 0.7 },
     { path: "/deystvovat", priority: 0.7 },
-    { path: "/pochemu-innsont", priority: 0.7 },
+    { path: "/pochemu-insont", priority: 0.7 },
     { path: "/dlya-komand", priority: 0.7 },
     { path: "/platforma", priority: 0.8 },
     { path: "/resheniya", priority: 0.8 },

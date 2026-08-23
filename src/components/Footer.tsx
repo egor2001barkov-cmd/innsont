@@ -18,7 +18,7 @@ export function Footer() {
             <Wordmark className="text-[14px] text-ink" />
           </Link>
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            {SITE.tagline}. ООО «Иннсонт», Москва. Рубли, 152-ФЗ, Wordstat и Яндекс
+            {SITE.tagline}. ООО «Инсонт», Москва. Рубли, 152-ФЗ, Wordstat и Яндекс
             рядом с Google.
           </p>
           <p className="mt-4 text-sm text-muted">

@@ -229,7 +229,7 @@ export default function Page() {
           </p>
           <CompareTable
             leftTitle="Обычный SEO-сервис"
-            rightTitle="Мониторинг INNSONT"
+            rightTitle="Мониторинг INSONT"
             rows={[
               ["Поиск", "Яндекс или Google, редко оба", "Яндекс, Google, регион проекта"],
               ["Нейросети", "Нет или отдельный сервис", "GigaChat, ChatGPT и дальше по тарифу"],
@@ -347,7 +347,7 @@ export default function Page() {
               desc: "Куда падает провал видимости",
             },
             {
-              href: "/pochemu-innsont",
+              href: "/pochemu-insont",
               title: "Почему один кабинет",
               desc: "Поиск и модели в одной очереди",
             },

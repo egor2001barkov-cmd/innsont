@@ -12,7 +12,7 @@ export default function ChatPage() {
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       role: "bot",
-      text: "Я чат INNSONT. Спросите про видимость, аудит или набросайте абзац под промпт.",
+      text: "Я чат INSONT. Спросите про видимость, аудит или набросайте абзац под промпт.",
     },
   ]);
 

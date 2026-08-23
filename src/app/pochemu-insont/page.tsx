@@ -5,16 +5,16 @@ import { SeeAlso } from "@/components/SeeAlso";
 import { PageAdvantages } from "@/components/Advantages";
 
 export const metadata: Metadata = {
-  title: "Зачем INNSONT, если уже есть SEO-сервис",
+  title: "Зачем INSONT, если уже есть SEO-сервис",
   description:
-    "Обычный SEO-сервис не видит GigaChat. Трекер нейросетей не поднимает сайт в Яндексе и Google. INNSONT делает и поиск, и ответы моделей в одном кабинете.",
-  alternates: { canonical: "/pochemu-innsont" },
+    "Обычный SEO-сервис не видит GigaChat. Трекер нейросетей не поднимает сайт в Яндексе и Google. INSONT делает и поиск, и ответы моделей в одном кабинете.",
+  alternates: { canonical: "/pochemu-insont" },
 };
 
 export default function Page() {
   return (
     <div className="mx-auto max-w-[1000px] px-5 py-16 text-center">
-      <Breadcrumbs path="/pochemu-innsont" lastName="Почему INNSONT" />
+      <Breadcrumbs path="/pochemu-insont" lastName="Почему INSONT" />
       <p className="mx-auto inline-block rounded-full border border-orange/40 px-4 py-1 text-xs font-bold uppercase tracking-[0.16em] text-orange">
         Зачем один кабинет
       </p>
@@ -28,7 +28,7 @@ export default function Page() {
       <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
         SEO-сервис покажет, на каком вы месте в поиске. Но не скажет, советует
         ли вас GigaChat. Трекер нейросетей покажет упоминания — и всё: сайт в
-        топ сам не выйдет, карточку на витрине никто не поправит. INNSONT
+        топ сам не выйдет, карточку на витрине никто не поправит. INSONT
         смотрит и поиск, и ответы моделей. На неделю остаётся одна очередь работ.
       </p>
       <SeoBridge />
@@ -37,7 +37,7 @@ export default function Page() {
         место, откуда уже приходят заявки.
       </p>
       <div className="mt-6 text-left">
-        <PageAdvantages path="/pochemu-innsont" />
+        <PageAdvantages path="/pochemu-insont" />
       </div>
       <SeeAlso
         links={[

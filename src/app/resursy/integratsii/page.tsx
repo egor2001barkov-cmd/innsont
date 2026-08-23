@@ -1,7 +1,7 @@
 import { ResourceShell, resourceMeta } from "@/lib/resources";
 
 export const metadata = resourceMeta(
-  "Интеграции INNSONT — Метрика, Вебмастер, Search Console",
+  "Интеграции INSONT — Метрика, Вебмастер, Search Console",
   "Подключите Яндекс Метрику, Вебмастер, Google Search Console, WordPress, Битрикс, Tilda и API.",
   "/resursy/integratsii"
 );
@@ -11,7 +11,7 @@ export default function Page() {
     <ResourceShell
       eyebrow="Подключать"
       h1="Интеграции"
-      lead="INNSONT встаёт в стек, который уже есть, а не заменяет его."
+      lead="INSONT встаёт в стек, который уже есть, а не заменяет его."
       path="/resursy/integratsii"
     >
       <p>

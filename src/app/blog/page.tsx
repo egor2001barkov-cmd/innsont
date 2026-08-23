@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Блог: продвижение в Яндексе, Google и нейросетях",
   description:
-    "Статьи INNSONT: как расти в Яндексе и Google, как попасть в ответы GigaChat и ChatGPT, техника и тексты без воды.",
+    "Статьи INSONT: как расти в Яндексе и Google, как попасть в ответы GigaChat и ChatGPT, техника и тексты без воды.",
   alternates: { canonical: "/blog" },
 };
 

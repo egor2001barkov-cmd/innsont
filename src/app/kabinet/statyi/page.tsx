@@ -12,7 +12,7 @@ function buildArticle(topic: string, brand: string, tone: string) {
   const b = brand.trim() || "ваш бренд";
   return `# ${t[0].toUpperCase() + t.slice(1)}
 
-*INNSONT · голос: ${tone} · бренд: ${b}*
+*INSONT · голос: ${tone} · бренд: ${b}*
 
 ## Короткий ответ
 

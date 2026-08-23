@@ -1,8 +1,8 @@
 import { ResourceShell, resourceMeta } from "@/lib/resources";
 
 export const metadata = resourceMeta(
-  "Документация API INNSONT — видимость и статьи",
-  "API INNSONT: видимость в поиске и нейросетях, статьи, очередь задач. Чтобы встроить в свой кабинет.",
+  "Документация API INSONT — видимость и статьи",
+  "API INSONT: видимость в поиске и нейросетях, статьи, очередь задач. Чтобы встроить в свой кабинет.",
   "/resursy/api"
 );
 

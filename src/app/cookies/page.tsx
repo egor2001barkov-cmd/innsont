@@ -3,8 +3,8 @@ import { ResourceShell, resourceMeta } from "@/lib/resources";
 import { SITE } from "@/lib/site";
 
 export const metadata = resourceMeta(
-  "Политика cookies — INNSONT",
-  "Какие файлы cookie использует сайт INNSONT, зачем они нужны и как отключить их в браузере.",
+  "Политика cookies — INSONT",
+  "Какие файлы cookie использует сайт INSONT, зачем они нужны и как отключить их в браузере.",
   "/cookies"
 );
 
@@ -31,7 +31,7 @@ export default function Page() {
         не называют вас по имени.
       </p>
 
-      <h2 className="mt-10 text-2xl">Зачем INNSONT их использует</h2>
+      <h2 className="mt-10 text-2xl">Зачем INSONT их использует</h2>
       <p>Мы ставим cookies и похожие записи в браузере, чтобы:</p>
       <ul className="mb-4 list-disc space-y-2 pl-5">
         <li>запомнить, что вы нажали «Понятно» на уведомлении о cookies;</li>
@@ -57,12 +57,12 @@ export default function Page() {
           </thead>
           <tbody>
             <tr>
-              <td>innsont.cookies</td>
+              <td>insont.cookies</td>
               <td>Согласие с уведомлением</td>
               <td>до удаления в браузере</td>
             </tr>
             <tr>
-              <td>innsont.theme</td>
+              <td>insont.theme</td>
               <td>Светлая или тёмная тема</td>
               <td>до удаления в браузере</td>
             </tr>

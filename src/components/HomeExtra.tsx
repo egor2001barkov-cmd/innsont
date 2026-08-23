@@ -22,7 +22,7 @@ export function HomeStayShot() {
     <figure>
       <div className="overflow-hidden border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
         <div className="flex items-center justify-between gap-3 border-b border-line bg-bg px-3 py-2">
-          <span className="wordmark text-[10px] text-orange">INNSONT</span>
+          <span className="wordmark text-[10px] text-orange">INSONT</span>
           <span className="truncate text-[11px] text-muted">СМ-Клиника · неделя 12–18 авг</span>
         </div>
         <div className="p-3">
@@ -334,7 +334,7 @@ export function HomeCompare() {
             У других
           </div>
           <div className="bg-bg px-4 py-3 text-xs font-bold uppercase tracking-[0.12em] text-orange">
-            У INNSONT
+            У INSONT
           </div>
         </div>
         <ul className="list-none">
@@ -356,7 +356,7 @@ export function HomeCompare() {
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.12em] text-orange sm:hidden">
-                  У INNSONT
+                  У INSONT
                 </div>
                 <p className="mt-1 text-[15px] font-bold leading-relaxed sm:mt-0">{row.us}</p>
               </div>

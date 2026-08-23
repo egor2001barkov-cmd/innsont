@@ -3,7 +3,7 @@ import { HubPage } from "@/components/HubPage";
 import { SITE_SECTIONS } from "@/lib/site-map";
 
 export const metadata: Metadata = {
-  title: "Платформа INNSONT — поиск, нейросети, очередь работ",
+  title: "Платформа INSONT — поиск, нейросети, очередь работ",
   description:
     "Мониторинг видимости в Яндексе, Google, ChatGPT и GigaChat. Автор статей, центр действий, трекеры и агенты в одном кабинете.",
   alternates: { canonical: "/platforma" },

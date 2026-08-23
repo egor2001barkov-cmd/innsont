@@ -1,8 +1,8 @@
-www.innsont.ru {
-	redir https://innsont.ru{uri} permanent
+www.insont.ru {
+	redir https://insont.ru{uri} permanent
 }
 
-innsont.ru {
+insont.ru {
 	encode gzip zstd
 	reverse_proxy 127.0.0.1:3001
 	header {

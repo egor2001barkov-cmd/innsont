@@ -11,7 +11,7 @@ export type FoundLanding = {
   matched: string[];
 };
 
-const UA = "InnsontResearch/1.0 (+https://innsont.ru)";
+const UA = "InsontResearch/1.0 (+https://insont.ru)";
 
 function decode(html: string) {
   return html

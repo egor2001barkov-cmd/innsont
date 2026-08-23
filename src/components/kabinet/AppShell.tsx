@@ -145,11 +145,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       setActiveId(loadActiveProjectId(ps));
     };
     sync();
-    window.addEventListener("innsont-session", sync);
-    window.addEventListener("innsont-workspace", sync);
+    window.addEventListener("insont-session", sync);
+    window.addEventListener("insont-workspace", sync);
     return () => {
-      window.removeEventListener("innsont-session", sync);
-      window.removeEventListener("innsont-workspace", sync);
+      window.removeEventListener("insont-session", sync);
+      window.removeEventListener("insont-workspace", sync);
     };
   }, [router]);
 
@@ -215,7 +215,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <header className="flex items-center justify-between border-b border-[#ececec] bg-white px-5 py-3">
           <div className="flex items-center gap-2">
             <BrandMark className="h-7 w-7" />
-            <span className="text-[15px] font-semibold">INNSONT</span>
+            <span className="text-[15px] font-semibold">INSONT</span>
           </div>
           <span className="text-[13px] text-[#6b7280]">{session.email}</span>
         </header>
@@ -235,7 +235,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <div className="flex items-center gap-2 px-1 pb-3">
         <BrandMark className="h-7 w-7" />
-        <span className="text-[15px] font-semibold tracking-tight">INNSONT</span>
+        <span className="text-[15px] font-semibold tracking-tight">INSONT</span>
         <span className="rounded-md bg-[#f3f4f6] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#6b7280]">
           {dev ? "Dev" : "Standard"}
         </span>
@@ -425,7 +425,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex flex-wrap items-center gap-3 border-b border-[#fecaca] bg-[#fff7f7] px-5 py-2.5">
             <p className="flex-1 text-[13.5px] text-[#b91c1c]">
               Платёж {formatRub(session.failedAmount)} не прошёл. Повторите оплату или обновите способ, чтобы
-              пользоваться INNSONT.
+              пользоваться INSONT.
             </p>
             <button className="text-[13.5px] font-medium text-[#111827]" onClick={() => setPayOpen(true)}>
               Обновить способ оплаты

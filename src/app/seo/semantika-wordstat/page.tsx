@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo/semantika-wordstat" },
   openGraph: {
-    title: "Семантика Wordstat — INNSONT",
+    title: "Семантика Wordstat — INSONT",
     description:
       "Частота, хвосты, регион и сезон из Wordstat. Рядом подсказки Google. Кластеры по смыслу, не каша на одном URL.",
     url: "/seo/semantika-wordstat",

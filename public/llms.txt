@@ -1,43 +1,43 @@
-# INNSONT
+# INSONT
 
 > Российская платформа GEO и AEO. ИИ-видимость, агенты, контент и измерение роста.
 
 ## Главное
 
-- [Главная](https://innsont.ru/): белое SEO и GEO
-- [Карта сайта](https://innsont.ru/karta-sayta)
-- [Платформа](https://innsont.ru/platforma)
-- [Продвижение в поиске](https://innsont.ru/seo)
-- [Продвижение в нейросетях](https://innsont.ru/geo)
-- [Решения](https://innsont.ru/resheniya)
-- [Ресурсы](https://innsont.ru/resursy)
-- [Тарифы](https://innsont.ru/tseny)
-- [Демо](https://innsont.ru/demo)
-- [О компании](https://innsont.ru/kompaniya)
+- [Главная](https://insont.ru/): белое SEO и GEO
+- [Карта сайта](https://insont.ru/karta-sayta)
+- [Платформа](https://insont.ru/platforma)
+- [Продвижение в поиске](https://insont.ru/seo)
+- [Продвижение в нейросетях](https://insont.ru/geo)
+- [Решения](https://insont.ru/resheniya)
+- [Ресурсы](https://insont.ru/resursy)
+- [Тарифы](https://insont.ru/tseny)
+- [Демо](https://insont.ru/demo)
+- [О компании](https://insont.ru/kompaniya)
 
 ## Платформа
 
-- [Объём ИИ-поиска](https://innsont.ru/platforma/obem-ii-poiska)
-- [Исследователь брендов](https://innsont.ru/platforma/issledovatel-brendov)
-- [Мониторинг видимости](https://innsont.ru/platforma/monitoring-vidimosti)
-- [Центр действий](https://innsont.ru/platforma/tsentr-deystviy)
-- [Автор статей](https://innsont.ru/platforma/avtor-statey)
+- [Объём ИИ-поиска](https://insont.ru/platforma/obem-ii-poiska)
+- [Исследователь брендов](https://insont.ru/platforma/issledovatel-brendov)
+- [Мониторинг видимости](https://insont.ru/platforma/monitoring-vidimosti)
+- [Центр действий](https://insont.ru/platforma/tsentr-deystviy)
+- [Автор статей](https://insont.ru/platforma/avtor-statey)
 
 ## Продвижение в нейросетях
 
-- [GEO и AEO](https://innsont.ru/geo)
-- [GigaChat](https://innsont.ru/geo/gigachat)
-- [ChatGPT](https://innsont.ru/geo/chatgpt)
-- [Алиса и YandexGPT](https://innsont.ru/geo/alisa)
-- [GEO и SEO](https://innsont.ru/geo/vs-seo)
+- [GEO и AEO](https://insont.ru/geo)
+- [GigaChat](https://insont.ru/geo/gigachat)
+- [ChatGPT](https://insont.ru/geo/chatgpt)
+- [Алиса и YandexGPT](https://insont.ru/geo/alisa)
+- [GEO и SEO](https://insont.ru/geo/vs-seo)
 
 ## Решения
 
-- [Крупный бизнес](https://innsont.ru/resheniya/krupnyy-biznes)
-- [Агентства](https://innsont.ru/resheniya/agentstva)
-- [Команды роста](https://innsont.ru/resheniya/komandy-rosta)
-- [Интернет-магазины](https://innsont.ru/resheniya/internet-magaziny)
-- [Рестораны](https://innsont.ru/resheniya/restorany)
-- [Автосервисы](https://innsont.ru/resheniya/avtoservisy)
-- [Юристы](https://innsont.ru/resheniya/yuristy)
-- [Туризм](https://innsont.ru/resheniya/turizm)
+- [Крупный бизнес](https://insont.ru/resheniya/krupnyy-biznes)
+- [Агентства](https://insont.ru/resheniya/agentstva)
+- [Команды роста](https://insont.ru/resheniya/komandy-rosta)
+- [Интернет-магазины](https://insont.ru/resheniya/internet-magaziny)
+- [Рестораны](https://insont.ru/resheniya/restorany)
+- [Автосервисы](https://insont.ru/resheniya/avtoservisy)
+- [Юристы](https://insont.ru/resheniya/yuristy)
+- [Туризм](https://insont.ru/resheniya/turizm)

@@ -70,11 +70,11 @@ export type WritingStyle = {
   rules: string;
 };
 
-const PROJECTS = "innsont.projects.v3";
-const ACTIVE = "innsont.activeProject.v3";
-const CONTENT = "innsont.content.v3";
-const STYLES = "innsont.styles.v3";
-const ACTIONS = "innsont.actions.v3";
+const PROJECTS = "insont.projects.v3";
+const ACTIVE = "insont.activeProject.v3";
+const CONTENT = "insont.content.v3";
+const STYLES = "insont.styles.v3";
+const ACTIONS = "insont.actions.v3";
 
 export function loadProjects(): Project[] {
   if (typeof window === "undefined") return [];
@@ -91,7 +91,7 @@ export function loadProjects(): Project[] {
 
 export function saveProjects(items: Project[]) {
   localStorage.setItem(PROJECTS, JSON.stringify(items));
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 export function loadActiveProjectId(projects: Project[]): string {
@@ -107,7 +107,7 @@ export function hasOnboardedProject(projects: Project[]) {
 
 export function saveActiveProjectId(id: string) {
   localStorage.setItem(ACTIVE, id);
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 export { hostOf } from "@/lib/profile";
@@ -127,7 +127,7 @@ export function loadContent(): ContentItem[] {
 
 export function saveContent(items: ContentItem[]) {
   localStorage.setItem(CONTENT, JSON.stringify(items));
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 export function loadStyles(): WritingStyle[] {
@@ -145,7 +145,7 @@ export function loadStyles(): WritingStyle[] {
 
 export function saveStyles(items: WritingStyle[]) {
   localStorage.setItem(STYLES, JSON.stringify(items));
-  window.dispatchEvent(new Event("innsont-workspace"));
+  window.dispatchEvent(new Event("insont-workspace"));
 }
 
 export type ActionItem = {

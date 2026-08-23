@@ -175,7 +175,7 @@ export default function Page() {
           <h2 className="text-3xl">Чат в соседней вкладке и агент из очереди</h2>
           <CompareTable
             leftTitle="Просто модель"
-            rightTitle="Агент INNSONT"
+            rightTitle="Агент INSONT"
             rows={[
               ["Откуда задача", "Вы придумали промпт", "Вчерашний прогон и очередь"],
               ["Данные", "Память модели", "Wordstat, выдача, ваш сайт"],

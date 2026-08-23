@@ -6,12 +6,12 @@ import type { Metadata } from "next";
 import { FaqList } from "@/components/FaqList";
 
 export const metadata: Metadata = {
-  title: "Тарифы INNSONT — Старт, Базовый, Рост и контур для агентств",
+  title: "Тарифы INSONT — Старт, Базовый, Рост и контур для агентств",
   description:
     "Старт от 4 490 ₽ при годе, Базовый 10 790 ₽, Рост 22 490 ₽. Для агентств — питч 8 910 ₽ и корпоративный от 59 900 ₽ по счёту. Рубли, 152-ФЗ.",
   alternates: { canonical: "/tseny" },
   openGraph: {
-    title: "Тарифы INNSONT | Старт, Базовый, Рост",
+    title: "Тарифы INSONT | Старт, Базовый, Рост",
     description:
       "Месяц или год (−10%): Старт 4 490 ₽, Базовый 10 790 ₽, Рост 22 490 ₽ /мес при оплате года.",
     url: "/tseny",
@@ -79,7 +79,7 @@ export default function PricingPage() {
           {
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "INNSONT",
+            name: "INSONT",
             brand: SITE.name,
             description: "Платформа GEO и AEO. Три тарифа: Старт, Базовый, Рост.",
             offers: PLANS.map((p) => ({

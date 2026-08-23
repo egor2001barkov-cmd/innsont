@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo" },
   openGraph: {
-    title: "Продвижение сайта в Яндексе и Google — INNSONT",
+    title: "Продвижение сайта в Яндексе и Google — INSONT",
     description:
       "Семантика, витрина, техника, тексты. Яндекс, Google и Bing в одном цикле. Без ссылок с бирж.",
     url: "/seo",
@@ -365,11 +365,11 @@ export default function Page() {
               { href: "/seo/search-console", name: "Google Search Console" },
               { href: "/seo/google-profil", name: "Google Профиль компании" },
               { href: "/seo/mikrorazmetka", name: "Микроразметка" },
-              { href: "/seo/vs-writesonic", name: "INNSONT и Writesonic" },
-              { href: "/seo/vs-semrush", name: "INNSONT и Semrush" },
+              { href: "/seo/vs-writesonic", name: "INSONT и Writesonic" },
+              { href: "/seo/vs-semrush", name: "INSONT и Semrush" },
               { href: "/seo/skolko-stoit", name: "Сколько стоит SEO" },
               { href: "/seo/vs-agentstvo", name: "Кабинет или агентство" },
-              { href: "/seo/vs-keys-so", name: "INNSONT и Keys.so" },
+              { href: "/seo/vs-keys-so", name: "INSONT и Keys.so" },
               { href: "/seo/glossariy", name: "Глоссарий" },
             ].map((it) => (
               <li key={it.href} className="border-b border-line">

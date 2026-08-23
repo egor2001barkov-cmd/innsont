@@ -13,7 +13,7 @@ function Frame({
     <figure className="mt-6">
       <div className="overflow-hidden rounded-2xl border border-line bg-paper">
         <div className="flex items-center justify-between border-b border-line bg-bg px-4 py-2.5">
-          <span className="wordmark text-[10px] text-orange">INNSONT</span>
+          <span className="wordmark text-[10px] text-orange">INSONT</span>
           <span className="text-[12px] text-muted">{title}</span>
         </div>
         <div className="p-4 md:p-5">{children}</div>

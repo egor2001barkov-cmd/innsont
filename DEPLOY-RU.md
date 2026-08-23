@@ -1,12 +1,12 @@
-# Как выложить innsont.ru
+# Как выложить insont.ru
 
 Код: https://github.com/egor2001barkov-cmd/innsont  
 Сервер тот же, что у Elizon: `168.222.194.23` (Timeweb VPS).  
-Elizon слушает `:3000`, INNSONT — `:3001`. Caddy разводит домены.
+Elizon слушает `:3000`, INSONT — `:3001`. Caddy разводит домены.
 
 ## DNS в reg.ru
 
-Панель: Домены → innsont.ru → DNS / Управление зоной.
+Панель: Домены → insont.ru → DNS / Управление зоной.
 
 NS должны быть `ns1.reg.ru` и `ns2.reg.ru`.
 
@@ -26,8 +26,8 @@ TTL 300–3600. Обычно 5–30 минут, иногда до суток.
 Проверка:
 
 ```bash
-dig +short innsont.ru A
-dig +short www.innsont.ru A
+dig +short insont.ru A
+dig +short www.insont.ru A
 # должно быть 168.222.194.23
 ```
 

@@ -1,6 +1,6 @@
 export type Theme = "light" | "dark";
 
-const KEY = "innsont.theme";
+const KEY = "insont.theme";
 
 export function readTheme(): Theme {
   if (typeof window === "undefined") return "light";
@@ -16,4 +16,4 @@ export function applyTheme(theme: Theme) {
   localStorage.setItem(KEY, theme);
 }
 
-export const THEME_BOOT = `(function(){try{var t=localStorage.getItem("innsont.theme");if(t!=="dark"&&t!=="light"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t;document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})();`;
+export const THEME_BOOT = `(function(){try{var t=localStorage.getItem("insont.theme");if(t!=="dark"&&t!=="light"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t;document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})();`;

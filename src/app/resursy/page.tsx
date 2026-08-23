@@ -3,7 +3,7 @@ import { HubPage } from "@/components/HubPage";
 import { SITE_SECTIONS } from "@/lib/site-map";
 
 export const metadata: Metadata = {
-  title: "Ресурсы INNSONT — блог, гайды и помощь",
+  title: "Ресурсы INSONT — блог, гайды и помощь",
   description:
     "Блог про Яндекс, Google и нейросети, руководство AEO/GEO, API, партнёрка и интеграции.",
   alternates: { canonical: "/resursy" },

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/resheniya/saas" },
   openGraph: {
-    title: "SaaS в поиске и нейросетях — INNSONT",
+    title: "SaaS в поиске и нейросетях — INSONT",
     description:
       "Справка, которую можно процитировать. Сравнения без грязи. Яндекс и Google вместе, не «мы же B2B».",
     url: "/resheniya/saas",

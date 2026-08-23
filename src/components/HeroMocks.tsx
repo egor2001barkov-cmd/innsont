@@ -66,7 +66,7 @@ export function ChatGptAdFrame() {
       </div>
       <div className="relative mt-5 rounded-2xl border border-dashed border-orange/70 bg-[#fffaf6] p-4">
         <span className="absolute -top-2.5 right-4 rounded-full bg-[#fff1e8] px-2.5 py-0.5 text-[11px] font-semibold text-orange">
-          Нашёл INNSONT
+          Нашёл INSONT
         </span>
         <div className="text-[11px] font-semibold uppercase tracking-wide text-muted">
           Крупный банк · реклама

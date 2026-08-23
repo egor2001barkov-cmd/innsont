@@ -12,7 +12,7 @@ export type SiteScan = {
   pages: PageProbe[];
 };
 
-const UA = "InnsontAudit/1.0 (+https://innsont.ru)";
+const UA = "InsontAudit/1.0 (+https://insont.ru)";
 
 async function probe(url: string): Promise<PageProbe & { body?: string }> {
   try {

@@ -5,7 +5,7 @@ import { SITE_SECTIONS } from "@/lib/site-map";
 export const metadata: Metadata = {
   title: "Решения — для бизнеса, агентств и магазинов",
   description:
-    "Решения INNSONT: клиники, рестораны, автосервисы, юристы, туризм, SaaS, банки. Продвижение в Яндексе, Google и нейросетях.",
+    "Решения INSONT: клиники, рестораны, автосервисы, юристы, туризм, SaaS, банки. Продвижение в Яндексе, Google и нейросетях.",
   alternates: { canonical: "/resheniya" },
 };
 

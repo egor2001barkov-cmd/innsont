@@ -6,12 +6,12 @@ import { CompanyPoints } from "@/components/CompanyPlay";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "О компании INNSONT — кто делает продвижение в поиске и нейросетях",
+  title: "О компании INSONT — кто делает продвижение в поиске и нейросетях",
   description:
-    "ООО «Иннсонт», Москва. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
+    "ООО «Инсонт», Москва. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
   alternates: { canonical: "/kompaniya" },
   openGraph: {
-    title: "О компании INNSONT",
+    title: "О компании INSONT",
     description: "Московское юрлицо. Поиск и ответы нейросетей в одном кабинете.",
     url: "/kompaniya",
     locale: "ru_RU",
@@ -82,7 +82,7 @@ export default function Page() {
         <CompanyPoints />
         <SeeAlso
           links={[
-            { href: "/pochemu-innsont", title: "Зачем один кабинет", desc: "Поиск и модели в одной очереди" },
+            { href: "/pochemu-insont", title: "Зачем один кабинет", desc: "Поиск и модели в одной очереди" },
             { href: "/tseny", title: "Тарифы", desc: "Рубли, год −10%, агентствам — свой контур" },
             { href: "/oferta", title: "Оферта", desc: "Те же правила, что на сайте" },
             { href: "/demo", title: "Демо", desc: "Разберём ваш сайт" },

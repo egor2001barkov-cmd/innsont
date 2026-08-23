@@ -4,8 +4,8 @@ export function Wordmark({
   className?: string;
 }) {
   return (
-    <span className={`wordmark text-ink ${className}`} aria-label="INNSONT">
-      INNSONT
+    <span className={`wordmark text-ink ${className}`} aria-label="INSONT">
+      INSONT
     </span>
   );
 }

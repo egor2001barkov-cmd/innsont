@@ -268,7 +268,7 @@ export function SeoBridge() {
           fontFamily="Manrope, sans-serif"
           fontWeight="700"
         >
-          INNSONT
+          INSONT
         </text>
       </svg>
     </div>
@@ -385,7 +385,7 @@ export function HomeWhatWeDo() {
   return (
     <section className="reveal mx-auto max-w-[1200px] px-5 py-16">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">
-        Чем занимается INNSONT
+        Чем занимается INSONT
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl md:text-5xl">Три вещи, которые делает сервис</h2>
       <p className="mt-4 max-w-3xl text-lg text-muted">
@@ -517,7 +517,7 @@ export function HomeMidBanner() {
           Коротко
         </p>
         <h2 className="mt-3 max-w-3xl text-3xl leading-tight md:text-5xl">
-          INNSONT продвигает сайт в топ Яндекса и в ответы нейросетей
+          INSONT продвигает сайт в топ Яндекса и в ответы нейросетей
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
@@ -631,7 +631,7 @@ function AppChrome({
     <div className="overflow-hidden border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
       <div className="flex min-h-[280px]">
         <aside className="hidden w-[158px] shrink-0 flex-col gap-0.5 border-r border-line bg-bg px-2 py-3 md:flex">
-          <span className="wordmark mb-3 px-2 text-[9px] text-orange">INNSONT</span>
+          <span className="wordmark mb-3 px-2 text-[9px] text-orange">INSONT</span>
           {items.map((it) => (
             <div
               key={it.t}

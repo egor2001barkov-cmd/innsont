@@ -111,7 +111,7 @@ export function RichPage({ page }: { page: RichPageData }) {
               alt={
                 page.imageAlt ||
                 page.imageCaption ||
-                `Скриншот кабинета INNSONT. ${page.h1}`
+                `Скриншот кабинета INSONT. ${page.h1}`
               }
               className="w-full"
             />
@@ -160,7 +160,7 @@ export function RichPage({ page }: { page: RichPageData }) {
           </section>
         )}
         <section className="mt-10 border-t border-line pt-10">
-          <h2 className="text-2xl md:text-[28px]">Как это делает INNSONT</h2>
+          <h2 className="text-2xl md:text-[28px]">Как это делает INSONT</h2>
           <dl className="mt-6 max-w-3xl">
             {page.how.map((h) => (
               <div key={h.title} className="border-t border-line py-5 first:border-t-0 first:pt-0">

@@ -22,11 +22,11 @@ export function useWorkspace() {
       setActiveId(loadActiveProjectId(ps));
     };
     sync();
-    window.addEventListener("innsont-session", sync);
-    window.addEventListener("innsont-workspace", sync);
+    window.addEventListener("insont-session", sync);
+    window.addEventListener("insont-workspace", sync);
     return () => {
-      window.removeEventListener("innsont-session", sync);
-      window.removeEventListener("innsont-workspace", sync);
+      window.removeEventListener("insont-session", sync);
+      window.removeEventListener("insont-workspace", sync);
     };
   }, []);
 

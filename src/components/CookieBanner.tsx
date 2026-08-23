@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const KEY = "innsont.cookies";
+const KEY = "insont.cookies";
 
 export function CookieBanner() {
   const path = usePathname() || "";

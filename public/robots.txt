@@ -1,4 +1,4 @@
-# INNSONT — открыто для Яндекса, Google и Bing.
+# INSONT — открыто для Яндекса, Google и Bing.
 # Кабинет, оплату и API не индексируем.
 
 User-agent: Yandex
@@ -18,7 +18,7 @@ Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext&yclid
-Host: https://innsont.ru
+Host: https://insont.ru
 
 User-agent: YandexBot
 Allow: /
@@ -30,7 +30,7 @@ Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from&_openstat&ref&etext
-Host: https://innsont.ru
+Host: https://insont.ru
 
 User-agent: YandexImages
 Allow: /
@@ -71,5 +71,5 @@ Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
 
-Sitemap: https://innsont.ru/sitemap.xml
-Host: https://innsont.ru
+Sitemap: https://insont.ru/sitemap.xml
+Host: https://insont.ru

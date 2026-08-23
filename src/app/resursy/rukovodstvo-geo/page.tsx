@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Как сайт попадает в ответы GigaChat, ChatGPT и Алисы. Структура страницы, обход роботов, цитаты, замер. Рядом с продвижением в Яндексе и Google. Только Россия.",
   alternates: { canonical: "/resursy/rukovodstvo-geo" },
   openGraph: {
-    title: "Руководство AEO / GEO — INNSONT",
+    title: "Руководство AEO / GEO — INSONT",
     description:
       "Практический гайд: чем GEO отличается от SEO, какую страницу цитируют модели и как это мерить без сказки про миллиарды диалогов.",
     url: "/resursy/rukovodstvo-geo",
@@ -132,7 +132,7 @@ export default function Page() {
           </div>
           <Shot
             src="/ui/ui-seo.png"
-            alt="Скриншот кабинета INNSONT: позиции в топ-10 Яндекса, ошибки Вебмастера, страницы без title"
+            alt="Скриншот кабинета INSONT: позиции в топ-10 Яндекса, ошибки Вебмастера, страницы без title"
             caption="Слой поиска. Регион Москва, зеркало, коммерческие факторы. Без этого GEO не с чего начинать."
           />
         </section>
@@ -211,7 +211,7 @@ export default function Page() {
           </div>
           <Shot
             src="/ui/ui-statyi.png"
-            alt="Скриншот кабинета INNSONT: автор статей, бриф про вклад 2026 и короткий ответ в первом абзаце"
+            alt="Скриншот кабинета INSONT: автор статей, бриф про вклад 2026 и короткий ответ в первом абзаце"
             caption="Так выглядит черновик, который потом можно цитировать: короткий ответ, дальше таблица и FAQ."
           />
           <p className="leading-relaxed text-[#3a3632]">
@@ -279,7 +279,7 @@ export default function Page() {
           </p>
           <Shot
             src="/ui/ui-vidimost.png"
-            alt="Скриншот кабинета INNSONT: позиция в Яндексе и упоминание бренда в GigaChat и ChatGPT"
+            alt="Скриншот кабинета INSONT: позиция в Яндексе и упоминание бренда в GigaChat и ChatGPT"
             caption="Одна строка: место в поиске и назвали ли в ответе. Регион — Россия, не «десять рынков мира»."
           />
         </section>
@@ -298,7 +298,7 @@ export default function Page() {
           </p>
           <Shot
             src="/ui/ui-deystviya.png"
-            alt="Скриншот кабинета INNSONT: очередь работ, открыть blog роботу, цены, FAQ, регион в Вебмастере"
+            alt="Скриншот кабинета INSONT: очередь работ, открыть blog роботу, цены, FAQ, регион в Вебмастере"
             caption="Сначала то, что двигает заявки. Не «ещё двадцать статей в блог»."
           />
           <p className="leading-relaxed text-[#3a3632]">

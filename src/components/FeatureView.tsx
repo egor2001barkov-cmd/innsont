@@ -56,7 +56,7 @@ export function FeatureView({ page }: { page: FeaturePage; section: string }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={extra.image}
-              alt={`Скриншот кабинета INNSONT. ${extra.caption}`}
+              alt={`Скриншот кабинета INSONT. ${extra.caption}`}
               className="w-full"
             />
             <figcaption className="mt-2 text-sm text-muted">{extra.caption}</figcaption>

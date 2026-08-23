@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Ежедневный срез: как часто в русских ответах ChatGPT виден рекламный блок. Рядом — Директ и Google Ads. Выборка, не весь рынок.",
   alternates: { canonical: "/resursy/indeks-reklamy" },
   openGraph: {
-    title: "Индекс рекламы в ответах — INNSONT",
+    title: "Индекс рекламы в ответах — INSONT",
     description:
       "Смотрим спонсорские блоки в ChatGPT на русском каждый день. Цифры скромные: в России это пока редко.",
     url: "/resursy/indeks-reklamy",
@@ -40,7 +40,7 @@ export default function Page() {
         data={{
           "@context": "https://schema.org",
           "@type": "Dataset",
-          name: "Индекс рекламы INNSONT",
+          name: "Индекс рекламы INSONT",
           description:
             "Ежедневная выборка русских ответов ChatGPT: доля с рекламным блоком.",
           creator: { "@type": "Organization", name: SITE.name },

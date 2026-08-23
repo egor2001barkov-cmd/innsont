@@ -1,10 +1,10 @@
 export const SITE = {
-  name: "INNSONT",
-  legalName: "ООО «Иннсонт»",
-  domain: "innsont.ru",
-  url: "https://innsont.ru",
-  email: "support@innsont.ru",
-  salesEmail: "sales@innsont.ru",
+  name: "INSONT",
+  legalName: "ООО «Инсонт»",
+  domain: "insont.ru",
+  url: "https://insont.ru",
+  email: "support@insont.ru",
+  salesEmail: "sales@insont.ru",
   telegram: "https://t.me/egorconsult",
   telegramHandle: "@egorconsult",
   max: "https://max.ru/u/f9LHodD0cOLokrK3yJtWfpkCG_GAlpt4msSkWHp4JR6tI2ahGXrLjBI0Fj4",
@@ -361,7 +361,7 @@ export const RESOURCES: NavGroup[] = [
       {
         href: "/resursy/api",
         title: "Документация API",
-        desc: "Стройте продукты поверх INNSONT",
+        desc: "Стройте продукты поверх INSONT",
         icon: "code",
       },
     ],
@@ -427,7 +427,7 @@ export const RESOURCES: NavGroup[] = [
 export const FEATURED = {
   platform: {
     badge: "НОВОЕ",
-    title: "Представляем Хаб проектов в INNSONT для мультибрендовых команд",
+    title: "Представляем Хаб проектов в INSONT для мультибрендовых команд",
     desc: "Единый вид всех проектов мониторинга брендов в пространстве. ИИ-видимость, доля цитирования и тренды — в одном месте.",
     href: "/platforma/monitoring-vidimosti",
     image: "hub",
@@ -452,16 +452,16 @@ export type PageSeo = {
 export const PAGE_SEO: PageSeo[] = [
   {
     path: "/",
-    title: "INNSONT | Продвижение сайта в Яндексе и Google",
+    title: "INSONT | Продвижение сайта в Яндексе и Google",
     description:
       "Продвигаем сайты в Яндексе, Google и других поисковиках. Семантика Wordstat, витрина, Вебмастер и Search Console. Плюс видимость в GigaChat.",
     h1: "Продвигаем сайт в Яндексе, Google и других поисковиках",
   },
   {
     path: "/tseny",
-    title: "Тарифы INNSONT | Старт, Базовый, Рост — цены в рублях",
+    title: "Тарифы INSONT | Старт, Базовый, Рост — цены в рублях",
     description:
-      "Три подписки INNSONT: месяц или год со скидкой 10%. Старт 4 490 ₽, Базовый 10 790 ₽, Рост 22 490 ₽ /мес при годе.",
+      "Три подписки INSONT: месяц или год со скидкой 10%. Старт 4 490 ₽, Базовый 10 790 ₽, Рост 22 490 ₽ /мес при годе.",
     h1: "Тарифы и цены",
     eyebrow: "Тарифы",
   },

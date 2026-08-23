@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         destination: "/seo/pravila-poiska",
         permanent: true,
       },
+      {
+        source: "/pochemu-innsont",
+        destination: "/pochemu-insont",
+        permanent: true,
+      },
     ];
   },
 };

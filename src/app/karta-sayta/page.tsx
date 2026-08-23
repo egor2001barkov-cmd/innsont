@@ -8,9 +8,9 @@ import { POSTS } from "@/lib/blog";
 import { keywordNav } from "@/lib/keyword-pages";
 
 export const metadata: Metadata = {
-  title: "Карта сайта INNSONT — все разделы",
+  title: "Карта сайта INSONT — все разделы",
   description:
-    "Все страницы INNSONT: продвижение в Яндексе и Google, тарифы, кейсы, города, отрасли и кабинет.",
+    "Все страницы INSONT: продвижение в Яндексе и Google, тарифы, кейсы, города, отрасли и кабинет.",
   alternates: { canonical: "/karta-sayta" },
 };
 
@@ -21,7 +21,7 @@ export default function SitemapPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "Карта сайта INNSONT",
+          name: "Карта сайта INSONT",
           url: `${SITE.url}/karta-sayta`,
           numberOfItems: SITE_SECTIONS.reduce((n, s) => n + s.items.length, 0),
         }}

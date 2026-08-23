@@ -49,7 +49,7 @@ export function LlmsGenerator() {
             className="input mt-1.5"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
-            placeholder="innsont.ru"
+            placeholder="insont.ru"
           />
         </label>
         <label className="block text-sm font-semibold">

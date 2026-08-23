@@ -54,9 +54,9 @@ export type Invoice = {
   status: "оплачен" | "ожидает" | "черновик";
 };
 
-const KEY = "innsont.session";
-const TEAM = "innsont.team";
-const BILLS = "innsont.invoices";
+const KEY = "insont.session";
+const TEAM = "insont.team";
+const BILLS = "insont.invoices";
 
 export function emptySession(partial: Partial<Session> & Pick<Session, "email">): Session {
   const dev = isDevAccount(partial.email);
@@ -103,7 +103,7 @@ export function loadSession(): Session | null {
 export function saveSession(s: Session) {
   localStorage.setItem(KEY, JSON.stringify(emptySession(s)));
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event("innsont-session"));
+    window.dispatchEvent(new Event("insont-session"));
   }
 }
 

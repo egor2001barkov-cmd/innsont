@@ -95,7 +95,7 @@ function Screen({
 }) {
   return (
     <section id={id} className="card mx-auto max-w-[920px] p-6">
-      <div className="wordmark mb-4 text-[11px] text-orange">INNSONT</div>
+      <div className="wordmark mb-4 text-[11px] text-orange">INSONT</div>
       <div className="mb-4 text-lg font-semibold">{title}</div>
       {children}
     </section>
