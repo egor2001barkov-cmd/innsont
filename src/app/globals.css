@@ -49,7 +49,7 @@ html[data-theme="dark"] {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   overflow-x: clip;
   max-width: 100%;
 }
@@ -264,6 +264,12 @@ html[data-theme="dark"] .compare-row:hover {
     transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.reveal.is-instant.is-in,
+.reveal-stagger.is-instant.is-in > * {
+  animation: none;
+  transition: none;
+}
+
 .reveal-stagger > * {
   opacity: 0;
 }
@@ -315,6 +321,154 @@ html[data-theme="dark"] .compare-row:hover {
     transform: none;
     animation: none;
     transition: none;
+  }
+
+  .route-stage.is-switch {
+    animation: none;
+  }
+
+  .nav-progress span {
+    transition: none;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 400;
+  height: 2px;
+  pointer-events: none;
+  view-transition-name: nav-progress;
+}
+
+.nav-progress span {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--orange);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--orange) 75%, transparent);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.nav-progress span::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 72px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #fff6);
+  box-shadow: 0 0 8px var(--orange);
+}
+
+.nav-progress.is-done {
+  opacity: 0;
+  transition: opacity 0.16s linear;
+}
+
+.route-stage {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.route-stage.is-switch {
+  animation: route-fallback 0.26s cubic-bezier(0.22, 0.74, 0.14, 1);
+}
+
+@keyframes route-fallback {
+  from {
+    transform: translate3d(0, 36px, 0);
+  }
+}
+
+html:active-view-transition .route-stage.is-switch {
+  animation: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(root) {
+  animation: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.site-header {
+  view-transition-name: site-header;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 120;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+.theme-dock {
+  view-transition-name: theme-dock;
+}
+
+::view-transition-group(theme-dock),
+::view-transition-group(nav-progress) {
+  animation: none;
+  z-index: 400;
+}
+
+::view-transition-old(theme-dock),
+::view-transition-old(nav-progress) {
+  display: none;
+}
+
+::view-transition-new(theme-dock),
+::view-transition-new(nav-progress) {
+  animation: none;
+}
+
+::view-transition-old(.route-out) {
+  animation: 220ms cubic-bezier(0.22, 0.74, 0.14, 1) both route-out;
+  z-index: 1;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(.route-in) {
+  animation: 260ms cubic-bezier(0.22, 0.74, 0.14, 1) both route-in;
+  z-index: 2;
+  mix-blend-mode: normal;
+}
+
+@keyframes route-out {
+  to {
+    transform: translateY(-22vh);
+  }
+}
+
+@keyframes route-in {
+  from {
+    transform: translateY(30vh);
   }
 }
 

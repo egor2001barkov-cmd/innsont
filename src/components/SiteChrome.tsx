@@ -1,13 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { rememberPendingRef } from "@/lib/referral";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { SiteJsonLd } from "./SiteJsonLd";
 import { ThemeToggle } from "./ThemeToggle";
 import { CookieBanner } from "./CookieBanner";
+import { RouteProgress, RouteStage } from "./PageMotion";
 export { Breadcrumbs } from "./Breadcrumbs";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -17,13 +18,19 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     if (ref) rememberPendingRef(ref);
   }, [path]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const nodes = Array.from(document.querySelectorAll(".reveal, .reveal-stagger"));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      nodes.forEach((el) => el.classList.add("is-in"));
+      nodes.forEach((el) => el.classList.add("is-in", "is-instant"));
       return;
     }
+    const vh = window.innerHeight;
+    nodes.forEach((el) => {
+      if (el.getBoundingClientRect().top < vh * 0.94) {
+        el.classList.add("is-in", "is-instant");
+      }
+    });
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -34,12 +41,15 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
-    nodes.forEach((el) => io.observe(el));
+    nodes.forEach((el) => {
+      if (!el.classList.contains("is-in")) io.observe(el);
+    });
     return () => io.disconnect();
   }, [path]);
   if (path.startsWith("/kabinet")) {
     return (
       <main className="min-w-0 flex-1">
+        <RouteProgress />
         {children}
         <ThemeToggle />
       </main>
@@ -49,8 +59,11 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <SiteJsonLd />
       <Header />
-      <main className="min-w-0 flex-1 pb-16 sm:pb-8">{children}</main>
-      <Footer />
+      <RouteProgress />
+      <RouteStage path={path}>
+        <main className="min-w-0 flex-1 pb-16 sm:pb-8">{children}</main>
+        <Footer />
+      </RouteStage>
       <CookieBanner />
       <ThemeToggle />
     </>
