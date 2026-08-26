@@ -6,6 +6,7 @@ import {
   ActTrio,
   HomeCabinet,
   HomeAppShots,
+  HeroPlanStrip,
   HomeHeroSuite,
   HomeMidBanner,
   HomePlansTeaser,
@@ -187,7 +188,7 @@ export default function HomePage() {
             нет, готовит страницы и правки, публикует после вашего «ок». Один
             кабинет на Яндекс, Google и ответы GigaChat с ChatGPT.
           </p>
-          <div className="cta-row mx-auto mt-8 max-w-xl justify-center">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link href="/demo" className="btn-primary">
               Заказать демо
             </Link>
@@ -195,6 +196,7 @@ export default function HomePage() {
               5 запросов бесплатно
             </Link>
           </div>
+          <HeroPlanStrip />
           <p className="mx-auto mt-5 max-w-xl text-sm font-medium text-ink/70">
             Следуем рекомендациям Яндекса для вебмастеров и правилам Google
             для сайтов. Bing подхватывает те же страницы.

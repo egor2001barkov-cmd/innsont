@@ -75,7 +75,7 @@ export default function Page() {
         </p>
         <h1 className="mt-3 max-w-4xl text-4xl leading-[1.08] md:text-6xl">{page.h1}</h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#3a3632]">{page.lead}</p>
-        <div className="cta-row mt-8">
+        <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/demo" className="btn-primary">
             Заказать демо
           </Link>

@@ -1,7 +1,39 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { formatRub, PLANS } from "@/lib/site";
 import { Icon, IndustryIcon } from "./Icons";
 import { ReviewsCarousel } from "./ReviewsCarousel";
+
+export function HeroPlanStrip() {
+  return (
+    <nav aria-label="Тарифы" className="mx-auto mt-5 w-full min-w-0 max-w-xl md:hidden">
+      <p className="mb-2 text-center text-[11px] font-semibold text-muted">
+        Подписка · год −10%
+      </p>
+      <div className="grid grid-cols-3 gap-2">
+        {PLANS.map((p) => (
+          <Link
+            key={p.id}
+            href={`/registratsiya?plan=${p.id}&period=annual`}
+            className={`min-w-0 overflow-hidden rounded-2xl border px-2 py-2.5 text-left ${
+              p.popular
+                ? "border-orange bg-orange-soft ring-1 ring-orange/25"
+                : "border-line bg-paper"
+            }`}
+          >
+            <span className="block truncate text-[11px] font-extrabold leading-none">
+              {p.name}
+            </span>
+            <span className="mt-1.5 block text-[13px] font-extrabold leading-tight tracking-tight">
+              {formatRub(p.priceAnnual)}
+            </span>
+            <span className="mt-0.5 block text-[10px] font-semibold text-muted">/мес</span>
+          </Link>
+        ))}
+      </div>
+    </nav>
+  );
+}
 
 export function StepBadge({ n, label }: { n: string; label: string }) {
   return (
@@ -531,16 +563,16 @@ export function HomeMidBanner() {
             </div>
           ))}
         </div>
-        <div className="cta-row mt-8">
+        <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="/registratsiya"
-            className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-2 text-[13px] font-bold text-white ring-2 ring-white hover:bg-white/30 sm:px-6 sm:py-3 sm:text-base"
+            className="inline-flex rounded-full bg-white/20 px-6 py-3 font-bold text-white ring-2 ring-white hover:bg-white/30"
           >
             Попробовать 5 запросов
           </Link>
           <Link
             href="/tseny"
-            className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-2 text-[13px] font-bold text-white ring-2 ring-white hover:bg-white/30 sm:px-6 sm:py-3 sm:text-base"
+            className="inline-flex rounded-full bg-white/20 px-6 py-3 font-bold text-white ring-2 ring-white hover:bg-white/30"
           >
             Смотреть тарифы
           </Link>
@@ -602,7 +634,7 @@ export function HomePlansTeaser() {
                 <li key={it}>{it}</li>
               ))}
             </ul>
-            <Link href="/tseny" className="btn-outline mt-6 w-full sm:py-2.5">
+            <Link href="/tseny" className="btn-outline mt-6 w-full">
               Сравнить тарифы
             </Link>
           </article>
@@ -980,11 +1012,11 @@ export function ProofCta() {
         Закажите демо. Покажем позиции в Яндексе и то, рекомендуют ли вас
         нейросети.
       </h2>
-      <div className="cta-row mt-8">
-        <Link href="/demo" className="btn-primary sm:px-8 sm:py-3 sm:text-base">
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/demo" className="btn-primary px-8 py-3 text-base">
           Заказать демо
         </Link>
-        <Link href="/registratsiya" className="btn-outline sm:px-8 sm:py-3 sm:text-base">
+        <Link href="/registratsiya" className="btn-outline px-8 py-3 text-base">
           5 запросов бесплатно
         </Link>
       </div>

@@ -77,7 +77,7 @@ export function CtaBand({
     <section className="mx-auto mt-20 max-w-[1100px] border-t border-line px-5 py-14">
       <h2 className="max-w-3xl text-2xl leading-snug md:text-[28px]">{title}</h2>
       <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-muted">{text}</p>
-      <div className="cta-row mt-6">
+      <div className="mt-6 flex flex-wrap items-center gap-3">
         <a href="/demo" className="btn-primary">
           Заказать демо
         </a>
