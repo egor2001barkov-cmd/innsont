@@ -452,6 +452,8 @@ export function HomeWho() {
   const items = [
     { href: "/resheniya/internet-magaziny", t: "Интернет-магазины", d: "Карточки с ценой, наличием и доставкой по городам", icon: "shop" },
     { href: "/resheniya/kliniki", t: "Клиники", d: "Страницы услуг и врачей, запись, карточка в Яндекс Бизнесе", icon: "clinic" },
+    { href: "/resheniya/stomatologii", t: "Стоматологии", d: "Вилка цен, врачи, карты, запись с поиска", icon: "clinic" },
+    { href: "/resheniya/okna", t: "Окна и рольставни", d: "Цена на створку, замер, район только с выездом", icon: "realty" },
     { href: "/resheniya/zastroyshchiki", t: "Застройщики", d: "Посадочные корпусов, районы, сроки сдачи и ипотека", icon: "realty" },
     { href: "/resheniya/banki", t: "Банки и финтех", d: "Вклады, ИИС и тарифы без выдуманной доходности", icon: "bank" },
     { href: "/resheniya/saas", t: "SaaS и IT", d: "Сравнения, документация и запросы «какой сервис выбрать»", icon: "saas" },

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Назвали ли в GigaChat по запросу — кабинет INSONT</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#161513">GigaChat · назвали или нет</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <rect x="28" y="112" width="1044" height="56" rx="14" fill="#f6f1e8"/>
+    <text x="48" y="146" fill="#161513">узи москва цена</text>
+    <text x="520" y="146" fill="#6b6560">Яндекс 3</text>
+    <text x="720" y="146" fill="#6b6560">Google 5</text>
+    <text x="920" y="146" fill="#c43c2c">GigaChat нет</text>
+    <rect x="28" y="180" width="1044" height="56" rx="14" fill="#f6f1e8"/>
+    <text x="48" y="214" fill="#161513">куда записаться на узи вечером</text>
+    <text x="520" y="214" fill="#6b6560">Яндекс 11</text>
+    <text x="720" y="214" fill="#6b6560">Google 9</text>
+    <text x="920" y="214" fill="#1f8a4c">назвали</text>
+    <rect x="28" y="248" width="1044" height="80" rx="14" fill="#fff1e8"/>
+    <text x="48" y="282" fill="#161513">Очередь не «ещё статьи для нейросети».</text>
+    <text x="48" y="308" fill="#161513">На /uzi нет цены — модель берёт агрегатор, хотя в Яндексе вы третьи.</text>
+  </g>
+</svg>

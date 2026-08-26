@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Семантическое ядро: кластер на URL, статья ведёт на услугу</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#161513">Ядро · кластер, не простыня ключей</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14">
+    <rect x="28" y="112" width="340" height="200" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="148" fill="#6b6560">статья</text>
+    <text x="48" y="180" font-size="16" fill="#161513">/stati/podgotovka</text>
+    <text x="48" y="210" fill="#6b6560">как готовиться к узи</text>
+    <text x="48" y="268" fill="#161513">ведёт на → /uzi</text>
+    <rect x="384" y="112" width="340" height="200" rx="16" fill="#fff1e8"/>
+    <text x="404" y="148" fill="#6b6560">коммерция</text>
+    <text x="404" y="180" font-size="16" fill="#161513">/uzi</text>
+    <text x="404" y="210" fill="#6b6560">узи цена · Москва</text>
+    <text x="404" y="268" fill="#161513">цена есть</text>
+    <rect x="740" y="112" width="332" height="200" rx="16" fill="#f6f1e8"/>
+    <text x="760" y="148" fill="#6b6560">район</text>
+    <text x="760" y="180" font-size="16" fill="#161513">/uzi/sokol</text>
+    <text x="760" y="210" fill="#6b6560">только если филиал есть</text>
+    <text x="760" y="268" fill="#161513">не клон</text>
+  </g>
+</svg>

@@ -494,6 +494,8 @@ export const EXTRA_SEO_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo/vs-keys-so", title: "INSONT и Keys.so" },
+      { href: "/seo/vs-megaindex", title: "INSONT и MegaIndex" },
+      { href: "/seo/vs-topvisor", title: "INSONT и Топвизор" },
       { href: "/seo/vs-writesonic", title: "INSONT и Writesonic" },
       { href: "/seo/prodvizhenie-v-google", title: "Продвижение в Google" },
       { href: "/tseny", title: "Тарифы" },

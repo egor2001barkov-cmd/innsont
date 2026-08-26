@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" role="img" aria-labelledby="t">
+  <title id="t">Карточка организации, сайт и Вебмастер — один адрес</title>
+  <rect width="1100" height="380" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#161513">Карты · один адрес в трёх местах</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <rect x="28" y="112" width="332" height="200" rx="16" fill="#f6f1e8"/>
+    <text x="48" y="148" fill="#6b6560">Яндекс Бизнес</text>
+    <text x="48" y="184" font-size="16" fill="#161513">ул. Лесная, 5</text>
+    <text x="48" y="212" fill="#1f8a4c">совпадает</text>
+    <rect x="384" y="112" width="332" height="200" rx="16" fill="#f6f1e8"/>
+    <text x="404" y="148" fill="#6b6560">Сайт /contacts</text>
+    <text x="404" y="184" font-size="16" fill="#161513">ул. Лесная, 5</text>
+    <text x="404" y="212" fill="#1f8a4c">совпадает</text>
+    <rect x="740" y="112" width="332" height="200" rx="16" fill="#fff1e8"/>
+    <text x="760" y="148" fill="#6b6560">2ГИС · было</text>
+    <text x="760" y="184" font-size="16" fill="#161513">пр. Мира, 10</text>
+    <text x="760" y="212" fill="#c43c2c">чинить</text>
+    <text x="48" y="348" font-size="14" fill="#6b6560">Липовых филиалов не заводим. Точка только куда можно приехать.</text>
+  </g>
+</svg>

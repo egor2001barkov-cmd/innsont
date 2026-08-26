@@ -323,19 +323,8 @@ html[data-theme="dark"] .compare-row:hover {
     transition: none;
   }
 
-  .route-stage.is-switch {
-    animation: none;
-  }
-
   .nav-progress span {
     transition: none;
-  }
-
-  ::view-transition-old(*),
-  ::view-transition-new(*),
-  ::view-transition-group(*) {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
   }
 }
 
@@ -383,93 +372,21 @@ html[data-theme="dark"] .compare-row:hover {
   max-width: 100%;
 }
 
-.route-stage.is-switch {
-  animation: route-fallback 0.26s cubic-bezier(0.22, 0.74, 0.14, 1);
-}
-
-@keyframes route-fallback {
-  from {
-    transform: translate3d(0, 36px, 0);
-  }
-}
-
-html:active-view-transition .route-stage.is-switch {
-  animation: none;
-}
-
-::view-transition {
+.route-veil {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
   pointer-events: none;
 }
 
-::view-transition-group(root) {
-  animation: none;
+html[data-routing] .route-veil {
+  display: block;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-.site-header {
-  view-transition-name: site-header;
-}
-
-::view-transition-group(site-header) {
-  animation: none;
-  z-index: 120;
-}
-
-::view-transition-old(site-header) {
-  display: none;
-}
-
-::view-transition-new(site-header) {
-  animation: none;
-}
-
-.theme-dock {
-  view-transition-name: theme-dock;
-}
-
-::view-transition-group(theme-dock),
-::view-transition-group(nav-progress) {
-  animation: none;
-  z-index: 400;
-}
-
-::view-transition-old(theme-dock),
-::view-transition-old(nav-progress) {
-  display: none;
-}
-
-::view-transition-new(theme-dock),
-::view-transition-new(nav-progress) {
-  animation: none;
-}
-
-::view-transition-old(.route-out) {
-  animation: 220ms cubic-bezier(0.22, 0.74, 0.14, 1) both route-out;
-  z-index: 1;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(.route-in) {
-  animation: 260ms cubic-bezier(0.22, 0.74, 0.14, 1) both route-in;
-  z-index: 2;
-  mix-blend-mode: normal;
-}
-
-@keyframes route-out {
-  to {
-    transform: translateY(-22vh);
-  }
-}
-
-@keyframes route-in {
-  from {
-    transform: translateY(30vh);
-  }
+html[data-routing] .route-stage {
+  visibility: hidden;
 }
 
 .btn-outline {

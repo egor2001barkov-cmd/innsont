@@ -516,7 +516,12 @@ export const LONG_PAGES: RichPageData[] = [
       { q: "Вы парсите Keys?", a: "Нет. Свои съёмы и Wordstat." },
       { q: "Для агентства?", a: "Да. Часто Keys.so остаётся для питча, INSONT — для производства." },
     ],
-    related: relSeo,
+    related: [
+      { href: "/seo/vs-megaindex", title: "INSONT и MegaIndex" },
+      { href: "/seo/vs-topvisor", title: "INSONT и Топвизор" },
+      { href: "/seo/vs-semrush", title: "INSONT и Semrush" },
+      { href: "/seo", title: "Продвижение в поиске" },
+    ],
   },
   {
     path: "/seo/vebmaster",

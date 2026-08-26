@@ -158,6 +158,7 @@ export const CASES: CaseStudy[] = [
     person: "владелец направления маркетинга",
     related: [
       { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/resheniya/okna", title: "Окна и рольставни" },
       { href: "/seo/moskva", title: "Москва" },
       { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
     ],

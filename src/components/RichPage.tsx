@@ -12,6 +12,7 @@ export type RichPageData = {
   eyebrow: string;
   h1: string;
   answer: string;
+  body?: string[];
   image?: string;
   imageCaption?: string;
   imageAlt?: string;
@@ -85,6 +86,11 @@ export function RichPage({ page }: { page: RichPageData }) {
         </p>
         <h1 className="mt-3 max-w-4xl text-4xl leading-[1.1] md:text-5xl">{page.h1}</h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#3a3632]">{page.answer}</p>
+        {page.body?.map((p) => (
+          <p key={p.slice(0, 48)} className="mt-4 max-w-3xl text-[17px] leading-[1.75] text-[#3a3632]">
+            {p}
+          </p>
+        ))}
         <div className="mt-7 flex flex-wrap gap-3">
           <Link href="/demo" className="btn-primary">
             Заказать демо
@@ -173,7 +179,11 @@ export function RichPage({ page }: { page: RichPageData }) {
         {page.sections?.map((s) => (
           <section key={s.title} className="border-t border-line py-10">
             <h2 className="text-2xl md:text-[28px]">{s.title}</h2>
-            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-[#3a3632]">{s.text}</p>
+            {s.text.split(/\n\n+/).map((p) => (
+              <p key={p.slice(0, 40)} className="mt-3 max-w-3xl text-[16px] leading-[1.75] text-[#3a3632]">
+                {p}
+              </p>
+            ))}
             {s.points && (
               <ul className="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[15px]">
                 {s.points.map((p) => (

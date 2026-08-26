@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="t">
+  <title id="t">Источники в ответе Perplexity: вашего домена нет</title>
+  <rect width="1100" height="360" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#161513">Perplexity · источники ответа</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <text x="36" y="120" fill="#6b6560">«какой сервис учёта выбрать для ИП»</text>
+    <rect x="28" y="140" width="1044" height="44" rx="10" fill="#f6f1e8"/>
+    <text x="48" y="168" fill="#161513">1 · vc.ru/obzor-sklad</text>
+    <rect x="28" y="192" width="1044" height="44" rx="10" fill="#f6f1e8"/>
+    <text x="48" y="220" fill="#161513">2 · competitor.ru/sravnenie</text>
+    <rect x="28" y="244" width="1044" height="44" rx="10" fill="#fff1e8"/>
+    <text x="48" y="272" fill="#c43c2c">3 · вас нет · на сайте справка за логином</text>
+    <text x="36" y="328" font-size="14" fill="#6b6560">Открыть /help роботу. Таблицу «чем отличаемся» — в HTML, не в кабинете.</text>
+  </g>
+</svg>

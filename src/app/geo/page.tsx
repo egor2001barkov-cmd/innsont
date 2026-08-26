@@ -114,9 +114,19 @@ export default function Page() {
                 desc: "Русскоязычные ответы Сбера, часто опирается на открытые карточки",
               },
               {
+                href: "/geo/kak-popast-v-gigachat",
+                name: "Как попасть в GigaChat",
+                desc: "Порядок работ: робот, факт, замер. Без накрутки промптов",
+              },
+              {
                 href: "/geo/chatgpt",
                 name: "ChatGPT",
                 desc: "Сравнения и справка, цитаты домена",
+              },
+              {
+                href: "/geo/perplexity",
+                name: "Perplexity и Claude",
+                desc: "Источники в ответе. Для SaaS и B2B, не вместо Яндекса",
               },
               {
                 href: "/geo/alisa",

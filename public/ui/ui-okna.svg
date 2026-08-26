@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="t">
+  <title id="t">Посадочные окон только там, где едет замер</title>
+  <rect width="1100" height="360" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#161513">Окна · район только с выездом</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14">
+    <rect x="28" y="108" width="1044" height="44" rx="10" fill="#f6f1e8"/>
+    <text x="48" y="136" fill="#161513">/okna · створка от 12 400 ₽ · замер завтра · опубликовано</text>
+    <rect x="28" y="160" width="1044" height="44" rx="10" fill="#f6f1e8"/>
+    <text x="48" y="188" fill="#161513">/okna/zao · выезд есть · срок 2 дня · опубликовано</text>
+    <rect x="28" y="212" width="1044" height="44" rx="10" fill="#fff1e8"/>
+    <text x="48" y="240" fill="#161513">/okna/zhulebino · нет цены · в очереди</text>
+    <rect x="28" y="264" width="1044" height="44" rx="10" fill="#f6f1e8"/>
+    <text x="48" y="292" fill="#6b6560">метро Сокол · клона нет · бригада туда не едет</text>
+  </g>
+</svg>

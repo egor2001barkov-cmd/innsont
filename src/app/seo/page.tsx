@@ -402,6 +402,21 @@ export default function Page() {
               desc: "То, без чего Яндекс не пускает витрину",
             },
             {
+              href: "/seo/audit-sayta",
+              title: "Аудит сайта",
+              desc: "Витрина, регион, robots — не простыня PDF",
+            },
+            {
+              href: "/seo/raskrutka-sayta",
+              title: "Раскрутка сайта",
+              desc: "То же слово из поиска, без биржи ссылок",
+            },
+            {
+              href: "/seo/yandex-karty",
+              title: "Яндекс Карты и 2ГИС",
+              desc: "Один адрес в карточке и на сайте",
+            },
+            {
               href: "/platforma/monitoring-vidimosti",
               title: "Мониторинг видимости",
               desc: "Яндекс, Google и модели в одной строке",

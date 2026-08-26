@@ -1,8 +1,5 @@
 "use client";
 
-/// <reference types="react/canary" />
-
-import { ViewTransition } from "react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -92,6 +89,7 @@ export function RouteProgress() {
     if (!active.current) return;
     const my = gen.current;
     clearTimers();
+    delete document.documentElement.dataset.routing;
     const wait = Math.max(0, 160 - (performance.now() - startedAt.current));
     finishTimer.current = window.setTimeout(() => {
       if (gen.current !== my) return;
@@ -153,39 +151,18 @@ export function RouteProgress() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (!on) return null;
-
   return (
-    <div
-      className={`nav-progress${done ? " is-done" : ""}`}
-      aria-hidden
-    >
-      <span style={{ transform: `scaleX(${value})` }} />
-    </div>
+    <>
+      <div className="route-veil" aria-hidden />
+      {on ? (
+        <div className={`nav-progress${done ? " is-done" : ""}`} aria-hidden>
+          <span style={{ transform: `scaleX(${value})` }} />
+        </div>
+      ) : null}
+    </>
   );
 }
 
-export function RouteStage({
-  path,
-  children,
-}: {
-  path: string;
-  children: React.ReactNode;
-}) {
-  const [basePath] = useState(path);
-  const live = path !== basePath;
-  const className = live ? "route-stage is-switch" : "route-stage";
-  const stage = <div className={className}>{children}</div>;
-  if (!ViewTransition) return stage;
-
-  return (
-    <ViewTransition
-      key={path}
-      enter={live ? "route-in" : "none"}
-      exit="route-out"
-      default="none"
-    >
-      {stage}
-    </ViewTransition>
-  );
+export function RouteStage({ children }: { path: string; children: React.ReactNode }) {
+  return <div className="route-stage">{children}</div>;
 }

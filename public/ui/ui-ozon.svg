@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="t">
+  <title id="t">Артикул в ответе модели: ссылка на Ozon и на карточку сайта</title>
+  <rect width="1100" height="360" rx="28" fill="#fffcf7"/>
+  <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="5" fill="#ff6a2b">INSONT</text>
+  <text x="36" y="78" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#161513">Покупки · SKU в ответе</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="15">
+    <text x="36" y="118" fill="#6b6560">«какие кроссовки на первый марафон, бюджет 15 000»</text>
+    <rect x="28" y="140" width="1044" height="52" rx="12" fill="#f6f1e8"/>
+    <text x="48" y="172" fill="#161513">Назвали бренд · ссылка на Ozon</text>
+    <rect x="28" y="204" width="1044" height="52" rx="12" fill="#fff1e8"/>
+    <text x="48" y="236" fill="#161513">Своего домена в источниках нет · на сайте нет размерной сетки</text>
+    <text x="36" y="300" font-size="14" fill="#6b6560">Очередь: таблица размеров в HTML, артикул как на площадке. Выкуп отзывов не предлагаем.</text>
+  </g>
+</svg>

@@ -2,6 +2,7 @@ import type { RichPageData } from "@/components/RichPage";
 import { LONG_PAGES } from "@/lib/long-pages";
 import { EXTRA_SEO_PAGES, GEO_PAGES } from "@/lib/rank-pages";
 import { KEYWORD_PAGES } from "@/lib/keyword-pages";
+import { DEMAND_PAGES } from "@/lib/demand-pages";
 
 export const CITY_PAGES: RichPageData[] = [
   {
@@ -512,6 +513,7 @@ export const INDUSTRY_PAGES: RichPageData[] = [
       { q: "Накрутка записей?", a: "Нет." },
     ],
     related: [
+      { href: "/resheniya/stomatologii", title: "Стоматологии" },
       { href: "/seo/kazan", title: "Казань" },
       { href: "/seo/moskva", title: "Москва" },
     ],
@@ -900,6 +902,7 @@ export function allLongPages(): RichPageData[] {
     ...GEO_PAGES,
     ...EXTRA_SEO_PAGES,
     ...KEYWORD_PAGES,
+    ...DEMAND_PAGES,
   ];
 }
 

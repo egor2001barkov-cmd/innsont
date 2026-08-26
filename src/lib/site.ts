@@ -14,7 +14,7 @@ export const SITE = {
   description:
     "Продвигаем сайт в Яндексе, Google и ответах нейросетей. Чтобы вас находили, когда человек ищет услугу или спрашивает, кого выбрать.",
   /** Last real content edit. Sitemap lastmod — only this or a page date, never Date.now(). */
-  contentUpdated: "2026-08-23",
+  contentUpdated: "2026-08-26",
 };
 
 export const EXTRA_USER = 1490;
@@ -274,6 +274,18 @@ export const SOLUTIONS: NavItem[] = [
     title: "Клиники",
     desc: "Страницы услуг и врачей, запись, карточка в Яндекс Бизнесе",
     icon: "clinic",
+  },
+  {
+    href: "/resheniya/stomatologii",
+    title: "Стоматологии",
+    desc: "Услуги с вилкой цен, врачи, карты, запись с поиска",
+    icon: "clinic",
+  },
+  {
+    href: "/resheniya/okna",
+    title: "Окна и рольставни",
+    desc: "Цена на створку, замер, район только с выездом",
+    icon: "building",
   },
   {
     href: "/resheniya/zastroyshchiki",
