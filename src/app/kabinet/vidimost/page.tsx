@@ -99,7 +99,7 @@ export default function VisibilityPage() {
         </div>
       </div>
 
-      <div className="ws-card mt-4 overflow-hidden">
+      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f3f4f6] p-4">
           <h2 className="text-sm font-semibold">Промпты в трекинге</h2>
           <input

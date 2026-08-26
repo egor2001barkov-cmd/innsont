@@ -10,8 +10,8 @@ function Frame({
   children: ReactNode;
 }) {
   return (
-    <figure className="mt-6">
-      <div className="overflow-hidden rounded-2xl border border-line bg-paper">
+    <figure className="mt-6 min-w-0">
+      <div className="min-w-0 overflow-x-auto rounded-2xl border border-line bg-paper">
         <div className="flex items-center justify-between border-b border-line bg-bg px-4 py-2.5">
           <span className="wordmark text-[10px] text-orange">INSONT</span>
           <span className="text-[12px] text-muted">{title}</span>
@@ -43,16 +43,16 @@ export function RobotsFileMock() {
       <p className="mt-1 text-[12px] text-muted">
         Строка с /blog закрывает людям справку и роботу GigaChat. Яндекс туда тоже не зайдёт.
       </p>
-      <ol className="mt-3 border border-line bg-bg font-mono text-[12px] leading-6">
+      <ol className="mt-3 overflow-x-auto border border-line bg-bg font-mono text-[12px] leading-6">
         {lines.map(([line, kind], i) => (
           <li
             key={i}
-            className={`flex gap-3 px-3 py-0.5 ${
+            className={`flex min-w-0 gap-3 px-3 py-0.5 ${
               kind === "warn" ? "bg-[#fff1e8] font-semibold text-orange" : ""
             }`}
           >
             <span className="w-6 shrink-0 text-muted">{i + 1}</span>
-            <span>{line}</span>
+            <span className="min-w-0 break-all">{line}</span>
           </li>
         ))}
       </ol>

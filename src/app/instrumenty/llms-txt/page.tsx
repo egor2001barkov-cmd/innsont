@@ -147,7 +147,7 @@ export default function Page() {
 
         <section className="mt-16">
           <h2 className="text-3xl">Куда положить на хостинге</h2>
-          <div className="card mt-6 overflow-x-auto">
+          <div className="table-wrap card mt-6">
             <table className="w-full min-w-[520px] text-left text-sm">
               <tbody>
                 {[

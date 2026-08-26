@@ -75,6 +75,14 @@ export const metadata: Metadata = {
   verification: {
     yandex: "eab405796df2103e",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon-120x120.png", type: "image/png", sizes: "120x120" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -85,7 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${sans.variable} ${display.variable} ${brand.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-bg text-ink">
+      <body className="flex min-h-full min-w-0 max-w-full flex-col overflow-x-clip bg-bg text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         <YandexMetrika />
         <SiteChrome>{children}</SiteChrome>

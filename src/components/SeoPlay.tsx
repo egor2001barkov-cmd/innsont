@@ -227,32 +227,34 @@ export function SeoBeforeAfter() {
         <p className="mt-4 text-[14px] leading-relaxed">
           Для большинства людей удобнее смотреть агрегатор: там сразу цена и слот.
         </p>
-        <table className="sheet mt-3">
-          <thead>
-            <tr>
-              <th>Кому</th>
-              <th>Куда ведут</th>
-              <th className="num">Почему</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Большинству</td>
-              <td>НаПоправку</td>
-              <td className="num">цена и отзывы</td>
-            </tr>
-            <tr>
-              <td>Срочно</td>
-              <td>СберЗдоровье</td>
-              <td className="num">запись сегодня</td>
-            </tr>
-            <tr>
-              <td>По ОМС</td>
-              <td>Госуслуги</td>
-              <td className="num">полис</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-wrap mt-3">
+          <table className="sheet">
+            <thead>
+              <tr>
+                <th>Кому</th>
+                <th>Куда ведут</th>
+                <th className="num">Почему</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Большинству</td>
+                <td>НаПоправку</td>
+                <td className="num">цена и отзывы</td>
+              </tr>
+              <tr>
+                <td>Срочно</td>
+                <td>СберЗдоровье</td>
+                <td className="num">запись сегодня</td>
+              </tr>
+              <tr>
+                <td>По ОМС</td>
+                <td>Госуслуги</td>
+                <td className="num">полис</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p className="seo-warn mt-4 rounded-[14px] px-3 py-2.5 text-[13px] leading-relaxed">
           СМ-Клинику почти не называют. 284 чужих промпта ведут на агрегаторы.
         </p>
@@ -270,34 +272,36 @@ export function SeoBeforeAfter() {
         <p className="mt-4 text-[14px] leading-relaxed">
           Для большинства СМ-Клиника — нормальный выбор: цена, метро, запись на странице.
         </p>
-        <table className="sheet mt-3">
-          <thead>
-            <tr>
-              <th>Кому</th>
-              <th>Куда ведут</th>
-              <th className="num">Почему</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="seo-hit">
-              <td>Большинству</td>
-              <td>
-                <span className="rounded-full bg-[#eaf6ee] px-2 py-0.5 font-semibold text-good">СМ-Клиника</span>
-              </td>
-              <td className="num">приём от 2 400 ₽</td>
-            </tr>
-            <tr>
-              <td>Срочно</td>
-              <td>СберЗдоровье</td>
-              <td className="num">запись сегодня</td>
-            </tr>
-            <tr>
-              <td>По ОМС</td>
-              <td>Госуслуги</td>
-              <td className="num">полис</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-wrap mt-3">
+          <table className="sheet">
+            <thead>
+              <tr>
+                <th>Кому</th>
+                <th>Куда ведут</th>
+                <th className="num">Почему</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="seo-hit">
+                <td>Большинству</td>
+                <td>
+                  <span className="rounded-full bg-[#eaf6ee] px-2 py-0.5 font-semibold text-good">СМ-Клиника</span>
+                </td>
+                <td className="num">приём от 2 400 ₽</td>
+              </tr>
+              <tr>
+                <td>Срочно</td>
+                <td>СберЗдоровье</td>
+                <td className="num">запись сегодня</td>
+              </tr>
+              <tr>
+                <td>По ОМС</td>
+                <td>Госуслуги</td>
+                <td className="num">полис</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p className="seo-ok mt-4 rounded-[14px] px-3 py-2.5 text-[13px] leading-relaxed">
           Назвали в 14 из 40 промптов. Раньше было 3. Ссылок не покупали — открыли карточки врачей и поставили цену.
         </p>

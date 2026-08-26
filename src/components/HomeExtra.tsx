@@ -20,7 +20,7 @@ export function HomeStayShot() {
   ];
   return (
     <figure>
-      <div className="overflow-hidden border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
+      <div className="min-w-0 overflow-x-auto border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
         <div className="flex items-center justify-between gap-3 border-b border-line bg-bg px-3 py-2">
           <span className="wordmark text-[10px] text-orange">INSONT</span>
           <span className="truncate text-[11px] text-muted">СМ-Клиника · неделя 12–18 авг</span>
@@ -76,9 +76,9 @@ export function HomeStayShot() {
             {tasks.map((t) => (
               <li
                 key={t[0]}
-                className="flex items-baseline justify-between gap-2 border-b border-line py-2"
+                className="flex min-w-0 items-baseline justify-between gap-2 border-b border-line py-2"
               >
-                <span className="font-medium">{t[0]}</span>
+                <span className="min-w-0 break-words font-medium">{t[0]}</span>
                 <span className="shrink-0 text-muted">{t[1]}</span>
               </li>
             ))}
@@ -383,7 +383,7 @@ export function HomeRobots() {
         Смотрим строки по роботу, не одним запретом на всех. Черновик файла
         подтверждаете вы.
       </p>
-      <div className="mt-8 grid gap-8 lg:grid-cols-2">
+      <div className="mt-8 grid min-w-0 gap-8 lg:grid-cols-2">
         <RobotsFileMock />
         <RobotsBotsMock />
       </div>
@@ -421,7 +421,7 @@ export function HomeLandings() {
         города проигрывает витрине в топе. Клоны на все метро не делаем:
         посадочная там, куда можно приехать. Статья тянет услугу живым анкором.
       </p>
-      <div className="mt-8 grid gap-8 lg:grid-cols-2">
+      <div className="mt-8 grid min-w-0 gap-8 lg:grid-cols-2">
         <LandingsListMock />
         <LandingsLinksMock />
       </div>

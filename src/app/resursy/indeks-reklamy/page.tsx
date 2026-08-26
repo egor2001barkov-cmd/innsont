@@ -48,7 +48,7 @@ export default function Page() {
         }}
       />
 
-      <section className="rays overflow-hidden">
+      <section className="rays min-w-0">
         <div className="mx-auto max-w-[1180px] px-5 pb-8 pt-12">
           <Breadcrumbs path="/resursy/indeks-reklamy" lastName="Индекс рекламы" />
           <div className="mt-6 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
@@ -158,8 +158,8 @@ export default function Page() {
           электронике. На «окна Казань» — почти никогда. Это не медиарейтинг
           страны. Это то, что попало в 80–100 формулировок на тему.
         </p>
-        <div className="card mt-6 overflow-hidden">
-          <table className="w-full text-left text-sm">
+        <div className="table-wrap card mt-6">
+          <table className="w-full min-w-[28rem] text-left text-sm">
             <thead>
               <tr className="border-b border-line text-muted">
                 <th className="px-5 py-3 font-medium">Тема</th>

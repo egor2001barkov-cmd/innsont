@@ -50,7 +50,7 @@ export default function ContentLibrary() {
           <option value="бриф">Брифы</option>
         </select>
       </div>
-      <div className="ws-card mt-4 overflow-hidden">
+      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
         <table className="ws-table">
           <thead>
             <tr>

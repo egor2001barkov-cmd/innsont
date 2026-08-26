@@ -34,9 +34,16 @@ html[data-theme="dark"] .ws-app {
 }
 
 .ws-card {
+  min-width: 0;
+  max-width: 100%;
   background: var(--ws-card);
   border: 1px solid var(--ws-line);
   border-radius: 12px;
+}
+
+.ws-card:has(.ws-table) {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ws-card:hover {

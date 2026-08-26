@@ -297,7 +297,7 @@ export function CompareTable({
   rows: [string, string, string][];
 }) {
   return (
-    <div className="mt-6 overflow-x-auto">
+    <div className="table-wrap mt-6">
       <table className="w-full min-w-[560px] text-left text-sm">
         <thead>
           <tr className="border-b border-line text-muted">

@@ -64,7 +64,7 @@ export default function YandexRegionPage() {
         </div>
       </form>
 
-      <div className="ws-card mt-4 overflow-hidden">
+      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
         <div className="border-b border-[var(--ws-line,#e5e7eb)] px-4 py-3 text-sm font-semibold">
           Посадочные по регионам
         </div>

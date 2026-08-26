@@ -628,7 +628,7 @@ function AppChrome({
     { icon: "bolt" as const, t: "Очередь" },
   ];
   return (
-    <div className="overflow-hidden border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
+    <div className="min-w-0 overflow-x-auto border border-line bg-paper text-left shadow-[0_18px_40px_rgba(40,24,8,0.08)]">
       <div className="flex min-h-[280px]">
         <aside className="hidden w-[158px] shrink-0 flex-col gap-0.5 border-r border-line bg-bg px-2 py-3 md:flex">
           <span className="wordmark mb-3 px-2 text-[9px] text-orange">INSONT</span>
@@ -672,7 +672,7 @@ export function HomeAppShots() {
   const folders = ["СМ-Клиника", "МойСклад", "Фабрика Окон", "Черновики"];
 
   return (
-    <section className="reveal mx-auto max-w-[1200px] px-5 pb-6 pt-4 text-left">
+    <section className="reveal mx-auto min-w-0 max-w-[1200px] px-5 pb-6 pt-4 text-left">
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">
         Как это выглядит
       </p>
@@ -686,7 +686,7 @@ export function HomeAppShots() {
 
       <div className="mt-8">
         <AppChrome active="Мой контент">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <label className="min-w-0 flex-1">
               <span className="sr-only">Поиск по страницам</span>
               <input
@@ -696,7 +696,7 @@ export function HomeAppShots() {
                 className="w-full min-w-0 rounded-sm border border-line bg-bg px-3 py-2 text-sm outline-none placeholder:text-muted"
               />
             </label>
-            <span className="rounded-sm bg-orange px-3 py-2 text-[12px] font-semibold text-white">
+            <span className="w-fit shrink-0 rounded-sm bg-orange px-3 py-2 text-[12px] font-semibold text-white">
               Новая страница
             </span>
           </div>
@@ -747,7 +747,7 @@ export function HomeAppShots() {
             <div className="text-[14px] font-semibold">Позиции · Москва</div>
             <p className="mt-0.5 text-[12px] text-muted">Яндекс, Google и назвали ли в GigaChat</p>
             <div className="table-wrap mt-3">
-              <table className="data min-w-[28rem]">
+              <table className="data">
                 <thead>
                   <tr>
                     <th>Запрос</th>
@@ -778,13 +778,13 @@ export function HomeAppShots() {
           <AppChrome active="Очередь">
             <div className="text-[14px] font-semibold">На эту неделю</div>
             <p className="mt-0.5 text-[12px] text-muted">Пять–десять дел, не триста пунктов аудита</p>
-            <ul className="mt-3 border-t border-line text-[13px]">
+            <ul className="mt-3 min-w-0 border-t border-line text-[13px]">
               {tasks.map((t) => (
                 <li
                   key={t[0]}
-                  className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line py-2.5"
+                  className="flex min-w-0 flex-wrap items-baseline justify-between gap-2 border-b border-line py-2.5"
                 >
-                  <span className="font-medium">{t[0]}</span>
+                  <span className="min-w-0 break-words font-medium">{t[0]}</span>
                   <span className="text-muted">
                     {t[1]} · {t[2]}
                   </span>
@@ -847,8 +847,8 @@ export function HomeHeroSuite() {
   ];
 
   return (
-    <div className="relative mx-auto mt-12 w-full min-w-0 max-w-[1040px] overflow-x-clip text-left">
-      <div className="overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_24px_60px_rgba(40,24,8,0.10)]">
+    <div className="relative mx-auto mt-12 w-full min-w-0 max-w-[1040px] text-left">
+      <div className="min-w-0 overflow-x-auto rounded-2xl border border-line bg-paper shadow-[0_24px_60px_rgba(40,24,8,0.10)]">
         <div className="flex md:min-h-[430px]">
           <aside className="hidden w-[86px] shrink-0 flex-col items-center border-r border-line bg-bg pt-4 md:flex">
             {nav.map((item) => (

@@ -10,8 +10,8 @@ function Frame({
   children: ReactNode;
 }) {
   return (
-    <figure className="mt-8">
-      <div className="overflow-hidden border border-line bg-paper">
+    <figure className="mt-8 min-w-0">
+      <div className="min-w-0 overflow-x-auto border border-line bg-paper">
         <div className="flex items-center justify-between border-b border-line bg-bg px-4 py-2.5">
           <span className="wordmark text-[10px] text-orange">INSONT</span>
           <span className="text-[12px] text-muted">{title}</span>

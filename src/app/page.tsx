@@ -160,7 +160,7 @@ export default function HomePage() {
         ]}
       />
 
-      <section className="rays overflow-hidden">
+      <section className="rays min-w-0">
         <div className="mx-auto max-w-[1200px] px-5 pb-8 pt-14 text-center">
           <p className="wordmark text-[12px] text-orange sm:text-[13px]">INSONT</p>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-muted">
@@ -726,7 +726,7 @@ function CompareCard({
   featured: boolean;
 }) {
   return (
-    <div className={`card overflow-hidden p-5 text-left ${featured ? "ring-1 ring-orange/40" : ""}`}>
+    <div className={`card min-w-0 overflow-x-auto p-5 text-left ${featured ? "ring-1 ring-orange/40" : ""}`}>
       <div className="flex items-center justify-between">
         <span className="rounded-full bg-[#f1ebe1] px-3 py-1 text-xs font-semibold">
           {label}

@@ -55,7 +55,7 @@ export default function BotsPage() {
         </div>
       </div>
 
-      <div className="ws-card mt-4 overflow-hidden">
+      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
         <div className="flex items-center justify-between border-b border-[#f3f4f6] p-4">
           <h2 className="text-sm font-semibold">Агенты</h2>
           <select className="ws-input w-auto" value={bot} onChange={(e) => setBot(e.target.value)}>

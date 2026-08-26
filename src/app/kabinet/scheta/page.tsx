@@ -21,7 +21,7 @@ export default function BillsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <p className="text-sm text-[#6b7280]">История по тарифу «{plan.name}».</p>
-      <div className="ws-card mt-4 overflow-hidden">
+      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
         <table className="ws-table">
           <thead>
             <tr>

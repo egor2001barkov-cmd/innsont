@@ -186,7 +186,7 @@ export function PageAdvantages({
   return (
     <section className={compact ? "mt-10" : "mt-16"} aria-labelledby="advantages-heading">
       {shot ? (
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,24rem)]">
+        <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,24rem)]">
           <div>
             <p className="text-sm text-muted">{copy.eyebrow}</p>
             <h2 id="advantages-heading" className="mt-2 max-w-3xl text-2xl leading-snug md:text-[28px]">
@@ -194,7 +194,7 @@ export function PageAdvantages({
             </h2>
             <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-muted">{copy.lead}</p>
           </div>
-          <div className="lg:sticky lg:top-24 lg:row-span-2">{shot}</div>
+          <div className="min-w-0 lg:sticky lg:top-24 lg:row-span-2">{shot}</div>
           <div>{list}</div>
         </div>
       ) : (

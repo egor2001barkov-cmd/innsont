@@ -16,7 +16,7 @@ export default function StrategyPage() {
       <p className="text-sm text-[#6b7280]">
         Кластеры по {project.name}. Частота — как часто промпт звучит в ИИ. Разрыв — насколько вы отстаёте от лидера.
       </p>
-      <div className="mt-5 overflow-hidden ws-card">
+      <div className="ws-card mt-5 min-w-0 overflow-x-auto">
         <table className="ws-table">
           <thead>
             <tr>

@@ -51,6 +51,7 @@ html[data-theme="dark"] {
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
@@ -60,6 +61,21 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
   max-width: 100%;
+  min-width: 0;
+}
+
+body > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+main {
+  min-width: 0;
+  max-width: 100%;
+}
+
+main .grid > * {
+  min-width: 0;
 }
 
 h1,
@@ -343,9 +359,16 @@ html[data-theme="dark"] .compare-row:hover {
 }
 
 .table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  display: block;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
 }
 
 table.data {
@@ -448,6 +471,23 @@ html[data-theme="dark"] .card {
   textarea {
     font-size: 16px;
   }
+
+  table.data th,
+  table.data td,
+  table.sheet th,
+  table.sheet td {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  table.data td:first-child,
+  table.sheet td:first-child {
+    overflow-wrap: anywhere;
+  }
+
+  table.sheet {
+    min-width: 28rem;
+  }
 }
 
 @media (hover: none) {
@@ -481,6 +521,8 @@ html[data-theme="dark"] .theme-dock button.is-on {
 }
 
 .ui-stage {
+  min-width: 0;
+  max-width: 100%;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 24px;

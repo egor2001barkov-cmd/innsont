@@ -238,7 +238,7 @@ export default function KeysPage() {
 
           {tab === "keys" && (
             <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-              <div className="ws-card overflow-hidden">
+              <div className="ws-card min-w-0 overflow-x-auto">
                 <div className="flex items-center justify-between border-b border-[#f3f4f6] px-4 py-3">
                   <h2 className="text-sm font-semibold">Топ запросов</h2>
                   <span className="text-[11px] text-[#9ca3af]">
@@ -326,7 +326,7 @@ export default function KeysPage() {
           )}
 
           {tab === "landings" && (
-            <div className="ws-card mt-4 overflow-hidden">
+            <div className="ws-card mt-4 min-w-0 overflow-x-auto">
               <div className="border-b border-[#f3f4f6] px-4 py-3">
                 <h2 className="text-sm font-semibold">Посадочные в сфере «{res.sphere.label}»</h2>
                 <p className="text-[12px] text-[#9ca3af]">
