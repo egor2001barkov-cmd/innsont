@@ -187,7 +187,7 @@ export default function HomePage() {
             нет, готовит страницы и правки, публикует после вашего «ок». Один
             кабинет на Яндекс, Google и ответы GigaChat с ChatGPT.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="cta-row mx-auto mt-8 max-w-xl justify-center">
             <Link href="/demo" className="btn-primary">
               Заказать демо
             </Link>

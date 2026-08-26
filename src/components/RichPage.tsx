@@ -85,7 +85,7 @@ export function RichPage({ page }: { page: RichPageData }) {
         </p>
         <h1 className="mt-3 max-w-4xl text-4xl leading-[1.1] md:text-5xl">{page.h1}</h1>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#3a3632]">{page.answer}</p>
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="cta-row mt-7">
           <Link href="/demo" className="btn-primary">
             Заказать демо
           </Link>

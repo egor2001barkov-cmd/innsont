@@ -531,16 +531,16 @@ export function HomeMidBanner() {
             </div>
           ))}
         </div>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="cta-row mt-8">
           <Link
             href="/registratsiya"
-            className="inline-flex rounded-full bg-white/20 px-6 py-3 font-bold text-white ring-2 ring-white hover:bg-white/30"
+            className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-2 text-[13px] font-bold text-white ring-2 ring-white hover:bg-white/30 sm:px-6 sm:py-3 sm:text-base"
           >
             Попробовать 5 запросов
           </Link>
           <Link
             href="/tseny"
-            className="inline-flex rounded-full bg-white/20 px-6 py-3 font-bold text-white ring-2 ring-white hover:bg-white/30"
+            className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-2 text-[13px] font-bold text-white ring-2 ring-white hover:bg-white/30 sm:px-6 sm:py-3 sm:text-base"
           >
             Смотреть тарифы
           </Link>
@@ -602,7 +602,7 @@ export function HomePlansTeaser() {
                 <li key={it}>{it}</li>
               ))}
             </ul>
-            <Link href="/tseny" className="btn-outline mt-6 w-full">
+            <Link href="/tseny" className="btn-outline mt-6 w-full sm:py-2.5">
               Сравнить тарифы
             </Link>
           </article>
@@ -980,11 +980,11 @@ export function ProofCta() {
         Закажите демо. Покажем позиции в Яндексе и то, рекомендуют ли вас
         нейросети.
       </h2>
-      <div className="mt-8 flex flex-wrap gap-3">
-        <Link href="/demo" className="btn-primary px-8 py-3 text-base">
+      <div className="cta-row mt-8">
+        <Link href="/demo" className="btn-primary sm:px-8 sm:py-3 sm:text-base">
           Заказать демо
         </Link>
-        <Link href="/registratsiya" className="btn-outline px-8 py-3 text-base">
+        <Link href="/registratsiya" className="btn-outline sm:px-8 sm:py-3 sm:text-base">
           5 запросов бесплатно
         </Link>
       </div>
