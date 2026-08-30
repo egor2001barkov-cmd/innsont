@@ -38,102 +38,78 @@ export function PricingCards({
     <div>
       {expired && (
         <div className="text-center">
-          <h2 className="text-[32px] font-bold tracking-tight text-[#111827]">Срок тарифа истёк</h2>
-          <p className="mt-1 text-[15px] text-[#6b7280]">Выберите план, чтобы продолжить работу в INSONT</p>
+          <h2 className="text-[32px] font-semibold tracking-tight text-[#111827]">Срок тарифа истёк</h2>
+          <p className="mt-2 text-[15px] text-[#6b7280]">Выберите план, чтобы продолжить работу в INSONT</p>
         </div>
       )}
 
-      <div className="mt-6 flex items-center justify-center gap-1">
-        <div className="inline-flex rounded-lg bg-[#f3f4f6] p-1 text-[13.5px] font-medium">
-          <button
-            className={`rounded-md px-3 py-1.5 ${period === "monthly" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
-            onClick={() => setPeriod("monthly")}
-          >
-            Месяц
-          </button>
-          <button
-            className={`rounded-md px-3 py-1.5 ${period === "annual" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
-            onClick={() => setPeriod("annual")}
-          >
-            Год
-          </button>
-        </div>
-        <span className="ml-2 rounded-md bg-[#dcfce7] px-2 py-0.5 text-[11px] font-semibold text-[#166534]">
-          −20%
-        </span>
+      <div className="ws-plan-period mt-8">
+        <button type="button" className={period === "monthly" ? "is-on" : ""} onClick={() => setPeriod("monthly")}>
+          Ежемесячно
+        </button>
+        <button type="button" className={period === "annual" ? "is-on" : ""} onClick={() => setPeriod("annual")}>
+          Год <span className="ws-plan-off">−20%</span>
+        </button>
       </div>
 
       <div className="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-3">
         {PLANS.map((p) => {
           const current = session.plan === p.id && session.paid;
           return (
-            <div
-              key={p.id}
-              className={`relative flex flex-col rounded-2xl border bg-white p-5 ${
-                p.popular ? "border-[#ea580c] shadow-[0_0_0_1px_#ea580c]" : "border-[#e5e7eb]"
-              }`}
-            >
+            <div key={p.id} className={`ws-plan ${p.popular ? "is-popular" : ""}`}>
               <div className="flex items-start justify-between">
-                <span className="rounded-md bg-[#f3f4f6] px-2 py-0.5 text-[12px] font-semibold">{p.name}</span>
+                <span className="ws-plan-name">{p.name}</span>
                 {p.popular && (
-                  <span className="flex items-center gap-1 text-[12px] font-medium text-[#ea580c]">
+                  <span className="ws-plan-popular">
                     <Ico name="spark" className="h-3.5 w-3.5" /> Популярный
                   </span>
                 )}
               </div>
-              <div className="mt-4 flex items-end gap-1">
-                <span className="text-[36px] font-bold leading-none tracking-tight">{formatRub(price(p))}</span>
-                <span className="mb-1 text-[13px] text-[#6b7280]">/мес</span>
+              <div className="ws-plan-price">
+                <b>{formatRub(price(p))}</b>
+                <span>/мес</span>
               </div>
-              <button
-                className={`mt-4 w-full rounded-lg py-2.5 text-[14px] font-semibold ${
-                  p.popular
-                    ? "bg-[#ea580c] text-white hover:bg-[#c2410c]"
-                    : "border border-[#e5e7eb] bg-white text-[#111827] hover:bg-[#f9fafb]"
-                }`}
-                onClick={() => select(p.id)}
-              >
+              <button className="ws-plan-btn" onClick={() => select(p.id)}>
                 {current ? "Текущий" : "Выбрать"}
               </button>
-              <ul className="mt-5 space-y-3 text-[14px]">
-                <li className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-[#374151]">
-                    <Ico name="chat" className="h-4 w-4 text-[#9ca3af]" /> Промпты
+              <div className="ws-plan-rows">
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="chat" className="h-4 w-4" /> Промпты
                   </span>
-                  <span className="font-medium">{p.limits.prompts}</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-[#374151]">
-                    <Ico name="folder" className="h-4 w-4 text-[#9ca3af]" /> Проекты
+                  <b>{p.limits.prompts}</b>
+                </div>
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="folder" className="h-4 w-4" /> Проекты
                   </span>
-                  <span className="font-medium">{p.limits.projects}</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-[#374151]">
-                    <Ico name="zap" className="h-4 w-4 text-[#9ca3af]" /> Задачи
+                  <b>{p.limits.projects}</b>
+                </div>
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="zap" className="h-4 w-4" /> Задачи
                   </span>
-                  <span className="font-medium">{p.limits.actionItems ? "Да" : "Нет"}</span>
-                </li>
-              </ul>
-              <div className="mt-5 border-t border-[#f3f4f6] pt-4">
-                <div className="text-[13px] font-medium text-[#374151]">Площадки</div>
+                  <b>{p.limits.actionItems ? "Да" : "Нет"}</b>
+                </div>
+                <div className="ws-plan-plats mt-3">Площадки в тарифе</div>
                 <div className="mt-2">
                   <PlatformDots />
                 </div>
+                <button
+                  type="button"
+                  className="ws-plan-more"
+                  onClick={() => setOpen(open === p.id ? null : p.id)}
+                >
+                  Все возможности <Ico name="chev" className="h-4 w-4" />
+                </button>
+                {open === p.id && (
+                  <ul className="mt-2 space-y-1 text-[12.5px] text-[#4b5563]">
+                    {[...p.visibility, ...p.content, ...p.agents, ...p.team].map((x) => (
+                      <li key={x}>· {x}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <button
-                className="mt-4 flex items-center gap-1 text-[13px] text-[#6b7280]"
-                onClick={() => setOpen(open === p.id ? null : p.id)}
-              >
-                Все возможности <Ico name="chev" className="h-4 w-4" />
-              </button>
-              {open === p.id && (
-                <ul className="mt-2 space-y-1 text-[12.5px] text-[#4b5563]">
-                  {[...p.visibility, ...p.content, ...p.agents, ...p.team].map((x) => (
-                    <li key={x}>· {x}</li>
-                  ))}
-                </ul>
-              )}
             </div>
           );
         })}

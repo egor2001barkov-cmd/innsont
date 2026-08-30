@@ -744,217 +744,248 @@ html[data-theme="dark"] .agency-dark {
   background: #1a1511;
 }
 
-/* Tariff plates: enamel fill + machined metal bezel. Not glass, not neon. */
-.plan-plate {
-  --bezel-hi: #c9d19c;
-  --bezel-mid: #7c8b4c;
-  --bezel-lo: #4a5628;
-  --bezel-edge: #2a3316;
-  --plate-fill: #f1f2e4;
-  --plate-ink: #272e16;
-  --plate-mute: #5c6542;
-  position: relative;
+.ws-plan-period {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
-  color: var(--plate-ink);
-  border-radius: 16px;
-  padding: 7px;
-  background:
-    linear-gradient(
-      160deg,
-      var(--bezel-hi) 0%,
-      var(--bezel-mid) 36%,
-      var(--bezel-lo) 78%,
-      var(--bezel-edge) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--bezel-hi) 80%, white),
-    0 1px 0 var(--bezel-lo),
-    0 7px 0 var(--bezel-edge),
-    0 14px 24px rgba(40, 24, 8, 0.2);
-}
-
-.plan-plate--starter {
-  --bezel-hi: #c9d19c;
-  --bezel-mid: #7c8b4c;
-  --bezel-lo: #4a5628;
-  --bezel-edge: #2a3316;
-  --plate-fill: #f1f2e4;
-  --plate-ink: #272e16;
-  --plate-mute: #5c6542;
-}
-
-.plan-plate--basic {
-  --bezel-hi: #ecc09a;
-  --bezel-mid: #c45a22;
-  --bezel-lo: #8d3912;
-  --bezel-edge: #5a230e;
-  --plate-fill: #f8eadc;
-  --plate-ink: #3a1f12;
-  --plate-mute: #8a5738;
-}
-
-.plan-plate--growth {
-  --bezel-hi: #86b0b8;
-  --bezel-mid: #2a5b66;
-  --bezel-lo: #163840;
-  --bezel-edge: #0b2228;
-  --plate-fill: #e6eef0;
-  --plate-ink: #132428;
-  --plate-mute: #4a646a;
-}
-
-.plan-plate.is-featured {
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--bezel-hi) 85%, white),
-    0 1px 0 var(--bezel-lo),
-    0 10px 0 var(--bezel-edge),
-    0 18px 30px rgba(40, 24, 8, 0.26);
-}
-
-.plan-plate-face {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-  border-radius: 10px;
-  padding: 22px 20px 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 34%),
-    var(--plate-fill);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -2px 0 rgba(40, 24, 8, 0.06);
-}
-
-.plan-plate-face::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border-radius: 6px;
-  pointer-events: none;
-  border: 1px solid color-mix(in srgb, var(--bezel-mid) 26%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-}
-
-.plan-plate .text-muted {
-  color: var(--plate-mute);
-}
-
-.plan-plate .text-orange {
-  color: var(--bezel-lo);
-}
-
-.plan-plate h2,
-.plan-plate h3 {
-  color: var(--plate-ink);
-}
-
-.plan-plate-tag {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bezel-edge);
-  background: color-mix(in srgb, var(--bezel-hi) 55%, var(--plate-fill));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 1px 0 color-mix(in srgb, var(--bezel-lo) 40%, transparent);
-}
-
-.plan-plate-badge {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff8ee;
-  background: linear-gradient(180deg, var(--bezel-mid), var(--bezel-lo));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    0 2px 0 var(--bezel-edge);
-}
-
-.plan-plate-btn {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  gap: 8px;
-  margin-top: auto;
-  border-radius: 10px;
-  padding: 12px 18px;
+  gap: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.ws-plan-period button {
+  padding: 6px 2px 8px;
+  color: #6b7280;
+}
+
+.ws-plan-period button.is-on {
+  color: #111827;
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 #111827;
+}
+
+.ws-plan-off {
+  margin-left: 6px;
+  border-radius: 6px;
+  background: #dcfce7;
+  padding: 2px 7px;
+  font-size: 11px;
   font-weight: 700;
-  color: #fff8ee;
-  background: linear-gradient(180deg, var(--bezel-mid), var(--bezel-lo));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    0 3px 0 var(--bezel-edge);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  color: #166534;
 }
 
-.plan-plate-btn:hover {
-  filter: brightness(1.05);
+.ws-plan {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px 22px 18px;
+  color: #111827;
 }
 
-.plan-plate-btn:active {
-  transform: translateY(2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 1px 0 var(--bezel-edge);
+.ws-plan.is-popular {
+  border-color: #ea580c;
 }
 
-.plan-plate--compact {
-  padding: 5px;
-  border-radius: 12px;
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--bezel-hi) 75%, white),
-    0 1px 0 var(--bezel-lo),
-    0 4px 0 var(--bezel-edge),
-    0 8px 14px rgba(40, 24, 8, 0.16);
-}
-
-.plan-plate--compact .plan-plate-face {
-  padding: 10px 8px 9px;
+.ws-plan-name {
+  display: inline-flex;
+  align-items: center;
   border-radius: 8px;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.plan-plate--compact .plan-plate-face::before {
-  display: none;
+.ws-plan.is-popular .ws-plan-name {
+  background: #ea580c;
+  color: #fff;
 }
 
-.plan-plate--compact.is-featured {
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--bezel-hi) 75%, white),
-    0 1px 0 var(--bezel-lo),
-    0 5px 0 var(--bezel-edge),
-    0 10px 16px rgba(40, 24, 8, 0.2);
+.ws-plan-popular {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ea580c;
 }
 
-html[data-theme="dark"] .plan-plate--starter {
-  --plate-fill: #222618;
-  --plate-ink: #e7ead4;
-  --plate-mute: #9aa57a;
+.ws-plan-price {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  margin-top: 18px;
 }
 
-html[data-theme="dark"] .plan-plate--basic {
-  --plate-fill: #2a1c14;
-  --plate-ink: #f3e2d2;
-  --plate-mute: #c49a7a;
+.ws-plan-price b {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
 
-html[data-theme="dark"] .plan-plate--growth {
-  --plate-fill: #152226;
-  --plate-ink: #dce8ea;
-  --plate-mute: #87a0a6;
+.ws-plan-price span {
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.ws-plan-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ws-plan-btn:hover {
+  background: #f9fafb;
+}
+
+.ws-plan.is-popular .ws-plan-btn,
+.ws-plan-btn.is-fill {
+  border-color: #ea580c;
+  background: #ea580c;
+  color: #fff;
+}
+
+.ws-plan.is-popular .ws-plan-btn:hover,
+.ws-plan-btn.is-fill:hover {
+  background: #c2410c;
+  border-color: #c2410c;
+}
+
+.ws-plan-rows {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.ws-plan-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: 14px;
+}
+
+.ws-plan-row > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+}
+
+.ws-plan-row b {
+  font-weight: 600;
+  color: #111827;
+}
+
+.ws-plan-row svg {
+  color: #ea580c;
+}
+
+.ws-plan-plats {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.ws-plan-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.ws-plan--mini {
+  padding: 10px 10px 9px;
+  border-radius: 14px;
+}
+
+.ws-plan--mini .ws-plan-price {
+  margin-top: 8px;
+}
+
+.ws-plan--mini .ws-plan-price b {
+  font-size: 15px;
+}
+
+html[data-theme="dark"] .ws-plan-period,
+html[data-theme="dark"] .ws-plan-period button {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .ws-plan-period button.is-on {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+html[data-theme="dark"] .ws-plan {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+html[data-theme="dark"] .ws-plan.is-popular {
+  border-color: var(--orange);
+}
+
+html[data-theme="dark"] .ws-plan-name {
+  background: #2a2622;
+  color: var(--ink);
+}
+
+html[data-theme="dark"] .ws-plan.is-popular .ws-plan-name {
+  background: var(--orange);
+  color: #fff;
+}
+
+html[data-theme="dark"] .ws-plan-price span,
+html[data-theme="dark"] .ws-plan-more {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .ws-plan-row > span,
+html[data-theme="dark"] .ws-plan-plats {
+  color: #c4bdb4;
+}
+
+html[data-theme="dark"] .ws-plan-row b {
+  color: var(--ink);
+}
+
+html[data-theme="dark"] .ws-plan-rows {
+  border-top-color: var(--line);
+}
+
+html[data-theme="dark"] .ws-plan-btn {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+html[data-theme="dark"] .ws-plan.is-popular .ws-plan-btn,
+html[data-theme="dark"] .ws-plan-btn.is-fill {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
 }

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { formatRub, PLANS } from "@/lib/site";
 import { Icon, IndustryIcon } from "./Icons";
+import { Ico } from "./kabinet/icons";
 import { ReviewsCarousel } from "./ReviewsCarousel";
 
 export function HeroPlanStrip() {
@@ -10,23 +11,17 @@ export function HeroPlanStrip() {
       <p className="mb-2 text-center text-[11px] font-semibold text-muted">
         Подписка · год −10%
       </p>
-      <div className="grid grid-cols-3 gap-3 pb-2">
+      <div className="grid grid-cols-3 gap-2">
         {PLANS.map((p) => (
           <Link
             key={p.id}
             href={`/registratsiya?plan=${p.id}&period=annual`}
-            className={`plan-plate plan-plate--compact plan-plate--${p.id} min-w-0 text-left ${
-              p.popular ? "is-featured" : ""
-            }`}
+            className={`ws-plan ws-plan--mini min-w-0 text-left ${p.popular ? "is-popular" : ""}`}
           >
-            <span className="plan-plate-face">
-            <span className="block truncate text-[11px] font-extrabold leading-none">
-              {p.name}
-            </span>
-            <span className="mt-1.5 block text-[13px] font-extrabold leading-tight tracking-tight">
-              {formatRub(p.priceAnnual)}
-            </span>
-            <span className="mt-0.5 block text-[10px] font-semibold text-muted">/мес</span>
+            <span className="ws-plan-name">{p.name}</span>
+            <span className="ws-plan-price">
+              <b>{formatRub(p.priceAnnual)}</b>
+              <span>/мес</span>
             </span>
           </Link>
         ))}
@@ -585,64 +580,49 @@ export function HomeMidBanner() {
 }
 
 export function HomePlansTeaser() {
-  const plans = [
-    {
-      id: "starter" as const,
-      name: "Старт",
-      price: "4 990 ₽",
-      who: "Один человек, проверка гипотезы",
-      items: ["ChatGPT и GigaChat", "5 статей в месяц", "1 проект"],
-    },
-    {
-      id: "basic" as const,
-      name: "Базовый",
-      price: "11 990 ₽",
-      who: "Штатный SEO и контент",
-      items: ["Плюс YandexGPT и Gemini", "20 статей", "Регулярный трекинг"],
-      popular: true,
-    },
-    {
-      id: "growth" as const,
-      name: "Рост",
-      price: "24 990 ₽",
-      who: "Агентство или команда с очередью",
-      items: ["Центр действий и агенты", "Алиса, Claude, Perplexity", "API"],
-    },
-  ];
   return (
-    <section className="mx-auto max-w-[1200px] px-5 py-16">
-      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">Тарифы</p>
-      <h2 className="mt-3 text-4xl md:text-5xl">Три подписки. Год −10%</h2>
-      <p className="mt-4 max-w-2xl text-muted">
+    <section className="mx-auto max-w-[1100px] px-5 py-16">
+      <p className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-orange">
+        Тарифы
+      </p>
+      <h2 className="mt-3 text-center text-4xl md:text-5xl">Три подписки. Год −10%</h2>
+      <p className="mx-auto mt-4 max-w-2xl text-center text-muted">
         Платите в рублях, картой МИР или по счёту. 5 запросов бесплатно, потом
         выбираете тариф. Возврат 7 дней после оплаты.
       </p>
-      <div className="mt-10 grid gap-7 pb-3 md:grid-cols-3">
-        {plans.map((p) => (
-          <article
-            key={p.name}
-            className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""}`}
-          >
-            <div className="plan-plate-face">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-extrabold">{p.name}</h3>
-              {p.popular && (
-                <span className="plan-plate-badge">
-                  Чаще берут
-                </span>
-              )}
+      <div className="mt-10 grid gap-4 md:grid-cols-3">
+        {PLANS.map((p) => (
+          <article key={p.id} className={`ws-plan ${p.popular ? "is-popular" : ""}`}>
+            <div className="flex items-start justify-between gap-2">
+              <span className="ws-plan-name">{p.name}</span>
+              {p.popular && <span className="ws-plan-popular">Популярный</span>}
             </div>
-            <div className="mt-3 text-3xl font-extrabold tracking-tight">{p.price}</div>
-            <p className="text-sm font-bold text-muted">в месяц</p>
-            <p className="mt-3 text-sm font-semibold">{p.who}</p>
-            <ul className="mt-5 flex-1 space-y-2 text-sm font-semibold">
-              {p.items.map((it) => (
-                <li key={it}>{it}</li>
-              ))}
-            </ul>
-            <Link href="/tseny" className="plan-plate-btn mt-6">
-              Сравнить тарифы
+            <div className="ws-plan-price">
+              <b>{formatRub(p.priceMonthly)}</b>
+              <span>/мес</span>
+            </div>
+            <Link href="/tseny" className="ws-plan-btn">
+              Выбрать
             </Link>
+            <div className="ws-plan-rows">
+              <div className="ws-plan-row">
+                <span>
+                  <Ico name="chat" className="h-4 w-4" /> Промпты
+                </span>
+                <b>{p.limits.prompts}</b>
+              </div>
+              <div className="ws-plan-row">
+                <span>
+                  <Ico name="folder" className="h-4 w-4" /> Проекты
+                </span>
+                <b>{p.limits.projects}</b>
+              </div>
+              <div className="ws-plan-row">
+                <span>
+                  <Ico name="zap" className="h-4 w-4" /> Задачи
+                </span>
+                <b>{p.limits.actionItems ? "Да" : "Нет"}</b>
+              </div>
             </div>
           </article>
         ))}

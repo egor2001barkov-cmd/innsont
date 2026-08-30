@@ -95,35 +95,14 @@ export default function PricingPage() {
       <section className="mx-auto max-w-[1200px] px-5 pt-10">
         <Breadcrumbs path="/tseny" />
       </section>
-      <section className="mx-auto max-w-[1200px] px-5 py-6 text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">
-          Тарифы
-        </p>
-        <h1 className="mt-3 text-4xl md:text-6xl">Цены в рублях. Счёт, если нужно.</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
-          Старт, Базовый и Рост — сами в кабинете. Агентству — питч по клиентам
-          и корпоративный контур по договору.
+      <section className="mx-auto max-w-[1100px] px-5 py-10 text-center">
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">Тарифы INSONT</h1>
+        <p className="mx-auto mt-3 max-w-xl text-[16px] text-muted">
+          Выберите план, чтобы работать в кабинете. Рубли, счёт, 152-ФЗ.
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-[1100px] gap-7 px-5 pb-12 md:grid-cols-3">
-        {PLANS.map((p) => (
-          <div
-            key={p.id}
-            className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""} text-left`}
-          >
-            <div className="plan-plate-face">
-            <div className="plan-plate-tag">
-              {p.name} · {p.audience}
-            </div>
-            <h2 className="mt-3 text-xl font-extrabold">{p.job}</h2>
-            <p className="mt-2 text-sm font-semibold">{p.forWho}</p>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section className="mx-auto max-w-[1200px] px-5 pb-10">
+      <section className="mx-auto max-w-[1100px] px-5 pb-10">
         <PricingCards />
         <CompareTable />
       </section>

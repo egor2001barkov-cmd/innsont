@@ -4,32 +4,24 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PLANS, formatRub } from "@/lib/site";
 import { Icon } from "./Icons";
+import { Ico, PlatformDots } from "./kabinet/icons";
 
 export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) {
-  const [annual, setAnnual] = useState(true);
+  const [annual, setAnnual] = useState(false);
+  const [open, setOpen] = useState<string | null>(null);
 
   return (
     <div>
-      <div className="flex items-center justify-center gap-3 text-sm font-semibold">
-        <span className={!annual ? "font-bold" : "text-muted"}>Ежемесячно</span>
-        <button
-          type="button"
-          onClick={() => setAnnual((v) => !v)}
-          className={`relative h-7 w-12 rounded-full ${annual ? "bg-orange" : "bg-[#d9d0c3]"}`}
-          aria-label="Переключить период оплаты"
-        >
-          <span
-            className={`absolute top-0.5 h-6 w-6 rounded-full bg-white transition ${
-              annual ? "left-5" : "left-0.5"
-            }`}
-          />
+      <div className="ws-plan-period">
+        <button type="button" className={!annual ? "is-on" : ""} onClick={() => setAnnual(false)}>
+          Ежемесячно
         </button>
-        <span className={annual ? "font-bold" : "text-muted"}>
-          Год <span className="font-extrabold text-orange">−10%</span>
-        </span>
+        <button type="button" className={annual ? "is-on" : ""} onClick={() => setAnnual(true)}>
+          Год <span className="ws-plan-off">−10%</span>
+        </button>
       </div>
 
-      <div className="mt-8 grid gap-7 pb-3 lg:grid-cols-3">
+      <div className="mx-auto mt-8 grid max-w-5xl gap-4 lg:grid-cols-3">
         {PLANS.map((p) => {
           const price = annual ? p.priceAnnual : p.priceMonthly;
           const href =
@@ -37,49 +29,69 @@ export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) 
               ? `/oplata?plan=${p.id}&period=${annual ? "annual" : "monthly"}`
               : `/registratsiya?plan=${p.id}&period=${annual ? "annual" : "monthly"}`;
           return (
-            <article
-              key={p.id}
-              className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""}`}
-            >
-              <div className="plan-plate-face">
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="text-2xl font-extrabold tracking-tight">{p.name}</h3>
+            <article key={p.id} className={`ws-plan ${p.popular ? "is-popular" : ""}`}>
+              <div className="flex items-start justify-between gap-2">
+                <span className="ws-plan-name">{p.name}</span>
                 {p.popular && (
-                  <span className="plan-plate-badge">
-                    Чаще берут
+                  <span className="ws-plan-popular">
+                    <Ico name="spark" className="h-3.5 w-3.5" /> Популярный
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-sm font-bold text-orange">{p.audience}</p>
-              <p className="mt-1 text-[15px] font-bold">{p.job}</p>
-              <div className="mt-4 flex items-end gap-1">
-                <span className="text-4xl font-extrabold tracking-tight">
-                  {formatRub(price)}
-                </span>
-                <span className="mb-1 text-sm font-bold text-muted">/мес</span>
+              <div className="ws-plan-price">
+                <b>{formatRub(price)}</b>
+                <span>/мес</span>
               </div>
-              <p className="mt-1 text-xs font-semibold text-muted">
-                {annual
-                  ? `при оплате года · экономия ${formatRub(p.saveYear / 12)} /мес`
-                  : `месячная оплата · ${formatRub(p.priceMonthly)}`}
-              </p>
-              <p className="mt-3 text-sm font-medium leading-relaxed">{p.forWho}</p>
-              <p className="mt-2 text-sm font-medium leading-relaxed">{p.blurb}</p>
-              <Link href={href} className="plan-plate-btn mt-5">
-                {cta === "checkout" ? "Оформить" : "5 запросов бесплатно"}
+              <Link href={href} className="ws-plan-btn">
+                Выбрать
               </Link>
-              <Block title="Видимость" items={p.visibility} />
-              <Block title="Контент и SEO" items={p.content} />
-              <Block title="Агенты и автоматизация" items={p.agents} />
-              <Block title="Команда" items={p.team} />
-              <Block title="Не входит" items={p.notIncluded} muted />
+              <div className="ws-plan-rows">
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="chat" className="h-4 w-4" /> Промпты
+                  </span>
+                  <b>{p.limits.prompts}</b>
+                </div>
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="folder" className="h-4 w-4" /> Проекты
+                  </span>
+                  <b>{p.limits.projects}</b>
+                </div>
+                <div className="ws-plan-row">
+                  <span>
+                    <Ico name="zap" className="h-4 w-4" /> Задачи
+                  </span>
+                  <b>{p.limits.actionItems ? "Да" : "Нет"}</b>
+                </div>
+                <div className="ws-plan-plats mt-3">Площадки в тарифе</div>
+                <div className="mt-2">
+                  <PlatformDots />
+                </div>
+                <button
+                  type="button"
+                  className="ws-plan-more"
+                  onClick={() => setOpen(open === p.id ? null : p.id)}
+                >
+                  Все возможности <Ico name="chev" className="h-4 w-4" />
+                </button>
+                {open === p.id && (
+                  <ul className="mt-2 space-y-1 text-[13px] text-[#4b5563]">
+                    {[...p.visibility, ...p.content, ...p.agents, ...p.team].map((x) => (
+                      <li key={x}>· {x}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </article>
           );
         })}
       </div>
-      <p className="mt-6 text-center text-sm text-muted">
-        Рубли, счёт, 152-ФЗ. Холдингу и агентской сети — корпоративный контур ниже.
+      <p className="mt-8 text-center text-sm text-orange">
+        Нужно больше?{" "}
+        <Link href="/demo" className="font-medium underline-offset-2 hover:underline">
+          Написать в продажи
+        </Link>
       </p>
     </div>
   );
