@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Onest } from "next/font/google";
+import { Michroma, Onest } from "next/font/google";
 import { SiteChrome } from "@/components/SiteChrome";
 import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE } from "@/lib/site";
@@ -9,6 +9,13 @@ import "./globals.css";
 const sans = Onest({
   variable: "--font-sans",
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  display: "swap",
+});
+
+const brand = Michroma({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -79,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ru"
       data-theme="light"
       suppressHydrationWarning
-      className={`${sans.variable} h-full antialiased`}
+      className={`${sans.variable} ${brand.variable} h-full antialiased`}
     >
       <body className="flex min-h-full min-w-0 max-w-full flex-col overflow-x-clip bg-bg text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />

@@ -41,7 +41,7 @@ html[data-theme="dark"] {
   --font-sans: var(--font-sans);
   --font-serif: var(--font-sans);
   --font-display: var(--font-sans);
-  --font-brand: var(--font-sans);
+  --font-brand: var(--font-brand);
 }
 
 * {
@@ -50,7 +50,6 @@ html[data-theme="dark"] {
 
 html {
   --font-display: var(--font-sans);
-  --font-brand: var(--font-sans);
   scroll-behavior: auto;
   overflow-x: clip;
   max-width: 100%;
@@ -95,9 +94,9 @@ h3,
 }
 
 .wordmark {
-  font-family: var(--font-sans), Onest, system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-family: var(--font-brand), Michroma, "Eurostile", "Bank Gothic", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   line-height: 1;
 }
