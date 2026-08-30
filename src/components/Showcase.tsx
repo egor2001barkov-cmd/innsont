@@ -598,7 +598,7 @@ export function HomePlansTeaser() {
               {p.popular && <span className="ws-plan-popular">Популярный</span>}
             </div>
             <div className="ws-plan-price">
-              <b>{formatRub(p.priceMonthly)}</b>
+              <b>{formatRub(p.priceAnnual)}</b>
               <span>/мес</span>
             </div>
             <Link href="/tseny" className="ws-plan-btn">

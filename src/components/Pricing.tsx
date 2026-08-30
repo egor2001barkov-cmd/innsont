@@ -7,7 +7,7 @@ import { Icon } from "./Icons";
 import { Ico, PlatformDots } from "./kabinet/icons";
 
 export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) {
-  const [annual, setAnnual] = useState(false);
+  const [annual, setAnnual] = useState(true);
   const [open, setOpen] = useState<string | null>(null);
 
   return (
