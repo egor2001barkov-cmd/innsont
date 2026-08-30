@@ -29,7 +29,7 @@ export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) 
         </span>
       </div>
 
-      <div className="mt-8 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-7 pb-3 lg:grid-cols-3">
         {PLANS.map((p) => {
           const price = annual ? p.priceAnnual : p.priceMonthly;
           const href =
@@ -39,12 +39,13 @@ export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) 
           return (
             <article
               key={p.id}
-              className={`card flex flex-col p-6 ${p.popular ? "ring-2 ring-orange" : ""}`}
+              className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""}`}
             >
+              <div className="plan-plate-face">
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-2xl font-extrabold tracking-tight">{p.name}</h3>
                 {p.popular && (
-                  <span className="rounded-full bg-orange px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-white">
+                  <span className="plan-plate-badge">
                     Чаще берут
                   </span>
                 )}
@@ -62,9 +63,9 @@ export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) 
                   ? `при оплате года · экономия ${formatRub(p.saveYear / 12)} /мес`
                   : `месячная оплата · ${formatRub(p.priceMonthly)}`}
               </p>
-              <p className="mt-3 text-sm font-medium leading-relaxed text-[#3a3632]">{p.forWho}</p>
-              <p className="mt-2 text-sm font-medium leading-relaxed text-[#3a3632]">{p.blurb}</p>
-              <Link href={href} className="btn-primary mt-5 w-full">
+              <p className="mt-3 text-sm font-medium leading-relaxed">{p.forWho}</p>
+              <p className="mt-2 text-sm font-medium leading-relaxed">{p.blurb}</p>
+              <Link href={href} className="plan-plate-btn mt-5">
                 {cta === "checkout" ? "Оформить" : "5 запросов бесплатно"}
               </Link>
               <Block title="Видимость" items={p.visibility} />
@@ -72,6 +73,7 @@ export function PricingCards({ cta = "trial" }: { cta?: "trial" | "checkout" }) 
               <Block title="Агенты и автоматизация" items={p.agents} />
               <Block title="Команда" items={p.team} />
               <Block title="Не входит" items={p.notIncluded} muted />
+              </div>
             </article>
           );
         })}

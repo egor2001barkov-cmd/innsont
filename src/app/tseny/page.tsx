@@ -106,19 +106,24 @@ export default function PricingPage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-[1100px] gap-4 px-5 pb-10 md:grid-cols-3">
+      <section className="mx-auto grid max-w-[1100px] gap-7 px-5 pb-12 md:grid-cols-3">
         {PLANS.map((p) => (
-          <div key={p.id} className="card p-5 text-left">
-            <div className="text-xs font-extrabold uppercase tracking-wide text-orange">
+          <div
+            key={p.id}
+            className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""} text-left`}
+          >
+            <div className="plan-plate-face">
+            <div className="plan-plate-tag">
               {p.name} · {p.audience}
             </div>
-            <h2 className="mt-2 text-xl font-extrabold">{p.job}</h2>
-            <p className="mt-2 text-sm font-semibold text-[#3a3632]">{p.forWho}</p>
+            <h2 className="mt-3 text-xl font-extrabold">{p.job}</h2>
+            <p className="mt-2 text-sm font-semibold">{p.forWho}</p>
+            </div>
           </div>
         ))}
       </section>
 
-      <section className="mx-auto max-w-[1200px] px-5 pb-8">
+      <section className="mx-auto max-w-[1200px] px-5 pb-10">
         <PricingCards />
         <CompareTable />
       </section>

@@ -10,17 +10,16 @@ export function HeroPlanStrip() {
       <p className="mb-2 text-center text-[11px] font-semibold text-muted">
         Подписка · год −10%
       </p>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-3 pb-2">
         {PLANS.map((p) => (
           <Link
             key={p.id}
             href={`/registratsiya?plan=${p.id}&period=annual`}
-            className={`min-w-0 overflow-hidden rounded-2xl border px-2 py-2.5 text-left ${
-              p.popular
-                ? "border-orange bg-orange-soft ring-1 ring-orange/25"
-                : "border-line bg-paper"
+            className={`plan-plate plan-plate--compact plan-plate--${p.id} min-w-0 text-left ${
+              p.popular ? "is-featured" : ""
             }`}
           >
+            <span className="plan-plate-face">
             <span className="block truncate text-[11px] font-extrabold leading-none">
               {p.name}
             </span>
@@ -28,6 +27,7 @@ export function HeroPlanStrip() {
               {formatRub(p.priceAnnual)}
             </span>
             <span className="mt-0.5 block text-[10px] font-semibold text-muted">/мес</span>
+            </span>
           </Link>
         ))}
       </div>
@@ -587,12 +587,14 @@ export function HomeMidBanner() {
 export function HomePlansTeaser() {
   const plans = [
     {
+      id: "starter" as const,
       name: "Старт",
       price: "4 990 ₽",
       who: "Один человек, проверка гипотезы",
       items: ["ChatGPT и GigaChat", "5 статей в месяц", "1 проект"],
     },
     {
+      id: "basic" as const,
       name: "Базовый",
       price: "11 990 ₽",
       who: "Штатный SEO и контент",
@@ -600,6 +602,7 @@ export function HomePlansTeaser() {
       popular: true,
     },
     {
+      id: "growth" as const,
       name: "Рост",
       price: "24 990 ₽",
       who: "Агентство или команда с очередью",
@@ -614,31 +617,33 @@ export function HomePlansTeaser() {
         Платите в рублях, картой МИР или по счёту. 5 запросов бесплатно, потом
         выбираете тариф. Возврат 7 дней после оплаты.
       </p>
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <div className="mt-10 grid gap-7 pb-3 md:grid-cols-3">
         {plans.map((p) => (
           <article
             key={p.name}
-            className={`card flex flex-col p-6 ${p.popular ? "ring-1 ring-orange/40" : ""}`}
+            className={`plan-plate plan-plate--${p.id} ${p.popular ? "is-featured" : ""}`}
           >
+            <div className="plan-plate-face">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-extrabold">{p.name}</h3>
               {p.popular && (
-                <span className="rounded-full bg-[#fff1e8] px-2 py-0.5 text-[11px] font-extrabold text-orange">
+                <span className="plan-plate-badge">
                   Чаще берут
                 </span>
               )}
             </div>
             <div className="mt-3 text-3xl font-extrabold tracking-tight">{p.price}</div>
             <p className="text-sm font-bold text-muted">в месяц</p>
-            <p className="mt-3 text-sm font-semibold text-[#3a3632]">{p.who}</p>
+            <p className="mt-3 text-sm font-semibold">{p.who}</p>
             <ul className="mt-5 flex-1 space-y-2 text-sm font-semibold">
               {p.items.map((it) => (
                 <li key={it}>{it}</li>
               ))}
             </ul>
-            <Link href="/tseny" className="btn-outline mt-6 w-full">
+            <Link href="/tseny" className="plan-plate-btn mt-6">
               Сравнить тарифы
             </Link>
+            </div>
           </article>
         ))}
       </div>
