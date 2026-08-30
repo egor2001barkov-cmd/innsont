@@ -53,6 +53,8 @@ html {
   scroll-behavior: auto;
   overflow-x: clip;
   max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -91,6 +93,7 @@ h3,
   letter-spacing: -0.04em;
   font-weight: 600;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .wordmark {
@@ -535,6 +538,28 @@ html[data-theme="dark"] .card {
 }
 
 @media (max-width: 640px) {
+  h1,
+  h2,
+  h3,
+  .serif {
+    text-wrap: pretty;
+  }
+
+  main {
+    padding-bottom: 5.5rem;
+  }
+
+  .ui-stage,
+  .card {
+    overflow: hidden;
+  }
+
+  .theme-dock {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    padding: 3px;
+  }
+
   .theme-dock button span {
     display: none;
   }
@@ -602,8 +627,14 @@ html[data-theme="dark"] .theme-dock button.is-on {
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 24px;
-  padding: 22px;
+  padding: 16px;
   box-shadow: 0 22px 50px rgba(40, 24, 8, 0.07);
+}
+
+@media (min-width: 640px) {
+  .ui-stage {
+    padding: 22px;
+  }
 }
 
 .ui-stage-good {

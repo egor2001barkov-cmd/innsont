@@ -533,12 +533,20 @@ export default function HomePage() {
 
       <section className="bg-[#111] text-white">
         <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-5 py-16 md:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">
               Цикл ИИ-поиска
             </p>
-            <h2 className="mt-3 text-4xl">
-              Отследить. Приоритизировать. Сделать. Измерить. Повторить.
+            <h2 className="mt-3 text-[clamp(1.55rem,6.6vw,2.25rem)] leading-[1.15] [text-wrap:pretty] [overflow-wrap:anywhere]">
+              Отследить.
+              <br />
+              Приоритизировать.
+              <br />
+              Сделать.
+              <br />
+              Измерить.
+              <br />
+              Повторить.
             </h2>
             <blockquote className="mt-8 text-lg leading-relaxed text-white/80">
               «Раньше смотрели позиции в одном сервисе, а «нас нет в GigaChat»

@@ -93,22 +93,22 @@ export function PageIssuesCard() {
   return (
     <div className="rounded-[28px] border border-[#ece6dc] bg-[#faf7f2] p-5 shadow-[0_24px_60px_rgba(40,24,8,0.08)] md:p-6">
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-lg font-semibold">Норд Ран 3</div>
+        <div className="min-w-0">
+          <div className="text-lg font-semibold leading-snug">Норд Ран 3</div>
           <div className="text-xs text-muted">Карточка товара</div>
         </div>
-        <div className="rounded-xl bg-white px-3 py-2 text-right">
+        <div className="shrink-0 rounded-xl bg-white px-3 py-2 text-right">
           <div className="text-[10px] font-bold uppercase tracking-wide text-muted">
             Доля цитат
           </div>
-          <div className="text-sm font-bold">
+          <div className="text-sm font-bold whitespace-nowrap">
             3,4% <span className="text-good">+1,8%</span>
           </div>
         </div>
       </div>
-      <div className="mt-4 flex items-center justify-between text-[12px] text-muted">
-        <span>4 проблемы бьют по видимости</span>
-        <span className="rounded-full border border-orange/30 bg-white px-2.5 py-0.5 font-semibold text-orange">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[12px] text-muted">
+        <span className="min-w-0 leading-snug">4 проблемы бьют по видимости</span>
+        <span className="shrink-0 rounded-full border border-orange/30 bg-white px-2.5 py-0.5 font-semibold whitespace-nowrap text-orange">
           Агент правит
         </span>
       </div>
@@ -116,18 +116,18 @@ export function PageIssuesCard() {
         {rows.map(([t, s, c]) => (
           <li
             key={t}
-            className="flex items-center justify-between gap-3 border-t border-[#ece6dc] pt-2.5 text-sm"
+            className="flex items-start justify-between gap-3 border-t border-[#ece6dc] pt-2.5 text-sm"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex min-w-0 items-start gap-2 leading-snug">
               <span
-                className={`h-2 w-2 rounded-full ${
+                className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
                   c === "good" ? "bg-good" : c === "orange" ? "bg-orange" : "bg-[#d9d0c3]"
                 }`}
               />
               {t}
             </span>
             <span
-              className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+              className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap ${
                 c === "good"
                   ? "bg-[#eaf6ee] text-good"
                   : c === "orange"

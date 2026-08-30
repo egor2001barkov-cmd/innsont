@@ -145,12 +145,12 @@ export function SeoActionMock() {
   ];
   return (
     <div ref={ref} className={`seo-play ui-stage ${on ? "is-on" : ""}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-[17px] font-semibold">Центр действий</div>
-          <p className="mt-0.5 text-[13px] text-muted">После прогона Яндекса, Google и Вебмастера</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <div className="text-[17px] font-semibold leading-snug">Центр действий</div>
+          <p className="mt-0.5 text-[13px] leading-snug text-muted">После прогона Яндекса, Google и Вебмастера</p>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#eaf6ee] px-2.5 py-1 text-[12px] font-medium text-good">
+        <span className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full bg-[#eaf6ee] px-2.5 py-1 text-[12px] font-medium text-good">
           <span className="seo-dot h-1.5 w-1.5 rounded-full bg-good" />
           Следующий прогон · 10:51
         </span>
@@ -179,30 +179,36 @@ export function SeoActionMock() {
         {rows.map((r, i) => (
           <li
             key={r.t}
-            className="seo-row flex flex-wrap items-center gap-3 rounded-[16px] bg-[var(--bg)] px-3 py-2.5"
+            className="seo-row rounded-[16px] bg-[var(--bg)] px-3 py-2.5"
             style={{ animationDelay: `${120 + i * 90}ms` }}
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-paper text-[#8a5a38]">
-              <Icon name={r.icon} className="h-5 w-5" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="text-sm font-semibold">{r.t}</div>
-              <div className="text-[12px] text-muted">{r.d}</div>
+            <div className="flex gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-paper text-[#8a5a38]">
+                <Icon name={r.icon} className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 text-sm font-semibold leading-snug">{r.t}</div>
+                  <span
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ${
+                      r.prio === "Высокий" ? "bg-[#eaf6ee] text-good" : "bg-[#fff4e5] text-[#c47a12]"
+                    }`}
+                  >
+                    {r.prio}
+                  </span>
+                </div>
+                <div className="mt-0.5 text-[12px] leading-snug text-muted">{r.d}</div>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span className="text-[12px] text-muted">{r.n} URL</span>
+                  <Link
+                    href={r.href}
+                    className="rounded-full border border-line bg-paper px-3 py-1 text-[12px] font-semibold"
+                  >
+                    Чинить
+                  </Link>
+                </div>
+              </div>
             </div>
-            <span className="text-[12px] text-muted">{r.n} URL</span>
-            <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
-                r.prio === "Высокий" ? "bg-[#eaf6ee] text-good" : "bg-[#fff4e5] text-[#c47a12]"
-              }`}
-            >
-              {r.prio}
-            </span>
-            <Link
-              href={r.href}
-              className="rounded-full border border-line bg-paper px-3 py-1 text-[12px] font-semibold"
-            >
-              Чинить
-            </Link>
           </li>
         ))}
       </ul>

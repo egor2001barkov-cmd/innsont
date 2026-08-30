@@ -45,29 +45,31 @@ export function StepBadge({ n, label }: { n: string; label: string }) {
 
 export function ActionCenterShowcase() {
   return (
-    <div className="card p-5 shadow-[0_20px_50px_rgba(40,24,8,0.08)] md:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-lg font-semibold">Центр действий</div>
-          <p className="text-xs text-muted">Рекомендации после последнего прогона видимости</p>
+    <div className="card min-w-0 overflow-hidden p-4 shadow-[0_20px_50px_rgba(40,24,8,0.08)] sm:p-5 md:p-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <div className="text-lg font-semibold leading-snug">Центр действий</div>
+          <p className="mt-0.5 text-xs leading-snug text-muted">
+            Рекомендации после последнего прогона видимости
+          </p>
         </div>
-        <span className="rounded-full bg-[#eaf6ee] px-3 py-1 text-xs font-medium text-good">
+        <span className="w-fit shrink-0 rounded-full bg-[#eaf6ee] px-3 py-1 text-xs font-medium leading-snug text-good">
           ● Следующий прогон · 10:51
         </span>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-y-4 rounded-2xl bg-[#f6f1e8] px-4 py-4 sm:grid-cols-4 sm:gap-y-0">
+      <div className="mt-4 grid grid-cols-2 gap-y-4 rounded-2xl bg-[#f6f1e8] px-3 py-4 sm:grid-cols-4 sm:gap-y-0 sm:px-4">
         {[
           ["Открыто", "287"],
           ["В работе", "42"],
           ["Закрыто", "156"],
           ["Прирост видимости", "+12,4%"],
         ].map(([k, v]) => (
-          <div key={k} className="flex flex-col items-center text-center">
-            <div className="h-8 max-w-[9.5rem] text-[10px] font-semibold uppercase leading-tight tracking-[0.12em] text-muted">
+          <div key={k} className="flex min-w-0 flex-col items-center px-1 text-center">
+            <div className="min-h-8 text-[10px] font-semibold uppercase leading-tight tracking-[0.08em] text-muted">
               {k}
             </div>
             <div
-              className={`font-sans text-[32px] font-bold leading-none tracking-[-0.03em] [font-variant-numeric:tabular-nums] whitespace-nowrap ${
+              className={`mt-1 font-sans text-[26px] font-bold leading-none tracking-[-0.03em] [font-variant-numeric:tabular-nums] sm:text-[32px] ${
                 v.startsWith("+") ? "text-good" : "text-ink"
               }`}
             >
@@ -111,31 +113,34 @@ export function ActionCenterShowcase() {
             href: "/seo/tekhnicheskiy-audit",
           },
         ].map((row) => (
-          <div
-            key={row.t}
-            className="flex flex-wrap items-center gap-3 rounded-2xl bg-[#fbf7f0] px-3 py-3"
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#8a5a38]">
-              <Icon name={row.icon} className="h-5 w-5" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="text-sm font-semibold">{row.t}</div>
-              <div className="text-xs text-muted">{row.d}</div>
+          <div key={row.t} className="rounded-2xl bg-[#fbf7f0] px-3 py-3">
+            <div className="flex gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#8a5a38]">
+                <Icon name={row.icon} className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 text-sm font-semibold leading-snug">{row.t}</div>
+                  <span
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ${
+                      row.prio === "Высокий" ? "bg-[#eaf6ee] text-good" : "bg-[#fff4e5] text-[#c47a12]"
+                    }`}
+                  >
+                    {row.prio}
+                  </span>
+                </div>
+                <div className="mt-0.5 text-xs leading-snug text-muted">{row.d}</div>
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-muted">{row.n} задач</span>
+                  <Link
+                    href={row.href}
+                    className="rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold hover:border-orange"
+                  >
+                    Исправить →
+                  </Link>
+                </div>
+              </div>
             </div>
-            <span className="text-xs text-muted">{row.n} задач</span>
-            <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
-                row.prio === "Высокий" ? "bg-[#eaf6ee] text-good" : "bg-[#fff4e5] text-[#c47a12]"
-              }`}
-            >
-              {row.prio}
-            </span>
-            <Link
-              href={row.href}
-              className="rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold hover:border-orange"
-            >
-              Исправить →
-            </Link>
           </div>
         ))}
       </div>
@@ -145,21 +150,26 @@ export function ActionCenterShowcase() {
 
 export function ActTrio() {
   return (
-    <div className="grid items-stretch gap-4 lg:grid-cols-3">
-      <article className="card flex h-full flex-col p-5">
-        <div className="min-h-0 flex-1 rounded-2xl bg-[#f6f1e8] p-4">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <div className="font-semibold">Норд Ран 3</div>
+    <div className="grid min-w-0 items-stretch gap-4 lg:grid-cols-3">
+      <article className="card flex h-full min-w-0 flex-col p-4 sm:p-5">
+        <div className="min-h-0 min-w-0 flex-1 overflow-hidden rounded-2xl bg-[#f6f1e8] p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="font-semibold leading-snug">Норд Ран 3</div>
               <div className="text-xs text-muted">Карточка товара</div>
             </div>
-            <div className="rounded-full bg-white px-2 py-1 text-[10px] font-bold uppercase text-muted">
-              Доля цитат 3,4% <span className="text-good">+1,8%</span>
+            <div className="shrink-0 rounded-2xl bg-white px-2.5 py-1.5 text-right">
+              <div className="text-[10px] font-bold uppercase tracking-wide text-muted">
+                Доля цитат
+              </div>
+              <div className="text-sm font-bold whitespace-nowrap">
+                3,4% <span className="text-good">+1,8%</span>
+              </div>
             </div>
           </div>
-          <div className="mt-3 flex items-center justify-between text-[11px] text-muted">
-            <span>4 проблемы бьют по видимости</span>
-            <span className="rounded-full bg-[#fff1e8] px-2 py-0.5 font-semibold text-orange">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-muted">
+            <span className="min-w-0 leading-snug">4 проблемы бьют по видимости</span>
+            <span className="shrink-0 rounded-full bg-[#fff1e8] px-2 py-0.5 font-semibold whitespace-nowrap text-orange">
               Агент правит
             </span>
           </div>
@@ -170,10 +180,10 @@ export function ActTrio() {
               ["Ответ не в первом абзаце", "В очереди", "muted"],
               ["Сломана иерархия H1–H3", "В очереди", "muted"],
             ].map(([t, s, c]) => (
-              <li key={t} className="flex items-center justify-between gap-2">
-                <span>{t}</span>
+              <li key={t} className="flex items-start justify-between gap-3">
+                <span className="min-w-0 leading-snug">{t}</span>
                 <span
-                  className={`rounded-full px-2 py-0.5 text-[11px] ${
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] whitespace-nowrap ${
                     c === "good"
                       ? "bg-[#eaf6ee] text-good"
                       : c === "orange"
@@ -197,7 +207,7 @@ export function ActTrio() {
         </p>
       </article>
 
-      <article className="card flex h-full flex-col p-5">
+      <article className="card flex h-full min-w-0 flex-col p-4 sm:p-5">
         <div className="min-h-0 flex-1 space-y-2">
           <div className="rounded-2xl bg-[#f6f1e8] px-3 py-2 text-xs text-muted">
             Wikipedia · Список беговых брендов
@@ -232,7 +242,7 @@ export function ActTrio() {
         </p>
       </article>
 
-      <article className="card flex h-full flex-col p-5">
+      <article className="card flex h-full min-w-0 flex-col p-4 sm:p-5">
         <div className="min-h-0 flex-1 rounded-2xl bg-[#111] p-4 font-mono text-[12px] leading-6 text-[#d7d0c6]">
           <div className="mb-2 flex items-center justify-between text-[11px] text-white/60">
             <span>/robots.txt</span>

@@ -25,13 +25,13 @@ export function MockActionQueue() {
         {rows.map((r) => (
           <li
             key={r.t}
-            className="flex items-center justify-between gap-3 border-b border-line py-2.5"
+            className="flex items-start justify-between gap-3 border-b border-line py-2.5"
           >
-            <div>
-              <div className="text-sm font-semibold">{r.t}</div>
-              <div className="text-[11px] text-muted">{r.d}</div>
+            <div className="min-w-0">
+              <div className="text-sm font-semibold leading-snug">{r.t}</div>
+              <div className="text-[11px] leading-snug text-muted">{r.d}</div>
             </div>
-            <span className="flex items-center gap-2">
+            <span className="flex shrink-0 items-center gap-2">
               <span className="text-xs text-muted">{r.n}</span>
               <span
                 className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
@@ -61,10 +61,10 @@ export function MockPageFix() {
         {rows.map(([t, s]) => (
           <li
             key={t}
-            className="flex items-center justify-between gap-3 border-b border-line py-2.5 text-sm"
+            className="flex items-start justify-between gap-3 border-b border-line py-2.5 text-sm"
           >
-            <span>{t}</span>
-            <span
+            <span className="min-w-0 leading-snug">{t}</span>
+            <span className="shrink-0 whitespace-nowrap">
               className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
                 s === "Сделали"
                   ? "bg-[#eaf6ee] text-good"
