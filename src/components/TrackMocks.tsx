@@ -64,8 +64,8 @@ export function MockPageFix() {
             className="flex items-start justify-between gap-3 border-b border-line py-2.5 text-sm"
           >
             <span className="min-w-0 leading-snug">{t}</span>
-            <span className="shrink-0 whitespace-nowrap">
-              className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+            <span
+              className={`shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold ${
                 s === "Сделали"
                   ? "bg-[#eaf6ee] text-good"
                   : s === "Правим"
