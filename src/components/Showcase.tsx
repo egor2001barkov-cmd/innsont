@@ -297,7 +297,7 @@ export function SeoBridge() {
           textAnchor="middle"
           fill="white"
           fontSize="22"
-          fontFamily="Manrope, sans-serif"
+          fontFamily="Onest, sans-serif"
           fontWeight="700"
         >
           INSONT

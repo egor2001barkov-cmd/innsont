@@ -1,27 +1,15 @@
 import type { Metadata } from "next";
-import { Exo_2, Manrope, Michroma } from "next/font/google";
+import { Onest } from "next/font/google";
 import { SiteChrome } from "@/components/SiteChrome";
 import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE } from "@/lib/site";
 import { THEME_BOOT } from "@/lib/theme";
 import "./globals.css";
 
-const sans = Manrope({
+const sans = Onest({
   variable: "--font-sans",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const display = Exo_2({
-  variable: "--font-display",
-  subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700", "800"],
-});
-
-const brand = Michroma({
-  variable: "--font-brand",
-  subsets: ["latin"],
-  weight: "400",
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -91,7 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ru"
       data-theme="light"
       suppressHydrationWarning
-      className={`${sans.variable} ${display.variable} ${brand.variable} h-full antialiased`}
+      className={`${sans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full min-w-0 max-w-full flex-col overflow-x-clip bg-bg text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
