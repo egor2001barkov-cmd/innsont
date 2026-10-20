@@ -1,7 +1,7 @@
 # Как выложить insont.ru
 
 Код: https://github.com/egor2001barkov-cmd/innsont  
-Сервер тот же, что у Elizon: `168.222.194.23` (Timeweb VPS).  
+Сервер тот же, что у Elizon: `151.248.113.174` (Timeweb VPS, alias `elizon` в ~/.ssh).  
 Elizon слушает `:3000`, INSONT — `:3001`. Caddy разводит домены.
 
 ## DNS в reg.ru
@@ -12,8 +12,8 @@ NS должны быть `ns1.reg.ru` и `ns2.reg.ru`.
 
 | Имя | Тип | Значение |
 |-----|-----|----------|
-| `@` | A | `168.222.194.23` |
-| `www` | A | `168.222.194.23` |
+| `@` | A | `151.248.113.174` |
+| `www` | A | `151.248.113.174` |
 
 Удалите:
 
@@ -28,7 +28,7 @@ TTL 300–3600. Обычно 5–30 минут, иногда до суток.
 ```bash
 dig +short insont.ru A
 dig +short www.insont.ru A
-# должно быть 168.222.194.23
+# должно быть 151.248.113.174
 ```
 
 Когда A-запись встанет, Caddy сам выпустит HTTPS (Let's Encrypt).
@@ -81,3 +81,23 @@ curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # ждём 200
 - Вход: rate-limit по IP (20/10 мин), блок почты после 5 неудачных попыток на 15 минут.
 - Одинаковое время ответа на существующую и несуществующую почту (защита от перебора).
 
+
+## Рабочая схема деплоя (с 20.10.2026)
+
+Каталог на сервере: `/opt/innsont` (git-клон репозитория).
+
+```bash
+ssh elizon
+cd /opt/innsont
+git pull
+docker compose build
+docker stop innsont-web-1 && docker compose up -d
+curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # 200
+```
+
+Файлы, живущие только на сервере (не в git): `.env` (NEXT_PUBLIC_SITE_URL, ключи YandexGPT/Wordstat)
+и `docker-compose.override.yml` (привязка порта к 127.0.0.1:3001). Проксирует Caddy — блоки
+`insont.ru` + `www.insont.ru` в `/etc/caddy/Caddyfile` (бэкап рядом, `.backup-*`).
+
+Важно: деплой Elizon не должен затирать `/etc/caddy/Caddyfile` без блока insont.ru — 19.10.2026
+это уже случилось (сайт лежал ~16 часов, восстановлен 20.10).
