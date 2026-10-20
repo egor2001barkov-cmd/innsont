@@ -17,7 +17,7 @@ type Row = {
 
 type Job = {
   id: string;
-  provider: "yandex" | "demo";
+  provider: "deepseek" | "yandex" | "demo";
   status: "работает" | "готово" | "прерван" | "ошибка";
   rows: Row[];
   error?: string;
@@ -124,7 +124,7 @@ export default function BulkPage() {
       <p className="text-sm text-[#6b7280]">
         Пакетная генерация статей из списка ключей {project.name}: CSV → статьи в библиотеке
         контента. Осталось по тарифу: {left} статей
-        {job?.provider === "demo" && " · демо-режим (без ключа YandexGPT тексты каркасные)"}.
+        {job?.provider === "demo" && " · демо-режим (без LLM-ключа тексты каркасные)"}.
       </p>
 
       <div className="ws-card mt-4 space-y-3 p-5">

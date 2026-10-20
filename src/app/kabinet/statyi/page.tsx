@@ -26,7 +26,7 @@ function Writer() {
   const [styleId, setStyleId] = useState("");
   const [region, setRegion] = useState("");
   const [planData, setPlanData] = useState<ArticlePlan | null>(null);
-  const [provider, setProvider] = useState<"yandex" | "demo" | "">("");
+  const [provider, setProvider] = useState<"deepseek" | "yandex" | "demo" | "">("");
   const [markdown, setMarkdown] = useState("");
   const [seoTitle, setSeoTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
@@ -81,7 +81,7 @@ function Writer() {
       return;
     }
     setBusy("plan");
-    const data = await call<{ plan: ArticlePlan; provider: "yandex" | "demo" }>(
+    const data = await call<{ plan: ArticlePlan; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/plan",
       requestBody()
     );
@@ -95,7 +95,7 @@ function Writer() {
   async function makeDraft() {
     if (!planData) return;
     setBusy("draft");
-    const data = await call<{ markdown: string; provider: "yandex" | "demo" }>(
+    const data = await call<{ markdown: string; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/draft",
       { ...requestBody(), plan: planData }
     );
@@ -112,7 +112,7 @@ function Writer() {
 
   async function polish() {
     setBusy("polish");
-    const data = await call<{ seoTitle: string; seoDescription: string; provider: "yandex" | "demo" }>(
+    const data = await call<{ seoTitle: string; seoDescription: string; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/polish",
       { ...requestBody(), markdown }
     );
@@ -182,7 +182,7 @@ function Writer() {
           Осталось {left} из {plan.limits.articles} статей · промпты {session.promptsUsed}/
           {plan.limits.prompts}
           {provider && (
-            <> · {provider === "yandex" ? "генерация: YandexGPT" : "демо-режим (без ключа YandexGPT)"}</>
+            <> · {provider === "deepseek" ? "генерация: DeepSeek" : provider === "yandex" ? "генерация: YandexGPT" : "демо-режим (без LLM-ключа)"}</>
           )}
         </p>
         <label className="block text-[13px] font-medium">

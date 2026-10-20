@@ -67,7 +67,7 @@ export type Article = {
     key?: string;
     seoTitle?: string;
     seoDescription?: string;
-    provider?: "yandex" | "demo" | "manual";
+    provider?: "deepseek" | "yandex" | "demo" | "manual";
     source?: "writer" | "bulk" | "manual";
     wpPostId?: number;
     wpUrl?: string;

@@ -12,5 +12,7 @@ services:
       - YANDEX_WORDSTAT_TOKEN=${YANDEX_WORDSTAT_TOKEN:-}
       - YANDEXGPT_API_KEY=${YANDEXGPT_API_KEY:-}
       - YANDEXGPT_FOLDER_ID=${YANDEXGPT_FOLDER_ID:-}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - DEEPSEEK_MODEL=${DEEPSEEK_MODEL:-deepseek-4.1-flash}
     volumes:
       - ./data:/app/data

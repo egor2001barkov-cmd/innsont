@@ -3,5 +3,15 @@
     "email": "egor.freeman@yandex.ru",
     "code": "EGORFR4903",
     "invites": []
+  },
+  "DSTEST4173": {
+    "email": "ds-test@example.com",
+    "code": "DSTEST4173",
+    "invites": []
+  },
+  "DS2TES9103": {
+    "email": "ds2-test@example.com",
+    "code": "DS2TES9103",
+    "invites": []
   }
 }

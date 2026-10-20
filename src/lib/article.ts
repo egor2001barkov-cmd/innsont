@@ -1,6 +1,8 @@
-import { yandexComplete, yandexConfigured } from "@/lib/llm/yandex";
+import { activeProvider, llmComplete } from "@/lib/llm";
 
-export type Provider = "yandex" | "demo";
+export type Provider = "deepseek" | "yandex" | "demo";
+
+export { activeProvider };
 
 export type ArticlePlan = {
   title: string; // H1 с ключом
@@ -20,10 +22,6 @@ export type ArticleContext = {
   audience?: string;
   rules?: string;
 };
-
-export function activeProvider(): Provider {
-  return yandexConfigured() ? "yandex" : "demo";
-}
 
 function cap(s: string | undefined, n: number) {
   return String(s || "").slice(0, n);
@@ -137,7 +135,7 @@ const PLAN_SYSTEM =
 export async function generatePlan(
   ctx: ArticleContext
 ): Promise<{ plan: ArticlePlan; provider: Provider }> {
-  if (activeProvider() !== "yandex") return { plan: demoPlan(ctx.key), provider: "demo" };
+  if (activeProvider() === "demo") return { plan: demoPlan(ctx.key), provider: "demo" };
   const user = `Составь план SEO-статьи для Рунета по запросу: «${cap(ctx.key, 120)}».
 ${brandLine(ctx)}. ${styleLine(ctx)}.
 
@@ -151,7 +149,7 @@ ${brandLine(ctx)}. ${styleLine(ctx)}.
 Ответ — только JSON вида:
 {"title":"…","intent":"…","intro":"…","sections":[{"h2":"…","hint":"…"}],"faq":[{"q":"…","a":"…"}]}`;
 
-  const res = await yandexComplete(
+  const res = await llmComplete(
     [
       { role: "system", text: PLAN_SYSTEM },
       { role: "user", text: user },
@@ -159,7 +157,7 @@ ${brandLine(ctx)}. ${styleLine(ctx)}.
     { temperature: 0.3, maxTokens: 1200 }
   );
   if (!res.ok) return { plan: demoPlan(ctx.key), provider: "demo" };
-  return { plan: sanitizePlan(extractJson(res.text), ctx.key), provider: "yandex" };
+  return { plan: sanitizePlan(extractJson(res.text), ctx.key), provider: activeProvider() };
 }
 
 const DRAFT_SYSTEM =
@@ -169,11 +167,11 @@ export async function generateDraft(
   plan: ArticlePlan,
   ctx: ArticleContext
 ): Promise<{ markdown: string; provider: Provider }> {
-  if (activeProvider() !== "yandex") return { markdown: demoDraft(plan, ctx), provider: "demo" };
+  if (activeProvider() === "demo") return { markdown: demoDraft(plan, ctx), provider: "demo" };
 
   const parts: string[] = [];
   // вступление
-  const lead = await yandexComplete(
+  const lead = await llmComplete(
     [
       { role: "system", text: DRAFT_SYSTEM },
       {
@@ -189,7 +187,7 @@ export async function generateDraft(
 
   // секции (по одной — держим контекст и лимит токенов)
   for (const s of plan.sections) {
-    const sec = await yandexComplete(
+    const sec = await llmComplete(
       [
         { role: "system", text: DRAFT_SYSTEM },
         {
@@ -206,7 +204,7 @@ export async function generateDraft(
 
   // FAQ
   if (plan.faq.length) {
-    const faq = await yandexComplete(
+    const faq = await llmComplete(
       [
         { role: "system", text: DRAFT_SYSTEM },
         {
@@ -221,7 +219,7 @@ export async function generateDraft(
     if (faq.ok) parts.push(faq.text.trim() + "\n");
   }
 
-  return { markdown: parts.join("\n"), provider: "yandex" };
+  return { markdown: parts.join("\n"), provider: activeProvider() };
 }
 
 export async function polishArticle(
@@ -233,14 +231,14 @@ export async function polishArticle(
   provider: Provider;
 }> {
   const fallbackTitle = cap(ctx.key, 70);
-  if (activeProvider() !== "yandex") {
+  if (activeProvider() === "demo") {
     return {
       seoTitle: fallbackTitle,
       seoDescription: cap(`Как выбрать: ${ctx.key}. Короткий ответ, таблица сравнения и FAQ. ${cap(ctx.brand, 40)}.`, 160),
       provider: "demo",
     };
   }
-  const res = await yandexComplete(
+  const res = await llmComplete(
     [
       { role: "system", text: PLAN_SYSTEM },
       {
@@ -266,6 +264,6 @@ ${markdown.slice(0, 1500)}
   return {
     seoTitle: cap(typeof obj.seoTitle === "string" ? obj.seoTitle : "", 90) || fallbackTitle,
     seoDescription: cap(typeof obj.seoDescription === "string" ? obj.seoDescription : "", 200),
-    provider: "yandex",
+    provider: activeProvider(),
   };
 }

@@ -55,7 +55,8 @@ curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # ждём 200
 В `.env` рядом с `docker-compose.yml` (в контейнер пробрасываются `environment`):
 
 - `YANDEX_WORDSTAT_TOKEN` — сбор ключей (можно без него: работают подсказки)
-- `YANDEXGPT_API_KEY` и `YANDEXGPT_FOLDER_ID` — генерация статей.
+- `DEEPSEEK_API_KEY` (+ `DEEPSEEK_MODEL`, по умолчанию `deepseek-4.1-flash`) — основной LLM;
+- `YANDEXGPT_API_KEY` и `YANDEXGPT_FOLDER_ID` — резервный LLM.
   Получить: console.yandex.cloud → выбрать каталог → скопировать Folder ID →
   Сервисные аккаунты → создать → API-ключ. Без ключей кабинет работает,
   но статьи генерируются в demo-режиме (каркасные шаблоны).

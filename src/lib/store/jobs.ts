@@ -28,7 +28,7 @@ export type BulkJob = {
   accountId: string;
   projectId: string;
   createdAt: string;
-  provider: "yandex" | "demo";
+  provider: "deepseek" | "yandex" | "demo";
   status: "работает" | "готово" | "прерван" | "ошибка";
   rows: BulkRow[];
   error?: string;
@@ -124,7 +124,7 @@ async function runJob(job: BulkJob) {
       try {
         // план: быстро — по одной строке без отдельного LLM-вызова на структуру
         let plan: ArticlePlan;
-        if (activeProvider() === "yandex") {
+        if (activeProvider() !== "demo") {
           const p = await generatePlan(ctx);
           plan = p.plan;
           const spendPlan = trySpend(acc, "prompt");
