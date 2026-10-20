@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Runtime-данные кабинета: живут только на сервере, не в git
+/data/referrals.json
