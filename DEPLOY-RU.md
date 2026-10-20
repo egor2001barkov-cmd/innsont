@@ -102,3 +102,14 @@ curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # 200
 
 Важно: деплой Elizon не должен затирать `/etc/caddy/Caddyfile` без блока insont.ru — 19.10.2026
 это уже случилось (сайт лежал ~16 часов, восстановлен 20.10).
+
+## Права на каталог данных (один раз после клонирования)
+
+Контейнер работает от uid 1001 (nextjs), каталог данных — от root после git clone:
+
+```bash
+ssh elizon "chown -R 1001:65533 /opt/innsont/data"
+```
+
+Иначе регистрация/вход падают с 500 (нет прав на запись account.json). Проверка:
+`curl -s -o /dev/null -w "%{http_code}" -X POST https://insont.ru/api/auth/register ...` → 200/409.
