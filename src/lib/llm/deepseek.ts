@@ -5,9 +5,11 @@
  * .env:
  *   DEEPSEEK_API_KEY — ключ платформы (обязателен для включения)
  *   DEEPSEEK_MODEL   — по умолчанию deepseek-4.1-flash
+ *
+ * Эндпоинт зафиксирован (SSRF-защита: адрес из env в fetch не подставляется).
+ * Шлюз-реселлеров (например, Рег.облако) добавляем вторым литералом + переключателем env.
  */
 
-/** Эндпоинт зафиксирован: адрес из env не принимается (SSRF), реселлеров добавим по мере надобности. */
 const API_URL = "https://api.deepseek.com/chat/completions";
 
 export type ChatMessage = { role: "system" | "user" | "assistant"; text: string };
@@ -21,10 +23,10 @@ export async function deepseekComplete(
   opts: { temperature?: number; maxTokens?: number; timeoutMs?: number } = {}
 ): Promise<{ ok: true; text: string } | { ok: false; error: string }> {
   const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) return { ok: false, error: "DeepSeek не настроен" };
+  if (!apiKey) return { ok: false, error: "LLM-провайдер не настроен" };
   const model = process.env.DEEPSEEK_MODEL || "deepseek-4.1-flash";
 
-  let lastError = "DeepSeek недоступен";
+  let lastError = "LLM-провайдер недоступен";
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt > 0) await new Promise((r) => setTimeout(r, 3000 * attempt));
     try {
@@ -46,18 +48,18 @@ export async function deepseekComplete(
       });
       clearTimeout(timer);
       if (res.status === 429 || res.status >= 500) {
-        lastError = `DeepSeek: HTTP ${res.status}`;
+        lastError = `LLM: HTTP ${res.status}`;
         continue;
       }
       if (!res.ok) {
         const detail = await res.text().catch(() => "");
-        return { ok: false, error: `DeepSeek: HTTP ${res.status} ${detail.slice(0, 200)}` };
+        return { ok: false, error: `LLM: HTTP ${res.status} ${detail.slice(0, 200)}` };
       }
       const data = (await res.json()) as {
         choices?: { message?: { content?: string } }[];
       };
       const text = data.choices?.[0]?.message?.content;
-      if (!text) return { ok: false, error: "DeepSeek: пустой ответ" };
+      if (!text) return { ok: false, error: "LLM: пустой ответ" };
       return { ok: true, text };
     } catch (e) {
       lastError = e instanceof Error ? e.message : "сетевая ошибка";

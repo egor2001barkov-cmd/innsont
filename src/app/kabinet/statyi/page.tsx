@@ -182,7 +182,7 @@ function Writer() {
           Осталось {left} из {plan.limits.articles} статей · промпты {session.promptsUsed}/
           {plan.limits.prompts}
           {provider && (
-            <> · {provider === "deepseek" ? "генерация: DeepSeek" : provider === "yandex" ? "генерация: YandexGPT" : "демо-режим (без LLM-ключа)"}</>
+            <> · {provider === "demo" ? "демо-режим (без ключа ИИ)" : "генерация: ИИ"}</>
           )}
         </p>
         <label className="block text-[13px] font-medium">

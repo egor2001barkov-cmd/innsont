@@ -186,7 +186,7 @@ export default function ContentLibrary() {
             <h2 className="text-lg font-semibold">{open.title}</h2>
             <p className="mt-1 text-sm text-[#6b7280]">
               {open.type} · {open.status} · {open.words} слов
-              {open.meta?.provider === "deepseek" && " · DeepSeek"}{open.meta?.provider === "yandex" && " · YandexGPT"}{open.meta?.provider === "demo" && " · демо-генерация"}
+              {open.meta?.provider === "demo" && " · демо-генерация"}
             </p>
             {err && <p className="mt-2 text-[13px] text-[#b91c1c]">{err}</p>}
             <textarea
