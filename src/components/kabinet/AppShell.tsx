@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { formatRub } from "@/lib/site";
 import { clearSession, isDevAccount, loadSession, planForSession, saveSession, type Session } from "@/lib/session";
+import { apiLogout, apiMe, migrateLocalContentOnce } from "@/lib/client-auth";
 import {
   hasOnboardedProject,
   hostOf,
@@ -31,11 +32,14 @@ const GEO = [
 
 const SEO_TOP = [
   { href: "/kabinet/kluchi", label: "Ключи", icon: "key" },
+  { href: "/kabinet/konkurenty", label: "Конкуренты", icon: "chart" },
   { href: "/kabinet/audit", label: "Аудит сайта", icon: "search" },
+  { href: "/kabinet/integratsii", label: "Интеграции", icon: "chart" },
 ];
 const SEO_NEW = [
   { href: "/kabinet/strategiya", label: "Стратегия", icon: "map" },
   { href: "/kabinet/statyi", label: "Создание контента", icon: "edit" },
+  { href: "/kabinet/bulk", label: "Пакетная генерация", icon: "spark" },
   { href: "/kabinet/chat", label: "Чат", icon: "chat" },
 ];
 const SEO_OLD = [
@@ -66,8 +70,11 @@ const TITLES: Record<string, string> = {
   "/kabinet/kluchi": "Ключи",
   "/kabinet/onboarding": "Новый проект",
   "/kabinet/audit": "Аудит сайта",
+  "/kabinet/konkurenty": "Конкуренты",
+  "/kabinet/integratsii": "Интеграции",
   "/kabinet/strategiya": "Стратегия",
   "/kabinet/statyi": "Создание контента",
+  "/kabinet/bulk": "Пакетная генерация",
   "/kabinet/chat": "Чат",
   "/kabinet/optimizatsiya": "Оптимизация",
   "/kabinet/pereupakovka": "Переупаковка",
@@ -123,6 +130,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [payOpen, setPayOpen] = useState(false);
   const [q, setQ] = useState("");
   const [toast, setToast] = useState("");
+
+  useEffect(() => {
+    // Один раз на монтирование: сверяем локальную сессию с серверной cookie-сессией.
+    void (async () => {
+      await migrateLocalContentOnce();
+      const local = loadSession();
+      if (!local) return;
+      const server = await apiMe();
+      if (!server) {
+        clearSession();
+        router.replace("/vhod");
+      }
+    })();
+  }, [router]);
 
   useEffect(() => {
     const sync = () => {
@@ -402,6 +423,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <button
               className="block w-full px-3 py-1.5 text-left text-[#b91c1c] hover:bg-[#fef2f2]"
               onClick={() => {
+                void apiLogout();
                 clearSession();
                 router.push("/");
               }}

@@ -21,15 +21,30 @@ export default function BlogIndex() {
         Разборы данных, плейбуки и исследования для команд, которые хотят
         попадать в ответы, а не только в выдачу.
       </p>
-      <ul className="mt-10 max-w-[720px] border-t border-line">
+      <ul className="mt-10 border-t border-line">
         {POSTS.map((p) => (
           <li key={p.slug} className="border-b border-line py-6">
             <Link href={`/blog/${p.slug}`} className="group block">
-              <div className="text-sm text-muted">
-                {p.tag} · {p.date} · {p.read}
+              <div className="flex flex-col gap-4 sm:flex-row">
+                {p.cover && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={p.cover}
+                    alt={`Обложка: ${p.title}`}
+                    width={280}
+                    height={147}
+                    loading="lazy"
+                    className="w-full rounded-xl border border-line sm:w-[280px] shrink-0"
+                  />
+                )}
+                <div className="min-w-0">
+                  <div className="text-sm text-muted">
+                    {p.tag} · {p.date} · {p.read}
+                  </div>
+                  <h2 className="mt-1 text-xl leading-snug group-hover:underline">{p.title}</h2>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted">{p.excerpt}</p>
+                </div>
               </div>
-              <h2 className="mt-1 text-xl leading-snug group-hover:underline">{p.title}</h2>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted">{p.excerpt}</p>
             </Link>
           </li>
         ))}

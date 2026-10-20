@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SeeAlso } from "@/components/SeeAlso";
 import { PageAdvantages } from "@/components/Advantages";
 import { SITE } from "@/lib/site";
+import { mdToHtmlBody } from "@/lib/markdown";
 import type { Metadata } from "next";
 
 const CUSTOM_SLUGS = new Set(["issledovanie-ii-vidimosti-rf"]);
@@ -35,6 +36,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
       locale: "ru_RU",
+      images: post.cover ? [{ url: `${SITE.url}${post.cover}`, width: 1200, height: 630 }] : undefined,
     },
   };
 }
@@ -55,9 +57,11 @@ export default async function PostPage({
           "@type": "Article",
           headline: post.title,
           datePublished: post.date,
+          dateModified: post.date,
           author: { "@type": "Person", name: post.author },
           publisher: { "@type": "Organization", name: SITE.name },
           description: post.description,
+          ...(post.cover ? { image: [`${SITE.url}${post.cover}`] } : {}),
         }}
       />
       <Breadcrumbs path={`/blog/${post.slug}`} lastName={post.title} />
@@ -69,11 +73,17 @@ export default async function PostPage({
         {post.author} · {post.date} · {post.read}
       </p>
       <p className="mt-6 text-lg text-[#3a3632]">{post.excerpt}</p>
-      <div className="prose-ru mt-8">
-        {post.body.map((p) => (
-          <p key={p.slice(0, 24)}>{p}</p>
-        ))}
-      </div>
+      {post.cover && (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={post.cover}
+          alt={`Обложка: ${post.title}`}
+          width={1200}
+          height={630}
+          className="mt-6 w-full rounded-2xl"
+        />
+      )}
+      <div className="prose-ru mt-8" dangerouslySetInnerHTML={{ __html: mdToHtmlBody(post.body) }} />
       <PageAdvantages path={`/blog/${post.slug}`} />
       <SeeAlso
         links={[

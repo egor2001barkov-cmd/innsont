@@ -1,171 +1,157 @@
 "use client";
 
-import { useState } from "react";
-import { Donut, HBars } from "@/components/kabinet/Charts";
-import { ColumnChart, LineChart } from "@/components/kabinet/WsChart";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { LineChart } from "@/components/kabinet/WsChart";
+import { HBars } from "@/components/kabinet/Charts";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
-import { geoFor } from "@/lib/workspace";
-import { PERIODS, statsForPeriod, type Period } from "@/lib/project-metrics";
+
+type Stats = {
+  metrikaConfigured: boolean;
+  webmasterConfigured: boolean;
+  metrika?: {
+    totals?: { visits: number; users: number; bounceRate: number; avgDurationSec: number };
+    byDay?: { date: string; visits: number }[];
+    sources?: { name: string; visits: number }[];
+    topPages?: { path: string; visits: number }[];
+    errors: string[];
+  };
+  webmaster?: { indexStats?: { date: string; indexed: number; crawled: number }[]; errors: string[] };
+};
 
 export default function VisibilityPage() {
   const { project, ready } = useWorkspace();
-  const [q, setQ] = useState("");
-  const [period, setPeriod] = useState<Period>("month");
+  const [stats, setStats] = useState<Stats | null>(null);
+
+  useEffect(() => {
+    if (!project) return;
+    void fetch(`/api/integrations/stats?projectId=${encodeURIComponent(project.id)}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then(setStats)
+      .catch(() => undefined);
+  }, [project?.id]);
+
   if (!ready || !project) return null;
-  const geo = geoFor(project);
-  const stats = statsForPeriod(project, period);
-  const rows = geo.prompts.filter((p) => p.q.includes(q.toLowerCase()));
-  const platforms = ["Яндекс", "Google", "Bing"];
-  const periodLabel = PERIODS.find((p) => p.id === period)!.label.toLowerCase();
+
+  const m = stats?.metrika;
+  const wm = stats?.webmaster;
+  const hasM = stats?.metrikaConfigured && m?.totals;
+  const hasW = stats?.webmasterConfigured && wm?.indexStats?.length;
+  const noData = !hasM && !hasW;
+
+  const cards = hasM
+    ? [
+        { k: "Визиты · 30 дней", v: m!.totals!.visits.toLocaleString("ru-RU"), d: "Яндекс.Метрика" },
+        { k: "Посетители", v: m!.totals!.users.toLocaleString("ru-RU"), d: `${m!.totals!.bounceRate}% отказов` },
+        {
+          k: "Время на сайте",
+          v: `${Math.round(m!.totals!.avgDurationSec / 60)} мин`,
+          d: "в среднем за визит",
+        },
+        {
+          k: "В индексе",
+          v: hasW ? wm!.indexStats![wm!.indexStats!.length - 1].indexed.toLocaleString("ru-RU") : "—",
+          d: hasW ? "Вебмастер" : "Вебмастер не подключён",
+        },
+      ]
+    : [
+        { k: "Визиты · 30 дней", v: "—", d: "Метрика не подключена" },
+        { k: "Посетители", v: "—", d: "" },
+        { k: "Время на сайте", v: "—", d: "" },
+        { k: "В индексе", v: "—", d: hasW ? "" : "Вебмастер не подключён" },
+      ];
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-sm text-[#6b7280]">
-            {project.name}: доля ответов, где модели называют бренд. Сравнение с конкурентами по промптам.
-          </p>
-        </div>
-        <div className="inline-flex rounded-lg bg-[#f3f4f6] p-1 text-[13px] font-medium">
-          {PERIODS.map((p) => (
-            <button
-              key={p.id}
-              className={`rounded-md px-2.5 py-1.5 ${period === p.id ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
-              onClick={() => setPeriod(p.id)}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <p className="text-sm text-[#6b7280]">
+        {project.name}: реальные данные о трафике и индексации из ваших подключённых сервисов.
+        Выдуманных процентов здесь больше нет.
+      </p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat k="Видимость" v={`${stats.visibilityNow}%`} d={`${stats.visibilityDelta >= 0 ? "+" : ""}${stats.visibilityDelta} п.п. · ${periodLabel}`} />
-        <Stat k="Ответов с брендом" v={stats.answersNow.toLocaleString("ru-RU")} d={`+${stats.answersDelta} · ${periodLabel}`} />
-        <Stat k="Страниц-цитат" v={String(geo.pagesCited)} d={`своих ${geo.ownPages}`} />
-        <Stat
-          k="Тональность"
-          v={`${geo.sentiment.pos}%`}
-          d={`${geo.sentiment.neu}% нейтр. · ${geo.sentiment.neg}% нег.`}
-        />
+        {cards.map((c) => (
+          <div key={c.k} className="ws-card p-4">
+            <div className="text-[12px] font-medium text-[#6b7280]">{c.k}</div>
+            <div className="mt-1 text-[26px] font-bold tracking-tight">{c.v}</div>
+            <div className="text-[12px] text-[#9ca3af]">{c.d}</div>
+          </div>
+        ))}
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <div className="ws-card p-5">
-          <h2 className="text-[15px] font-semibold">Как часто бренд в ответах</h2>
-          <p className="mb-2 text-[13px] text-[#6b7280]">Доля ответов с брендом за {periodLabel}. Наведите курсор на точку.</p>
-          <LineChart
-            points={stats.labels.map((label, i) => ({ label, value: stats.visibility[i] }))}
-            color="#ea580c"
-            unit="%"
-          />
-        </div>
-        <div className="ws-card p-5">
-          <h2 className="text-sm font-semibold">Платформы</h2>
-          <p className="mb-3 text-[12px] text-[#9ca3af]">Откуда приходят упоминания</p>
-          <Donut items={geo.platforms} />
-        </div>
-      </div>
-
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="ws-card p-5">
-          <h2 className="text-sm font-semibold">Доля голоса</h2>
-          <p className="mb-4 text-[12px] text-[#9ca3af]">Вы и конкуренты в одних промптах</p>
-          <ColumnChart
-            points={geo.rivals.map((r) => ({ label: r.name, value: r.score }))}
-            color="#ea580c"
-            height={180}
-          />
-          <div className="mt-3">
-            <HBars items={geo.rivals.map((r) => ({ label: r.name, value: r.score, you: r.you }))} />
-          </div>
-        </div>
-        <div className="ws-card p-5">
-          <h2 className="text-sm font-semibold">Тональность упоминаний</h2>
-          <div className="mt-6 flex h-3 overflow-hidden rounded-full">
-            <div className="bg-[#16a34a]" style={{ width: `${geo.sentiment.pos}%` }} />
-            <div className="bg-[#d1d5db]" style={{ width: `${geo.sentiment.neu}%` }} />
-            <div className="bg-[#ef4444]" style={{ width: `${geo.sentiment.neg}%` }} />
-          </div>
-          <div className="mt-3 flex justify-between text-[12px] text-[#6b7280]">
-            <span>Позитив {geo.sentiment.pos}%</span>
-            <span>Нейтрал {geo.sentiment.neu}%</span>
-            <span>Негатив {geo.sentiment.neg}%</span>
-          </div>
-          <p className="mt-4 text-[13px] leading-relaxed text-[#4b5563]">
-            На {project.name} позитив держится за счёт сравнений с цифрами. Негатив — жалобы на сроки доставки,
-            их модели подхватывают с отзывов, не с вашего домена.
+      {noData && (
+        <div className="ws-card mt-4 border-dashed p-8 text-center">
+          <p className="text-[14px] font-medium">Данных пока нет</p>
+          <p className="mt-1 text-[13px] text-[#6b7280]">
+            Подключите Яндекс.Метрику (трафик, источники, поведенческие) и Яндекс.Вебмастер
+            (индексация) в разделе «Интеграции» — эта страница заполнится реальными цифрами.
           </p>
+          <Link href="/kabinet/integratsii" className="ws-btn ws-btn-primary mt-4">
+            Подключить интеграции
+          </Link>
         </div>
-      </div>
+      )}
 
-      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f3f4f6] p-4">
-          <h2 className="text-sm font-semibold">Промпты в трекинге</h2>
-          <input
-            className="ws-input max-w-xs"
-            placeholder="Фильтр по промпту"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
+      {hasM && (
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <div className="ws-card p-5">
+            <h2 className="text-[15px] font-semibold">Визиты по дням</h2>
+            <p className="mt-1 text-[13px] text-[#6b7280]">Метрика, 30 дней</p>
+            <div className="mt-2">
+              <LineChart
+                points={(m!.byDay || []).map((d) => ({ label: d.date.slice(5), value: d.visits }))}
+                color="#ea580c"
+              />
+            </div>
+          </div>
+          <div className="ws-card p-5">
+            <h2 className="text-[15px] font-semibold">Источники</h2>
+            <p className="mb-3 text-[13px] text-[#6b7280]">Визиты за 30 дней</p>
+            <HBars
+              items={(m!.sources || []).slice(0, 7).map((s) => ({ label: s.name, value: s.visits, color: "#0f766e" }))}
+            />
+          </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="ws-table">
-            <thead>
-              <tr>
-                <th>Промпт</th>
-                <th>Частота</th>
-                <th>Ваша доля</th>
-                <th>Лидер</th>
-                {platforms.map((p) => (
-                  <th key={p}>{p}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => (
-                <tr key={r.q}>
-                  <td className="max-w-[260px] font-medium">{r.q}</td>
-                  <td>
-                    <span
-                      className={`rounded-md px-1.5 py-0.5 text-[11px] font-medium ${
-                        r.vol === "Высокая"
-                          ? "bg-[#fff7ed] text-[#c2410c]"
-                          : r.vol === "Средняя"
-                            ? "bg-[#f3f4f6] text-[#4b5563]"
-                            : "bg-[#f9fafb] text-[#9ca3af]"
-                      }`}
-                    >
-                      {r.vol}
-                    </span>
-                  </td>
-                  <td className="tabular-nums">{r.you}%</td>
-                  <td>{r.leader}</td>
-                  {platforms.map((p) => (
-                    <td key={p} className="text-center">
-                      {r.platforms[p] ? (
-                        <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#16a34a]" />
-                      ) : (
-                        <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#e5e7eb]" />
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-}
+      )}
 
-function Stat({ k, v, d }: { k: string; v: string; d: string }) {
-  return (
-    <div className="ws-card p-4">
-      <div className="text-[12px] font-medium uppercase tracking-wide text-[#9ca3af]">{k}</div>
-      <div className="mt-1 text-[26px] font-bold tracking-tight">{v}</div>
-      <div className="text-[12px] text-[#6b7280]">{d}</div>
+      {hasM && m!.topPages?.length ? (
+        <div className="ws-card mt-4 p-5">
+          <h2 className="text-[15px] font-semibold">Топ страниц по трафику</h2>
+          <ul className="mt-3 divide-y divide-[#f3f4f6] text-[13.5px]">
+            {m!.topPages.slice(0, 8).map((p) => (
+              <li key={p.path} className="flex items-center justify-between py-2">
+                <span className="truncate pr-3 font-mono text-[12.5px]">{p.path}</span>
+                <span className="shrink-0 tabular-nums text-[#6b7280]">{p.visits} визитов</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {hasW && (
+        <div className="ws-card mt-4 p-5">
+          <h2 className="text-[15px] font-semibold">Индексация (Вебмастер)</h2>
+          <p className="mt-1 text-[13px] text-[#6b7280]">Страниц в поиске по дням</p>
+          <div className="mt-2">
+            <LineChart
+              points={wm!.indexStats!.map((s) => ({ label: s.date.slice(5), value: s.indexed }))}
+              color="#1d4ed8"
+            />
+          </div>
+        </div>
+      )}
+
+      {m?.errors?.length ? (
+        <p className="mt-3 text-[12px] text-[#b45309]">Часть данных Метрики не получена: {m.errors.join("; ")}</p>
+      ) : null}
+
+      <div className="mt-5 flex flex-wrap gap-3">
+        <Link href="/kabinet/konkurenty" className="ws-btn ws-btn-outline">
+          Сравнить с конкурентами →
+        </Link>
+        <Link href="/kabinet/audit" className="ws-btn ws-btn-outline">
+          Полный аудит сайта →
+        </Link>
+      </div>
     </div>
   );
 }

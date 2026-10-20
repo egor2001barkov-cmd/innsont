@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#1d4ed8"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">07</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#1d4ed8" letter-spacing="3">АНАЛИТИКА</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">ROI ИИ-видимости</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/kak-izmerit-roi-ii-vidimosti</text>
+  <g><rect x="760" y="279.21989303664304" width="26" height="280.78010696335696" rx="6" fill="#e9e0d3"/><rect x="806" y="349.34152437141165" width="26" height="210.65847562858835" rx="6" fill="#e9e0d3"/><rect x="852" y="357.7390300889965" width="26" height="202.26096991100349" rx="6" fill="#e9e0d3"/><rect x="898" y="315.9435930335894" width="26" height="244.05640696641058" rx="6" fill="#e9e0d3"/><rect x="944" y="316.0789415438194" width="26" height="243.92105845618062" rx="6" fill="#e9e0d3"/><rect x="990" y="382.05793206812814" width="26" height="177.94206793187186" rx="6" fill="#e9e0d3"/><rect x="1036" y="436.2604071001988" width="26" height="123.73959289980121" rx="6" fill="#1d4ed8"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

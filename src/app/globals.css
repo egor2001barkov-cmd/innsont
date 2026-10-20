@@ -437,6 +437,67 @@ html[data-routing] .route-stage {
   margin: 2.25rem 0 0.75rem;
 }
 
+.prose-ru h3 {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.prose-ru ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  line-height: 1.7;
+  color: #3a3632;
+  list-style: disc;
+}
+
+.prose-ru ul li {
+  margin-bottom: 0.4rem;
+}
+
+.prose-ru blockquote {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #ea580c;
+  background: #faf6f0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #3a3632;
+}
+
+.prose-ru table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.925rem;
+}
+
+.prose-ru table th {
+  text-align: left;
+  font-weight: 600;
+  background: #f5efe7;
+}
+
+.prose-ru table th,
+.prose-ru table td {
+  border: 1px solid #e7ded2;
+  padding: 0.55rem 0.7rem;
+  vertical-align: top;
+}
+
+.prose-ru img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 1.25rem 0;
+}
+
+.prose-ru code {
+  background: #f3ede4;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}
+
 .table-wrap {
   display: block;
   width: 100%;

@@ -1,107 +1,119 @@
 "use client";
 
 import { useState } from "react";
-import { BarGroup } from "@/components/kabinet/Charts";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
-import { auditFor } from "@/lib/workspace";
+
+type Bot = {
+  name: string;
+  kind: "поиск" | "ИИ";
+  note: string;
+  robotsRule: string;
+  bannedInRobots: boolean;
+  siteResponds: boolean | null;
+  status: number | null;
+};
 
 export default function BotsPage() {
   const { project, ready } = useWorkspace();
-  const [bot, setBot] = useState("все");
+  const [bots, setBots] = useState<Bot[] | null>(null);
+  const [robotsFound, setRobotsFound] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
   if (!ready || !project) return null;
-  const data = auditFor(project);
-  const rows = bot === "все" ? data.bots : data.bots.filter((b) => b.bot === bot);
-  const hits = data.bots.reduce((s, b) => s + b.hits, 0);
-  const blocked = data.bots.reduce((s, b) => s + b.blocked, 0);
+
+  async function run() {
+    setBusy(true);
+    setErr("");
+    setBots(null);
+    const res = await fetch("/api/kabinet/bots", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ site: project!.url }),
+    });
+    const data = (await res.json().catch(() => ({}))) as { bots?: Bot[]; robotsFound?: boolean; error?: string };
+    setBusy(false);
+    if (!res.ok || !data.bots) {
+      setErr(data.error || "Не удалось проверить");
+      return;
+    }
+    setBots(data.bots);
+    setRobotsFound(data.robotsFound !== false);
+  }
+
+  const problems = (bots || []).filter(
+    (b) => (b.kind === "ИИ" && b.bannedInRobots) || b.siteResponds === false
+  );
 
   return (
-    <div className="mx-auto max-w-6xl">
-      <p className="text-sm text-[#6b7280]">
-        Кто обходит {project.url}: Яндекс, Google, Bing. Блоки в robots.txt режут обход.
-      </p>
-
-      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <div className="ws-card p-4">
-          <div className="text-[12px] font-medium uppercase tracking-wide text-[#9ca3af]">Заходов за 7 дней</div>
-          <div className="mt-1 text-[26px] font-bold">{hits.toLocaleString("ru-RU")}</div>
-        </div>
-        <div className="ws-card p-4">
-          <div className="text-[12px] font-medium uppercase tracking-wide text-[#9ca3af]">Заблокировано</div>
-          <div className="mt-1 text-[26px] font-bold text-[#b91c1c]">{blocked.toLocaleString("ru-RU")}</div>
-        </div>
-        <div className="ws-card p-4">
-          <div className="text-[12px] font-medium uppercase tracking-wide text-[#9ca3af]">Уникальных URL</div>
-          <div className="mt-1 text-[26px] font-bold">{data.crawled.toLocaleString("ru-RU")}</div>
-        </div>
+    <div className="mx-auto max-w-4xl">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <p className="text-sm text-[#6b7280]">
+          Реальная проверка: что robots.txt разрешает роботам {project.url} и отвечает ли сайт каждому
+          боту при живом заходе с его User-Agent.
+        </p>
+        <button className="ws-btn ws-btn-primary" onClick={() => void run()} disabled={busy}>
+          {busy ? "Заходим ботами…" : "Проверить ботов"}
+        </button>
       </div>
+      {err && <p className="mt-3 text-[13px] text-[#b91c1c]">{err}</p>}
+      {!robotsFound && bots && (
+        <p className="mt-3 rounded-lg bg-[#fff7ed] px-3 py-2 text-[13px] text-[#9a3412]">
+          robots.txt не найден — правила не заданы, боты ходят по всему сайту.
+        </p>
+      )}
 
-      <div className="ws-card mt-4 p-5">
-        <h2 className="text-sm font-semibold">Нагрузка ботов по дням</h2>
-        <p className="mb-2 text-[12px] text-[#9ca3af]">Яндекс · Google · Bing</p>
-        <BarGroup
-          series={data.botTrend.map((d) => ({
-            label: d.label,
-            values: [
-              { key: "yandex", value: d.yandex, color: "#fc3f1d" },
-              { key: "google", value: d.google, color: "#4285f4" },
-              { key: "bing", value: d.bing, color: "#00809d" },
-            ],
-          }))}
-        />
-        <div className="mt-2 flex flex-wrap gap-4 text-[12px] text-[#6b7280]">
-          <span className="flex items-center gap-1.5"><i className="h-2 w-2 rounded-full bg-[#fc3f1d]" /> Яндекс</span>
-          <span className="flex items-center gap-1.5"><i className="h-2 w-2 rounded-full bg-[#4285f4]" /> Google</span>
-          <span className="flex items-center gap-1.5"><i className="h-2 w-2 rounded-full bg-[#00809d]" /> Bing</span>
+      {problems.length > 0 && (
+        <div className="ws-card mt-4 border-[#fecaca] bg-[#fef2f2] p-4 text-[13px] text-[#b91c1c]">
+          {problems.map((b) => (
+            <p key={b.name}>
+              {b.bannedInRobots
+                ? `${b.name} закрыт в robots.txt — ${b.note} не увидит сайт.`
+                : `${b.name}: сайт не ответил на заход бота (код ${b.status ?? "нет ответа"}) — возможно, WAF режет роботов.`}
+            </p>
+          ))}
         </div>
-      </div>
+      )}
 
-      <div className="ws-card mt-4 min-w-0 overflow-x-auto">
-        <div className="flex items-center justify-between border-b border-[#f3f4f6] p-4">
-          <h2 className="text-sm font-semibold">Агенты</h2>
-          <select className="ws-input w-auto" value={bot} onChange={(e) => setBot(e.target.value)}>
-            <option value="все">Все боты</option>
-            {data.bots.map((b) => (
-              <option key={b.bot}>{b.bot}</option>
-            ))}
-          </select>
-        </div>
-        <table className="ws-table">
-          <thead>
-            <tr>
-              <th>Бот</th>
-              <th>Заходы</th>
-              <th>Блок</th>
-              <th>Страниц</th>
-              <th>Последний</th>
-              <th>Статус</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.bot}>
-                <td className="font-medium">{r.bot}</td>
-                <td className="tabular-nums">{r.hits.toLocaleString("ru-RU")}</td>
-                <td className="tabular-nums">{r.blocked}</td>
-                <td className="tabular-nums">{r.pages}</td>
-                <td className="text-[#6b7280]">{r.last}</td>
-                <td>
-                  <span
-                    className={`rounded-md px-1.5 py-0.5 text-[11px] font-medium ${
-                      r.status === "ок"
-                        ? "bg-[#dcfce7] text-[#166534]"
-                        : r.status === "блок"
-                          ? "bg-[#fee2e2] text-[#991b1b]"
-                          : "bg-[#f3f4f6] text-[#4b5563]"
-                    }`}
-                  >
-                    {r.status === "ок" ? "открыт" : r.status === "блок" ? "режет robots" : "редко"}
-                  </span>
-                </td>
+      {bots && (
+        <div className="ws-card mt-4 min-w-0 overflow-x-auto">
+          <table className="ws-table">
+            <thead>
+              <tr>
+                <th>Робот</th>
+                <th>Тип</th>
+                <th>robots.txt</th>
+                <th>Живой заход</th>
+                <th>Ответ</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {bots.map((b) => (
+                <tr key={b.name}>
+                  <td className="font-medium">
+                    {b.name}
+                    <span className="block text-[11px] font-normal text-[#9ca3af]">{b.note}</span>
+                  </td>
+                  <td>{b.kind === "ИИ" ? "ИИ-модель" : "Поисковик"}</td>
+                  <td className={b.bannedInRobots ? "text-[#b91c1c]" : "text-[#15803d]"}>{b.robotsRule}</td>
+                  <td
+                    className={
+                      b.siteResponds === true ? "text-[#15803d]" : b.siteResponds === false ? "text-[#b91c1c]" : ""
+                    }
+                  >
+                    {b.siteResponds === true ? "впускает" : b.siteResponds === false ? "не ответил" : "—"}
+                  </td>
+                  <td className="tabular-nums text-[#6b7280]">{b.status ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="border-t border-[#f3f4f6] p-3 text-[12px] text-[#9ca3af]">
+            «Живой заход» — сервер INSONT реально запросил главную страницу с User-Agent бота. AI-боты
+            (GPTBot, ClaudeBot, PerplexityBot) важны для попадания в ответы моделей.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

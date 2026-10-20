@@ -14,7 +14,7 @@ export const SITE = {
   description:
     "Продвигаем сайт в Яндексе, Google и ответах нейросетей. Чтобы вас находили, когда человек ищет услугу или спрашивает, кого выбрать.",
   /** Last real content edit. Sitemap lastmod — only this or a page date, never Date.now(). */
-  contentUpdated: "2026-08-26",
+  contentUpdated: "2026-10-20",
 };
 
 export const EXTRA_USER = 1490;

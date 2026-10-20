@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loadSession, saveSession, seedDemoSession } from "@/lib/session";
+import { useState } from "react";
+import { apiLogin } from "@/lib/client-auth";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
 
   return (
     <div className="mx-auto max-w-md px-5 py-16">
@@ -15,35 +18,33 @@ export default function LoginPage() {
       <p className="mt-2 text-muted">Кабинет видимости, статей и тарифа.</p>
       <form
         className="card mt-8 p-6"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
+          if (busy) return;
+          setErr("");
+          setBusy(true);
           const fd = new FormData(e.currentTarget);
-          const email = String(fd.get("email") || "");
-          const existing = loadSession();
-          if (existing && existing.email.toLowerCase() === email.toLowerCase()) {
-            saveSession({ ...existing, email });
-            router.push("/kabinet");
+          const res = await apiLogin(String(fd.get("email") || ""), String(fd.get("password") || ""));
+          setBusy(false);
+          if (!res.ok) {
+            setErr(res.error);
             return;
           }
-          saveSession(
-            seedDemoSession({
-              email,
-              name: email.split("@")[0] || "IN",
-            })
-          );
-          router.push("/kabinet/onboarding");
+          router.push("/kabinet");
         }}
       >
-        <input className="input" type="email" name="email" required placeholder="Почта" />
+        <input className="input" type="email" name="email" required placeholder="Почта" autoComplete="email" />
         <input
           className="input mt-3"
           type="password"
           name="password"
           required
           placeholder="Пароль"
+          autoComplete="current-password"
         />
-        <button className="btn-primary mt-5 w-full" type="submit">
-          Войти
+        {err && <p className="mt-3 text-sm text-[#b91c1c]">{err}</p>}
+        <button className="btn-primary mt-5 w-full" type="submit" disabled={busy}>
+          {busy ? "Проверяем…" : "Войти"}
         </button>
         <p className="mt-4 text-center text-sm text-muted">
           Нет аккаунта?{" "}

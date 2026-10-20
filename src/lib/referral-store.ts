@@ -1,9 +1,29 @@
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
-import type { ReferralAccount } from "@/lib/referral";
+import { accountIdFor } from "@/lib/auth";
+import type { ReferralAccount, ReferralInvite } from "@/lib/referral";
 import { makeRefCode } from "@/lib/referral";
 
 const FILE = join(process.cwd(), "data", "referrals.json");
+
+/** Приглашение считается подтверждённым, только если по нему реально создан аккаунт. */
+function emailHasAccount(email: string): boolean {
+  try {
+    const accPath = join(process.cwd(), "data", "accounts", accountIdFor(email), "account.json");
+    readFileSync(accPath, "utf8");
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function inviteConfirmed(invite: ReferralInvite): boolean {
+  return emailHasAccount(invite.email);
+}
+
+export function confirmedCount(acc: ReferralAccount): number {
+  return acc.invites.filter(inviteConfirmed).length;
+}
 
 function load(): Record<string, ReferralAccount> {
   try {
