@@ -34,6 +34,7 @@ const SEO_TOP = [
   { href: "/kabinet/kluchi", label: "Ключи", icon: "key" },
   { href: "/kabinet/konkurenty", label: "Конкуренты", icon: "chart" },
   { href: "/kabinet/audit", label: "Аудит сайта", icon: "search" },
+  { href: "/kabinet/otchet", label: "Недельный отчёт", icon: "chart" },
   { href: "/kabinet/integratsii", label: "Интеграции", icon: "chart" },
 ];
 const SEO_NEW = [
@@ -70,6 +71,7 @@ const TITLES: Record<string, string> = {
   "/kabinet/kluchi": "Ключи",
   "/kabinet/onboarding": "Новый проект",
   "/kabinet/audit": "Аудит сайта",
+  "/kabinet/otchet": "Недельный отчёт",
   "/kabinet/konkurenty": "Конкуренты",
   "/kabinet/integratsii": "Интеграции",
   "/kabinet/strategiya": "Стратегия",

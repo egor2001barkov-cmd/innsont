@@ -171,6 +171,7 @@ export default function KabinetHome() {
       <div className="mt-5 grid gap-3 md:grid-cols-3">
         {[
           { href: "/kabinet/audit", icon: "search", t: "Аудит сайта", d: lastAudit ? `Последний: ${lastAudit.google}/${lastAudit.yandex}` : "По методике seo-ru" },
+          { href: "/kabinet/otchet", icon: "chart", t: "Недельный отчёт", d: "28 дней против предыдущих 28" },
           { href: "/kabinet/konkurenty", icon: "chart", t: "Конкуренты", d: "Сравнение с 5 сайтами" },
           { href: "/kabinet/kluchi", icon: "key", t: "Ключи", d: "Wordstat и посадочные конкурентов" },
           { href: "/kabinet/statyi", icon: "edit", t: "Написать статью", d: `${Math.max(0, plan.limits.articles - session.articlesUsed)} из ${plan.limits.articles} осталось` },

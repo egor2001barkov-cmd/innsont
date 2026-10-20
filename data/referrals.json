@@ -13,5 +13,10 @@
     "email": "ds2-test@example.com",
     "code": "DS2TES9103",
     "invites": []
+  },
+  "WRTEST6463": {
+    "email": "wr-test@example.com",
+    "code": "WRTEST6463",
+    "invites": []
   }
 }
