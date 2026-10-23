@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#0e7490"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">34</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#0e7490" letter-spacing="3">НЕЙРОСЕТИ</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">Конкуренты в ответах</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/modeli-upominayut-konkurentov-chto-delat</text>
+  <g><rect x="760" y="395.446598456474" width="26" height="164.55340154352598" rx="6" fill="#e9e0d3"/><rect x="806" y="406.1804685299285" width="26" height="153.81953147007152" rx="6" fill="#e9e0d3"/><rect x="852" y="401.2644853058737" width="26" height="158.73551469412632" rx="6" fill="#e9e0d3"/><rect x="898" y="424.28846549242735" width="26" height="135.71153450757265" rx="6" fill="#e9e0d3"/><rect x="944" y="389.90848874324" width="26" height="170.09151125676" rx="6" fill="#e9e0d3"/><rect x="990" y="334.11004769383" width="26" height="225.88995230617002" rx="6" fill="#e9e0d3"/><rect x="1036" y="409.0222784632351" width="26" height="150.97772153676488" rx="6" fill="#0e7490"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

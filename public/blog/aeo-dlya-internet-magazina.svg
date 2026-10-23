@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#ea580c"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">32</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#ea580c" letter-spacing="3">ОТРАСЛИ</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">AEO магазина</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/aeo-dlya-internet-magazina</text>
+  <g><rect x="760" y="280.14392389100976" width="26" height="279.85607610899024" rx="6" fill="#e9e0d3"/><rect x="806" y="321.79938913555816" width="26" height="238.20061086444184" rx="6" fill="#e9e0d3"/><rect x="852" y="435.08557105320506" width="26" height="124.91442894679494" rx="6" fill="#e9e0d3"/><rect x="898" y="342.0420422591269" width="26" height="217.9579577408731" rx="6" fill="#e9e0d3"/><rect x="944" y="412.276079315925" width="26" height="147.72392068407498" rx="6" fill="#e9e0d3"/><rect x="990" y="322.8080461989157" width="26" height="237.1919538010843" rx="6" fill="#e9e0d3"/><rect x="1036" y="419.98395624919794" width="26" height="140.01604375080206" rx="6" fill="#ea580c"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

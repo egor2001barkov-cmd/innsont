@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#ea580c"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">26</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#ea580c" letter-spacing="3">ПОИСК</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">Вебмастер + GSC</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/kak-dobavit-sayt-v-vebmaster-poshagovo</text>
+  <g><rect x="760" y="377.0660897914786" width="26" height="182.9339102085214" rx="6" fill="#e9e0d3"/><rect x="806" y="414.9948670086451" width="26" height="145.0051329913549" rx="6" fill="#e9e0d3"/><rect x="852" y="387.8922710742336" width="26" height="172.10772892576642" rx="6" fill="#e9e0d3"/><rect x="898" y="389.39454475417733" width="26" height="170.60545524582267" rx="6" fill="#e9e0d3"/><rect x="944" y="311.49165313341655" width="26" height="248.50834686658345" rx="6" fill="#e9e0d3"/><rect x="990" y="325.8166062901728" width="26" height="234.18339370982721" rx="6" fill="#e9e0d3"/><rect x="1036" y="418.4698559658136" width="26" height="141.53014403418638" rx="6" fill="#ea580c"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

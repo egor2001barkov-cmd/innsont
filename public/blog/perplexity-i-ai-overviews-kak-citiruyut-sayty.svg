@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#b45309"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">33</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#b45309" letter-spacing="3">НЕЙРОСЕТИ</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">Perplexity и AIO</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/perplexity-i-ai-overviews-kak-citiruyut-sayty</text>
+  <g><polyline points="760,392.4322239472531 806,388.31968387402594 852,404.5542954732664 898,413.42652118671685 944,486.93220231635496 990,452.8145131841302 1036,478.31169675150886 1082,459.78918773215264 1128,532.4637438184582" fill="none" stroke="#b45309" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="1128" cy="532.4637438184582" r="12" fill="#b45309"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

@@ -38,9 +38,37 @@ import { post as iiKontent } from "./posts/ii-kontent-i-pravila-poiska";
 import { post as seoEcom } from "./posts/seo-internet-magazina-2026";
 import { post as brendovyeIks } from "./posts/brendovye-zaprosy-i-iks";
 import { post as vyborPodryadchika } from "./posts/kak-vybrat-seo-podryadchika";
+import { post as proverkaIndeksacii } from "./posts/kak-proverit-zakryat-li-sayt-ot-indeksacii";
+import { post as robotsPrimery } from "./posts/robots-txt-dlya-yandex-i-google-primery";
+import { post as dobavitVebmaster } from "./posts/kak-dobavit-sayt-v-vebmaster-poshagovo";
+import { post as cleanParam } from "./posts/clean-param-chto-eto-i-kak-napisat";
+import { post as uvelichitIndeksaciyu } from "./posts/kak-proverit-i-uvelichit-indeksaciyu-sayta";
+import { post as titleDesc } from "./posts/title-i-description-normy-dliny-primery";
+import { post as wordstatIstoriya } from "./posts/wordstat-istoriya-zaprosov-sezonost";
+import { post as gigachatOtvety } from "./posts/kak-popast-v-otvety-gigachat";
+import { post as aeoMagazin } from "./posts/aeo-dlya-internet-magazina";
+import { post as perplexityOverviews } from "./posts/perplexity-i-ai-overviews-kak-citiruyut-sayty";
+import { post as konkurentyVotvetah } from "./posts/modeli-upominayut-konkurentov-chto-delat";
+import { post as topvisorMegaindex } from "./posts/topvisor-ili-megaindex";
+import { post as keysSoVebmaster } from "./posts/keys-so-ili-vebmaster";
+import { post as insontAgentstvo } from "./posts/insont-ili-agentstvo";
 
 export const POSTS: Post[] = [
   // Свежие материалы вперёд
+  insontAgentstvo,
+  keysSoVebmaster,
+  topvisorMegaindex,
+  konkurentyVotvetah,
+  perplexityOverviews,
+  aeoMagazin,
+  gigachatOtvety,
+  wordstatIstoriya,
+  titleDesc,
+  cleanParam,
+  uvelichitIndeksaciyu,
+  dobavitVebmaster,
+  robotsPrimery,
+  proverkaIndeksacii,
   vyborPodryadchika,
   brendovyeIks,
   seoEcom,

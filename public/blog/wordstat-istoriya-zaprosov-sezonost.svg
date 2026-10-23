@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#ea580c"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">30</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#ea580c" letter-spacing="3">ПОИСК</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">История запросов</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/wordstat-istoriya-zaprosov-sezonost</text>
+  <g><polyline points="760,413.3738077036105 806,458.0217347275466 852,410.7512519028969 898,412.32755192462355 944,475.1212164568715 990,461.57675644382834 1036,501.273545818869 1082,461.6080354070291 1128,539.8897675438784" fill="none" stroke="#ea580c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="1128" cy="539.8897675438784" r="12" fill="#ea580c"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>

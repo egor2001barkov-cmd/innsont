@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#0f766e"/>
+  <text x="64" y="96" font-family="Georgia, serif" font-size="120" font-weight="700" fill="#efe6d8">24</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#0f766e" letter-spacing="3">ТЕХНИКА</text>
+  <text x="64" y="240" font-family="system-ui, sans-serif" font-size="58" font-weight="700" fill="#1f1b16">Проверка индексации</text>
+  <line x1="64" y1="286" x2="640" y2="286" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="345" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">INSONT · insont.ru/blog/kak-proverit-zakryat-li-sayt-ot-indeksacii</text>
+  <g><rect x="760" y="375.2574521547649" width="26" height="184.7425478452351" rx="6" fill="#e9e0d3"/><rect x="806" y="392.43261616444215" width="26" height="167.56738383555785" rx="6" fill="#e9e0d3"/><rect x="852" y="382.3058241826948" width="26" height="177.69417581730522" rx="6" fill="#e9e0d3"/><rect x="898" y="408.8824061350897" width="26" height="151.1175938649103" rx="6" fill="#e9e0d3"/><rect x="944" y="318.95671628532" width="26" height="241.04328371468" rx="6" fill="#e9e0d3"/><rect x="990" y="260.05952838109806" width="26" height="299.94047161890194" rx="6" fill="#e9e0d3"/><rect x="1036" y="293.3632533613127" width="26" height="266.6367466386873" rx="6" fill="#0f766e"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>
