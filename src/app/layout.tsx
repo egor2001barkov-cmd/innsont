@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Michroma, Onest } from "next/font/google";
+import { RouteProgress } from "@/components/RouteProgress";
 import { SiteChrome } from "@/components/SiteChrome";
 import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE } from "@/lib/site";
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full min-w-0 max-w-full flex-col overflow-x-clip bg-bg text-ink">
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+        <RouteProgress />
         <YandexMetrika />
         <SiteChrome>{children}</SiteChrome>
       </body>
