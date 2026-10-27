@@ -113,3 +113,13 @@ ssh elizon "chown -R 1001:65533 /opt/innsont/data"
 
 Иначе регистрация/вход падают с 500 (нет прав на запись account.json). Проверка:
 `curl -s -o /dev/null -w "%{http_code}" -X POST https://insont.ru/api/auth/register ...` → 200/409.
+
+## Диск и память VPS (1 ГБ RAM, инцидент 27.10.2026)
+
+Сборка на сервере (`docker compose build`) на 1-ГБ машине дважды роняла docker-демон
+(OOM) и заполняла диск до 98% сборочным кэшем в /var/lib/containerd. Правила:
+
+- После КАЖДОЙ сборки: `docker builder prune --all -f` и раз в месяц `docker system prune -a -f`.
+- Контроль: `df -h /` (держать <80%) и `docker system df`.
+- Сборки — вне часов пик; при 502 после сборки: `systemctl restart docker && cd /opt/innsont && docker compose up -d`.
+- Долгосрочно: собирать образ вне VPS (локально/CI) и доставлять через registry, либо поднять тариф VPS.
