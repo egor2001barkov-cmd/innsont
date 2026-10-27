@@ -128,42 +128,20 @@ export async function yandexSuggest(phrase: string): Promise<string[]> {
   return (data[1] as unknown[]).map(String).filter(Boolean);
 }
 
-function estimateCount(seed: string, phrase: string, index: number) {
-  const base = 4200 - index * 280 + seed.length * 40;
-  const bonus = phrase.split(" ").length === 2 ? 900 : 0;
-  return Math.max(80, Math.round((base + bonus) / 10) * 10);
-}
-
 export function suggestAsWordstat(seed: string, suggests: string[]): WordstatBundle {
+  // Без токена Wordstat реальных частотностей нет: отдаём только живые фразы
+  // из подсказок Яндекса — без выдуманных чисел, тренда и разбивки по регионам.
   const phrases = [seed, ...suggests.filter((s) => s.toLowerCase() !== seed.toLowerCase())].slice(0, 24);
-  const top = phrases.map((phrase, i) => ({ phrase, count: estimateCount(seed, phrase, i) }));
+  const top = phrases.map((phrase) => ({ phrase, count: 0 }));
   return {
     source: "suggest",
     phrase: seed,
-    totalCount: top[0]?.count ?? null,
+    totalCount: null,
     top,
-    associations: top.slice(1, 10),
-    dynamics: fakeTrend(top[0]?.count || 1000),
-    regions: [
-      { name: "Москва", count: Math.round((top[0]?.count || 0) * 0.28) },
-      { name: "Санкт-Петербург", count: Math.round((top[0]?.count || 0) * 0.12) },
-      { name: "Екатеринбург", count: Math.round((top[0]?.count || 0) * 0.05) },
-    ],
+    associations: [],
+    dynamics: [],
+    regions: [],
   };
-}
-
-function fakeTrend(last: number): WordstatDynamics[] {
-  const out: WordstatDynamics[] = [];
-  const now = new Date();
-  for (let i = 11; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const wave = 0.78 + 0.22 * Math.sin(i / 2.2);
-    out.push({
-      date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-01`,
-      count: Math.round(last * wave),
-    });
-  }
-  return out;
 }
 
 export function resolveWordstatToken(requestToken?: string | null) {

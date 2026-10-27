@@ -207,7 +207,7 @@ export default function KeysPage() {
             <Stat
               k="Частота фразы"
               v={res.wordstat.totalCount ? res.wordstat.totalCount.toLocaleString("ru-RU") : "—"}
-              d={res.wordstatLive ? "Wordstat, 30 дней" : "оценка + подсказки Яндекса"}
+              d={res.wordstatLive ? "Wordstat, 30 дней" : "подсказки Яндекса, без частотностей"}
             />
             <Stat k="Фраз в топе" v={String(res.wordstat.top.length)} d={`${res.suggest.length} подсказок`} />
             <Stat
@@ -269,7 +269,9 @@ export default function KeysPage() {
                             {row.phrase}
                           </button>
                         </td>
-                        <td className="tabular-nums">{row.count.toLocaleString("ru-RU")}</td>
+                        <td className="tabular-nums">
+                          {res.wordstatLive ? row.count.toLocaleString("ru-RU") : "—"}
+                        </td>
                         <td>
                           <Link
                             className="text-[12px] text-[#ea580c]"

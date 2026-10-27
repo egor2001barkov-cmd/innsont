@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       wordstatError = e instanceof Error ? e.message : "Wordstat недоступен";
     }
   } else {
-    wordstatError = "Нет токена Wordstat — частотность оценочная, фразы живые из подсказок Яндекса";
+    wordstatError = "Нет токена Wordstat — показываем живые фразы из подсказок Яндекса без частотностей. Добавьте токен в поле ниже или в YANDEX_WORDSTAT_TOKEN";
   }
 
   const phrases = [phrase, ...wordstat.top.map((t) => t.phrase), ...suggest].filter(
