@@ -2,40 +2,59 @@
 
 import { useState } from "react";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
-import { consumePrompt } from "@/lib/session";
+import { saveSession, type Session } from "@/lib/session";
 
 type Msg = { role: "you" | "bot"; text: string };
 
 export default function ChatPage() {
   const { session, setSession, project, plan, ready } = useWorkspace();
   const [input, setInput] = useState("");
+  const [busy, setBusy] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       role: "bot",
-      text: "Я чат INSONT. Спросите про видимость, аудит или набросайте абзац под промпт.",
+      text: "Я чат INSONT: отвечаю через подключённую модель. Реальные замеры сайта — в разделах «Аудит», «Видимость», «Ключи» и «Конкуренты»; я не выдумываю цифры.",
     },
   ]);
 
   if (!ready || !session || !project) return null;
 
-  function send() {
+  async function send() {
     const q = input.trim();
-    if (!q) return;
-    if (!session) return;
-    const used = consumePrompt(session, plan.limits.prompts);
-    setSession(used.session);
-    if (!used.ok) {
+    if (!q || busy) return;
+    setInput("");
+    setMsgs((m) => [...m, { role: "you", text: q }]);
+    setBusy(true);
+    try {
+      const res = await fetch("/api/kabinet/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...msgs, { role: "you" as const, text: q }]
+            .filter((m) => m.role !== "bot" || m.text.length < 2000)
+            .map((m) => ({ role: m.role === "you" ? ("user" as const) : ("assistant" as const), text: m.text })),
+          project: { name: project!.name, url: project!.url },
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        reply?: string;
+        error?: string;
+        profile?: Partial<Session>;
+      };
+      if (data.profile) {
+        const next = { ...session, ...data.profile } as Session;
+        saveSession(next);
+        setSession(next);
+      }
       setMsgs((m) => [
         ...m,
-        { role: "you", text: q },
-        { role: "bot", text: `Лимит промптов тарифа «${plan.name}»: ${plan.limits.prompts}.` },
+        { role: "bot", text: data.reply || data.error || "Не удалось получить ответ" },
       ]);
-      setInput("");
-      return;
+    } catch {
+      setMsgs((m) => [...m, { role: "bot", text: "Сеть недоступна — попробуйте ещё раз" }]);
+    } finally {
+      setBusy(false);
     }
-    const reply = replyTo(q, project.name);
-    setMsgs((m) => [...m, { role: "you", text: q }, { role: "bot", text: reply }]);
-    setInput("");
   }
 
   return (
@@ -56,12 +75,13 @@ export default function ChatPage() {
               </div>
             </div>
           ))}
+          {busy && <div className="text-[13px] text-[#9ca3af]">Модель отвечает…</div>}
         </div>
         <form
           className="flex gap-2 border-t border-[#f3f4f6] p-3"
           onSubmit={(e) => {
             e.preventDefault();
-            send();
+            void send();
           }}
         >
           <input
@@ -69,24 +89,13 @@ export default function ChatPage() {
             placeholder="Напишите запрос…"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            disabled={busy}
           />
-          <button className="ws-btn ws-btn-primary">Отправить</button>
+          <button className="ws-btn ws-btn-primary" disabled={busy}>
+            Отправить
+          </button>
         </form>
       </div>
     </div>
   );
-}
-
-function replyTo(q: string, brand: string) {
-  const s = q.toLowerCase();
-  if (s.includes("видимость") || s.includes("chatgpt") || s.includes("gigachat")) {
-    return `${brand} чаще всего цитируют GigaChat и Google AI. В ChatGPT проседает кластер «сравнение». Закройте его таблицей с датой.`;
-  }
-  if (s.includes("аудит") || s.includes("robots") || s.includes("бот")) {
-    return `На ${brand} GPTBot режется на каталоге. Снимите Disallow для /catalog — модели перестанут брать описания с агрегаторов.`;
-  }
-  if (s.includes("напиши") || s.includes("статья") || s.includes("абзац")) {
-    return `Черновик для ${brand}: ответ в 40–70 слов, затем таблица из 4 строк и FAQ из двух вопросов. Без «в современном мире».`;
-  }
-  return `По ${brand}: зафиксируйте промпт «${q}» в обзоре видимости и проверьте, кто лидер. Если доля ниже 20% — нужна отдельная посадочная, а не правка title.`;
 }
