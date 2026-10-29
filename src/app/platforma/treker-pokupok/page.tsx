@@ -90,7 +90,7 @@ export default function Page() {
         <p className="mx-auto mt-12 max-w-3xl text-[16px] leading-relaxed text-[#3a3632]">
           Люди уже спрашивают «какой пылесос до 30 000» не только в поиске. В
           ответе — три карточки, цена и куда нажать. Если вашей нет, заявка
-          уходит на Ozon. Это не «новый Amazon». Это та же полка, только вопрос
+          уходит на Ozon. Полка та же, что и в обычном магазине, только вопрос
           задали модели. Для магазина смысл тот же, что у{" "}
           <Link href="/resheniya/internet-magaziny" className="font-semibold text-orange">
             обычной витрины в поиске

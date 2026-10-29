@@ -128,8 +128,7 @@ export default function Page() {
           aside={<MockFrequency />}
         >
           <p>
-            Это не «5 600 показов». Это оценка: формулировку часто, средне или
-            редко встречаем в русскоязычных ответах. Нужна, чтобы отсечь шум.
+            Цифра — оценка того, как часто формулировка встречается в русскоязычных ответах: часто, средне или редко. Нужна, чтобы отсечь шум.
             На{" "}
             <Link href="/platforma/monitoring-vidimosti" className="font-semibold text-orange">
               ежедневный трекинг
@@ -256,8 +255,7 @@ export default function Page() {
             <li>
               <h3 className="text-lg font-semibold">2. Где в контенте не хватает страницы</h3>
               <p className="mt-2 text-[16px] leading-relaxed text-[#3a3632]">
-                Часто спрашивают, а бренда в ответе нет — это не «надо больше
-                SEO». Это конкретная страница или таблица, которой нет. У{" "}
+                Часто спрашивают, а бренда в ответе нет — значит, в ответах не хватает конкретной страницы или таблицы. У{" "}
                 <Link href="/keysy/centr-invest" className="font-semibold text-orange">
                   «Центр-инвеста»
                 </Link>{" "}
