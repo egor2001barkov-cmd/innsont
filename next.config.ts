@@ -2,10 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  // Сервер сборки — VPS с 1 ГБ RAM: фазы typecheck/eslint получают OOM-Kill.
-  // Типы и линт проверяются локально перед каждым пушем (npx tsc --noEmit).
+  // Сервер сборки — VPS с 1 ГБ RAM: фаза typecheck получает OOM-Kill.
+  // Типы проверяются локально перед каждым пушем (npx tsc --noEmit);
+  // линт в next build не выполняется (Next 16 его не запускает).
   typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
   async redirects() {
     return [
       {
