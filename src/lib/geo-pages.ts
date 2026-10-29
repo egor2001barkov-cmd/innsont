@@ -308,7 +308,7 @@ export const CITY_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo/krasnodar", title: "Краснодар" },
-      { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+      { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
     ],
   },
   {
@@ -401,7 +401,7 @@ export const CITY_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/ekaterinburg", title: "Екатеринбург" },
       { href: "/seo/perm", title: "Пермь" },
-      { href: "/seo/search-console", title: "Search Console" },
+      { href: "/blog/search-console-dlya-russkogo-saita", title: "Search Console" },
     ],
   },
   {
@@ -465,7 +465,7 @@ export const CITY_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/ekaterinburg", title: "Екатеринбург" },
       { href: "/seo/chelyabinsk", title: "Челябинск" },
-      { href: "/seo/search-console", title: "Search Console" },
+      { href: "/blog/search-console-dlya-russkogo-saita", title: "Search Console" },
     ],
   },
 ];
@@ -623,7 +623,7 @@ export const INDUSTRY_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/keysy/moysklad", title: "Кейс МойСклад" },
-      { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
       { href: "/platforma/monitoring-vidimosti", title: "Мониторинг" },
     ],
   },
@@ -779,7 +779,7 @@ export const INDUSTRY_PAGES: RichPageData[] = [
       "сайт автосервиса Google",
     ],
     related: [
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
       { href: "/seo/google-profil", title: "Google Профиль" },
       { href: "/seo/moskva", title: "Москва" },
     ],
@@ -889,7 +889,7 @@ export const INDUSTRY_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/sochi", title: "Сочи" },
       { href: "/seo/krasnodar", title: "Краснодар" },
-      { href: "/seo/semantika-wordstat", title: "Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Wordstat" },
     ],
   },
 ];

@@ -304,7 +304,7 @@ export default function HomePage() {
             },
             {
               icon: "growth",
-              href: "/seo/prodvizhenie-sayta",
+              href: "/blog/kak-proverit-i-uvelichit-indeksaciyu-sayta",
               t: "Внутренняя перелинковка",
               d: "Кластеры тянут коммерцию. Анкоры естественные, без «купить купить купить». Вес не утекает в технические разделы.",
             },

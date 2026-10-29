@@ -53,6 +53,7 @@ export default function Page() {
           {[
             ["ИНН", SITE.inn],
             ["Адрес", SITE.address],
+            ...(SITE.phone ? ([["Телефон", SITE.phone]] as [string, string][]) : []),
             ["Почта", SITE.email],
           ].map(([k, v]) => (
             <div key={k} className="flex flex-col gap-1 border-b border-line py-3 last:border-b-0 sm:flex-row sm:gap-8">

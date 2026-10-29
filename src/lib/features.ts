@@ -56,7 +56,7 @@ export const FEATURES: FeaturePage[] = [
     related: [
       { href: "/platforma/issledovatel-brendov", title: "Исследователь брендов" },
       { href: "/platforma/monitoring-vidimosti", title: "Мониторинг видимости" },
-      { href: "/seo/semantika-wordstat", title: "Семантика и Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика и Wordstat" },
     ],
   },
   {

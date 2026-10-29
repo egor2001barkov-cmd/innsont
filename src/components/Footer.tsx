@@ -24,6 +24,14 @@ export function Footer() {
           <p className="mt-4 text-sm text-muted">
             {SITE.address}
             <br />
+            {SITE.phone && (
+              <>
+                <a href={`tel:${SITE.phone.replace(/[^+\d]/g, "")}`} className="hover:text-ink">
+                  {SITE.phone}
+                </a>
+                <br />
+              </>
+            )}
             {SITE.email}
           </p>
           <p className="mt-3 flex items-center gap-2">

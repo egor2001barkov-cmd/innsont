@@ -55,11 +55,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/strategiya/kontent", priority: 0.75 },
     { path: "/resursy/partnerskaya", priority: 0.5 },
     { path: "/resursy/integratsii", priority: 0.4 },
-    { path: "/seo/robots-txt", priority: 0.75 },
-    { path: "/seo/posadochnye", priority: 0.75 },
   ];
 
-  const longPages = allLongPages().filter((p) => p.path !== "/seo");
+  // пути, ушедшие в 301 (каннибализация, аудит 29.10.2026) — в sitemap их быть не должно
+  const REDIRECTED = new Set([
+    "/seo/robots-txt",
+    "/seo/posadochnye",
+    "/seo/vebmaster",
+    "/seo/search-console",
+    "/seo/kommercheskie-faktory",
+    "/seo/tekhnicheskiy-audit",
+    "/seo/mikrorazmetka",
+    "/seo/semantika-wordstat",
+    "/seo/skolko-stoit",
+    "/seo/regionalnoe-prodvizhenie",
+    "/geo/kak-popast-v-gigachat",
+    "/seo/prodvizhenie",
+    "/seo/prodvizhenie-sayta",
+    "/seo/raskrutka-sayta",
+  ]);
+
+  const longPages = allLongPages().filter((p) => p.path !== "/seo" && !REDIRECTED.has(p.path));
 
   return [
     ...staticPaths.map(({ path, priority }) =>

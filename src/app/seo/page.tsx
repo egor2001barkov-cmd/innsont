@@ -406,7 +406,7 @@ export default function Page() {
               desc: "Витрина, регион, robots — не простыня PDF",
             },
             {
-              href: "/seo/raskrutka-sayta",
+              href: "/blog/beloe-seo-chto-eto",
               title: "Раскрутка сайта",
               desc: "То же слово из поиска, без биржи ссылок",
             },

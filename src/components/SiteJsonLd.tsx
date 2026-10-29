@@ -9,6 +9,7 @@ export function SiteJsonLd() {
     legalName: SITE.legalName,
     url: SITE.url,
     email: SITE.email,
+    ...(SITE.phone ? { telephone: SITE.phone.replace(/[^+\d]/g, "") } : {}),
     taxID: SITE.inn,
     image: `${SITE.url}/logo-mark.jpg`,
     logo: {
