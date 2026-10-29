@@ -83,22 +83,34 @@ curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # ждём 200
 - Одинаковое время ответа на существующую и несуществующую почту (защита от перебора).
 
 
-## Рабочая схема деплоя (с 20.10.2026)
+## Рабочая схема деплоя: systemd (с 27–29.10.2026)
 
-Каталог на сервере: `/opt/innsont` (git-клон репозитория).
+Сайты работают как systemd-сервисы (НЕ docker): `innsont-app.service` и `elizon-app.service`.
+Runtime-каталог: `/opt/innsont-app` (standalone-сборка + `.env` + `data/`). Git-клон: `/opt/innsont`.
 
 ```bash
 ssh elizon
-cd /opt/innsont
-git pull
-docker compose build
-docker stop innsont-web-1 && docker compose up -d
-curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # 200
+export PATH=/opt/node/bin:$PATH
+
+# 1. сборка на хосте (typecheck отключён в next.config — 1ГБ RAM; типы проверяются локально перед пушем)
+cd /opt/innsont && git pull && npm ci --no-audit --no-fund
+NODE_OPTIONS='--max-old-space-size=640' npm run build
+
+# 2. синк в runtime-каталог (data/ защищён; ВАЖНО: --exclude=.env — Next кладёт билд-.env в standalone!)
+rsync -a --delete /opt/innsont/.next/standalone/ /opt/innsont-app/ --exclude=data --exclude=.env
+rsync -a --delete /opt/innsont/.next/static/  /opt/innsont-app/.next/static/
+rsync -a /opt/innsont/public/ /opt/innsont-app/public/
+
+# 3. рестарт и проверка
+systemctl restart innsont-app && sleep 5
+systemctl is-active innsont-app   # active
+curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3001/   # 200
 ```
 
-Файлы, живущие только на сервере (не в git): `.env` (NEXT_PUBLIC_SITE_URL, ключи YandexGPT/Wordstat)
-и `docker-compose.override.yml` (привязка порта к 127.0.0.1:3001). Проксирует Caddy — блоки
-`insont.ru` + `www.insont.ru` в `/etc/caddy/Caddyfile` (бэкап рядом, `.backup-*`).
+Runtime-`.env` в /opt/innsont-app (НЕ перезаписывать синком): PORT=3001, HOSTNAME=127.0.0.1,
+NODE_ENV=production, NEXT_PUBLIC_SITE_URL, ключи LLM/Wordstat. Инцидент 29.10: rsync без
+--exclude=.env затёр runtime-env билд-версией без PORT → сервис падал EADDRINUSE на :3000.
+Git-`.env` в /opt/innsont урезан до NEXT_PUBLIC_SITE_URL, чтобы standalone не утаскивал лишнее.
 
 Важно: деплой Elizon не должен затирать `/etc/caddy/Caddyfile` без блока insont.ru — 19.10.2026
 это уже случилось (сайт лежал ~16 часов, восстановлен 20.10).
