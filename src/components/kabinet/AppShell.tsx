@@ -41,6 +41,8 @@ const SEO_NEW = [
   { href: "/kabinet/strategiya", label: "Стратегия", icon: "map" },
   { href: "/kabinet/statyi", label: "Создание контента", icon: "edit" },
   { href: "/kabinet/bulk", label: "Пакетная генерация", icon: "spark" },
+  { href: "/kabinet/humanizer", label: "Очеловечиватель", icon: "pen" },
+  { href: "/kabinet/kanibalizatsiya", label: "Каннибализация", icon: "key" },
   { href: "/kabinet/chat", label: "Чат", icon: "chat" },
 ];
 const SEO_OLD = [
@@ -76,6 +78,8 @@ const TITLES: Record<string, string> = {
   "/kabinet/integratsii": "Интеграции",
   "/kabinet/strategiya": "Стратегия",
   "/kabinet/statyi": "Создание контента",
+  "/kabinet/humanizer": "Очеловечиватель текста",
+  "/kabinet/kanibalizatsiya": "Проверка каннибализации",
   "/kabinet/bulk": "Пакетная генерация",
   "/kabinet/chat": "Чат",
   "/kabinet/optimizatsiya": "Оптимизация",
