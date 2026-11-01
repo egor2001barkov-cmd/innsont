@@ -13,7 +13,7 @@ export type ArticlePlan = {
 };
 
 export type ArticleContext = {
-  key: string; // ключевой запрос
+  key: string;
   brand: string;
   site?: string;
   industry?: string;
@@ -21,6 +21,20 @@ export type ArticleContext = {
   tone?: string;
   audience?: string;
   rules?: string;
+  // Writesonic-уровень параметров
+  length?: "короткая" | "средняя" | "длинная"; // 800 / 1500 / 2500+ слов
+  pov?: "я" | "мы" | "вы" | "они" | "нейтральный";
+  goal?: "информировать" | "продавать" | "сравнивать" | "обучать";
+  readingLevel?: "новичок" | "средний" | "эксперт";
+  includeFaq?: boolean;
+  includeTables?: boolean;
+  includeStats?: boolean;
+  includeCta?: boolean;
+  keywords?: string[]; // дополнительные LSI-ключи
+  instructions?: string; // свободные указания
+  referenceUrl?: string; // статья-референс
+  bannedWords?: string[]; // запрещённые слова
+  preferredPhrases?: string[]; // предпочтительные формулировки
 };
 
 function cap(s: string | undefined, n: number) {
@@ -120,13 +134,34 @@ function styleLine(ctx: ArticleContext) {
   const parts = [`тон: ${cap(ctx.tone, 60) || "деловой, живой, без канцелярита"}`];
   if (ctx.audience) parts.push(`аудитория: ${cap(ctx.audience, 120)}`);
   if (ctx.rules) parts.push(`правила: ${cap(ctx.rules, 400)}`);
+  if (ctx.pov) parts.push(`писать от лица: «${ctx.pov}»`);
+  if (ctx.goal) parts.push(`цель статьи: ${ctx.goal}`);
+  if (ctx.readingLevel) parts.push(`уровень читателя: ${ctx.readingLevel}`);
+  if (ctx.bannedWords?.length) parts.push(`запрещённые слова: ${ctx.bannedWords.join(", ")}`);
+  if (ctx.preferredPhrases?.length) parts.push(`предпочтительные обороты: ${ctx.preferredPhrases.join(", ")}`);
   return parts.join("; ");
 }
 
 function brandLine(ctx: ArticleContext) {
-  return `Бренд: ${cap(ctx.brand, 80)}${ctx.site ? ` (сайт ${cap(ctx.site, 120)})` : ""}${
+  let s = `Бренд: ${cap(ctx.brand, 80)}${ctx.site ? ` (сайт ${cap(ctx.site, 120)})` : ""}${
     ctx.industry ? `, сфера: ${cap(ctx.industry, 80)}` : ""
   }${ctx.region ? `, регион: ${cap(ctx.region, 60)}` : ""}`;
+  if (ctx.length) {
+    s += `. Объём: ${ctx.length === "короткая" ? "800–1000 слов" : ctx.length === "средняя" ? "1500–1800 слов" : "2500+ слов"}`;
+  }
+  if (ctx.keywords?.length) s += `. Дополнительные ключи: ${ctx.keywords.slice(0, 8).join(", ")}`;
+  if (ctx.instructions) s += `. Указания: ${cap(ctx.instructions, 500)}`;
+  if (ctx.referenceUrl) s += `. Референс: ${cap(ctx.referenceUrl, 200)}`;
+  return s;
+}
+
+function contentIncludes(ctx: ArticleContext) {
+  const inc: string[] = [];
+  if (ctx.includeFaq !== false) inc.push("FAQ с вопросами из поиска");
+  if (ctx.includeTables !== false) inc.push("таблицы сравнения где уместно");
+  if (ctx.includeStats) inc.push("конкретные цифры и статистику");
+  if (ctx.includeCta) inc.push("призыв к действию в конце");
+  return inc.length ? inc.join(", ") : "";
 }
 
 const PLAN_SYSTEM =
@@ -137,14 +172,14 @@ export async function generatePlan(
 ): Promise<{ plan: ArticlePlan; provider: Provider }> {
   if (activeProvider() === "demo") return { plan: demoPlan(ctx.key), provider: "demo" };
   const user = `Составь план SEO-статьи для Рунета по запросу: «${cap(ctx.key, 120)}».
-${brandLine(ctx)}. ${styleLine(ctx)}.
+${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить: ${contentIncludes(ctx)}` : ""}.
 
 Требования к плану:
 - title: заголовок H1 с ключом, до 70 символов, без точек в конце;
 - intent: коммерческий | информационный | сравнение | навигационный;
 - intro: прямой ответ на запрос в 1–2 предложениях (его цитируют нейросети);
-- sections: 4–6 разделов H2, каждый — с подсказкой (hint) что в нём должно быть: цифры, таблицы, ограничения. Первый раздел отвечает на запрос, дальше — выбор/сравнение/ошибки;
-- faq: 3–5 вопросов формулировками, как их пишут в поиске, с короткими ответами.
+- sections: ${ctx.length === "короткая" ? "3–4" : ctx.length === "длинная" ? "6–8" : "4–6"} разделов H2, каждый — с подсказкой (hint) что в нём должно быть. Первый раздел отвечает на запрос, дальше — выбор/сравнение/ошибки;
+- faq: ${ctx.includeFaq === false ? "[]" : "3–5 вопросов формулировками из поиска, с короткими ответами"}.
 
 Ответ — только JSON вида:
 {"title":"…","intent":"…","intro":"…","sections":[{"h2":"…","hint":"…"}],"faq":[{"q":"…","a":"…"}]}`;
