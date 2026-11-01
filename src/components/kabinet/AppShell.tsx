@@ -17,85 +17,68 @@ import {
 } from "@/lib/workspace";
 import { BrandMark, Ico } from "./icons";
 
+// Навигация в стиле Writesonic: фокусный сайдбар, конвейер «Создать → Проверить → Опубликовать»
 const NAV = [
   { href: "/kabinet", label: "Главная", icon: "home", exact: true },
-  { href: "/kabinet/kontent", label: "Ваш контент", icon: "file" },
-  { href: "/kabinet/stili", label: "Стили письма", icon: "pen" },
-  { href: "/kabinet/druzia", label: "Пригласить друга", icon: "mail" },
+  { href: "/kabinet/statyi", label: "Создать статью", icon: "edit" },
+  { href: "/kabinet/kontent", label: "Мой контент", icon: "file" },
 ];
 
-const GEO = [
-  { href: "/kabinet/vidimost", label: "Обзор", icon: "chart" },
-  { href: "/kabinet/boty", label: "Аналитика ботов", icon: "bot" },
-  { href: "/kabinet/deystviya", label: "Центр действий", icon: "zap" },
-];
-
-const SEO_TOP = [
-  { href: "/kabinet/kluchi", label: "Ключи", icon: "key" },
-  { href: "/kabinet/konkurenty", label: "Конкуренты", icon: "chart" },
-  { href: "/kabinet/audit", label: "Аудит сайта", icon: "search" },
-  { href: "/kabinet/otchet", label: "Недельный отчёт", icon: "chart" },
-  { href: "/kabinet/integratsii", label: "Интеграции", icon: "chart" },
-];
-const SEO_NEW = [
-  { href: "/kabinet/strategiya", label: "Стратегия", icon: "map" },
-  { href: "/kabinet/statyi", label: "Создание контента", icon: "edit" },
+const SEO_TOOLS = [
   { href: "/kabinet/bulk", label: "Пакетная генерация", icon: "spark" },
   { href: "/kabinet/humanizer", label: "Очеловечиватель", icon: "pen" },
-  { href: "/kabinet/kanibalizatsiya", label: "Каннибализация", icon: "key" },
-  { href: "/kabinet/chat", label: "Чат", icon: "chat" },
-];
-const SEO_OLD = [
-  { href: "/kabinet/optimizatsiya", label: "Оптимизация", icon: "wrench" },
-  { href: "/kabinet/pereupakovka", label: "Переупаковка", icon: "recycle" },
+  { href: "/kabinet/kluchi", label: "Ключи (Wordstat)", icon: "key" },
+  { href: "/kabinet/kanibalizatsiya", label: "Каннибализация", icon: "search" },
 ];
 
-const LANDINGS = [
-  { href: "/kabinet/posadochnye", label: "Обзор", icon: "folder", exact: true },
-  { href: "/kabinet/posadochnye/spisok", label: "Страницы", icon: "file" },
-  { href: "/kabinet/posadochnye/karta", label: "Карта", icon: "chart" },
+const ANALYTICS = [
+  { href: "/kabinet/audit", label: "Аудит сайта", icon: "search" },
+  { href: "/kabinet/otchet", label: "Недельный отчёт", icon: "chart" },
+  { href: "/kabinet/konkurenty", label: "Конкуренты", icon: "chart" },
+  { href: "/kabinet/boty", label: "ИИ-боты", icon: "bot" },
 ];
 
-const REGIONS_NAV = [
-  { href: "/kabinet/regiony", label: "Обзор", icon: "map", exact: true },
-  { href: "/kabinet/regiony/goroda", label: "Города", icon: "map" },
-  { href: "/kabinet/regiony/yandex", label: "Яндекс-регион", icon: "search" },
+const SETTINGS = [
+  { href: "/kabinet/integratsii", label: "Интеграции", icon: "wrench" },
+  { href: "/kabinet/stili", label: "Стили письма", icon: "pen" },
+  { href: "/kabinet/deystviya", label: "Центр действий", icon: "zap" },
+  { href: "/kabinet/druzia", label: "Пригласить друга", icon: "mail" },
 ];
 
 const TITLES: Record<string, string> = {
   "/kabinet": "Главная",
-  "/kabinet/kontent": "Ваш контент",
-  "/kabinet/stili": "Стили письма",
-  "/kabinet/druzia": "Пригласить друга",
-  "/kabinet/vidimost": "Обзор видимости",
-  "/kabinet/boty": "Аналитика ботов",
-  "/kabinet/deystviya": "Центр действий",
-  "/kabinet/kluchi": "Ключи",
-  "/kabinet/onboarding": "Новый проект",
+  "/kabinet/statyi": "Создать статью",
+  "/kabinet/kontent": "Мой контент",
+  "/kabinet/bulk": "Пакетная генерация",
+  "/kabinet/humanizer": "Очеловечиватель",
+  "/kabinet/kluchi": "Ключи (Wordstat)",
+  "/kabinet/kanibalizatsiya": "Каннибализация",
   "/kabinet/audit": "Аудит сайта",
   "/kabinet/otchet": "Недельный отчёт",
   "/kabinet/konkurenty": "Конкуренты",
+  "/kabinet/boty": "ИИ-боты",
   "/kabinet/integratsii": "Интеграции",
-  "/kabinet/strategiya": "Стратегия",
-  "/kabinet/statyi": "Создание контента",
-  "/kabinet/humanizer": "Очеловечиватель текста",
-  "/kabinet/kanibalizatsiya": "Проверка каннибализации",
-  "/kabinet/bulk": "Пакетная генерация",
-  "/kabinet/chat": "Чат",
-  "/kabinet/optimizatsiya": "Оптимизация",
-  "/kabinet/pereupakovka": "Переупаковка",
-  "/kabinet/posadochnye": "Посадочные",
-  "/kabinet/posadochnye/spisok": "Посадочные · страницы",
-  "/kabinet/posadochnye/karta": "Посадочные · карта",
-  "/kabinet/regiony": "Региональность",
-  "/kabinet/regiony/goroda": "Регионы · города",
-  "/kabinet/regiony/yandex": "Регионы · Яндекс",
+  "/kabinet/stili": "Стили письма",
+  "/kabinet/deystviya": "Центр действий",
+  "/kabinet/druzia": "Пригласить друга",
+  "/kabinet/onboarding": "Новый проект",
   "/kabinet/tarify": "Тарифы",
   "/kabinet/akkaunt": "Аккаунт",
   "/kabinet/komanda": "Команда",
   "/kabinet/scheta": "Счета",
   "/kabinet/nastroyki": "Настройки",
+  "/kabinet/chat": "Чат",
+  "/kabinet/optimizatsiya": "Оптимизация",
+  "/kabinet/strategiya": "Стратегия",
+  "/kabinet/pereupakovka": "Переупаковка",
+  "/kabinet/vidimost": "Видимость",
   "/kabinet/issledovanie": "Исследование",
+  "/kabinet/posadochnye": "Посадочные",
+  "/kabinet/posadochnye/spisok": "Посадочные · страницы",
+  "/kabinet/posadochnye/karta": "Посадочные · карта",
+  "/kabinet/regiony": "Регионы",
+  "/kabinet/regiony/goroda": "Регионы · города",
+  "/kabinet/regiony/yandex": "Регионы · Яндекс",
 };
 
 function NavLink({
@@ -330,58 +313,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </nav>
 
       <div className="mt-4 px-2 text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">
-        Видимость в ИИ (GEO)
+        Инструменты
       </div>
       <nav className="mt-1 space-y-0.5">
-        {GEO.map((n) => (
+        {SEO_TOOLS.map((n) => (
           <NavLink key={n.href} {...n} active={pathname.startsWith(n.href)} />
         ))}
       </nav>
 
       <div className="mt-4 px-2 text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">
-        SEO и контент
+        Аналитика
       </div>
       <nav className="mt-1 space-y-0.5">
-        {SEO_TOP.map((n) => (
-          <NavLink key={n.href} {...n} active={pathname.startsWith(n.href)} />
-        ))}
-      </nav>
-      <div className="mt-2 px-2 text-[11px] text-[#9ca3af]">Новый контент</div>
-      <nav className="mt-0.5 space-y-0.5">
-        {SEO_NEW.map((n) => (
-          <NavLink key={n.href} {...n} active={pathname.startsWith(n.href)} />
-        ))}
-      </nav>
-      <div className="mt-2 px-2 text-[11px] text-[#9ca3af]">Существующий контент</div>
-      <nav className="mt-0.5 space-y-0.5">
-        {SEO_OLD.map((n) => (
+        {ANALYTICS.map((n) => (
           <NavLink key={n.href} {...n} active={pathname.startsWith(n.href)} />
         ))}
       </nav>
 
       <div className="mt-4 px-2 text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">
-        Посадочные
+        Настройки
       </div>
       <nav className="mt-1 space-y-0.5">
-        {LANDINGS.map((n) => (
-          <NavLink
-            key={n.href}
-            {...n}
-            active={n.exact ? pathname === n.href : pathname.startsWith(n.href)}
-          />
-        ))}
-      </nav>
-
-      <div className="mt-4 px-2 text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">
-        Региональность
-      </div>
-      <nav className="mt-1 space-y-0.5">
-        {REGIONS_NAV.map((n) => (
-          <NavLink
-            key={n.href}
-            {...n}
-            active={n.exact ? pathname === n.href : pathname.startsWith(n.href)}
-          />
+        {SETTINGS.map((n) => (
+          <NavLink key={n.href} {...n} active={pathname.startsWith(n.href)} />
         ))}
       </nav>
 
