@@ -246,6 +246,12 @@ export default function AuditPage() {
               <div className="mt-2 flex flex-wrap gap-2">
                 <button className="ws-btn ws-btn-outline py-1.5 text-[12px]" onClick={pushToActions}>В Центр действий</button>
                 <button className="ws-btn ws-btn-outline py-1.5 text-[12px]" onClick={exportReport}>Скачать .md</button>
+                <a href="/kabinet/kanibalizatsiya" className="ws-btn ws-btn-outline py-1.5 text-[12px]">
+                  Проверить каннибализацию →
+                </a>
+                <a href="/instrumenty/ochelovechivatel" className="ws-btn ws-btn-outline py-1.5 text-[12px]" target="_blank">
+                  Очеловечиватель (публичный) ↗
+                </a>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
  * находит пары с пересекающимся интентом (общие значимые слова в title/H1).
  */
 
-export type PageEntry = { url: string; title: string; h1?: string; source: "статья" | "sitemap" };
+export type PageEntry = { url: string; title: string; h1?: string; source: string };
 
 export type Conflict = {
   keywords: string[];

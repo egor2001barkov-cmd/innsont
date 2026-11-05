@@ -528,22 +528,27 @@ function Writer() {
               <label className="block text-[13px]">Description<textarea className="ws-input mt-1 min-h-[50px]" value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} /></label>
             </div>
           )}
-          <div className="flex flex-wrap gap-2">
-            <button className="ws-btn ws-btn-primary" onClick={() => void save()} disabled={Boolean(busy) || Boolean(savedId)}>
-              {busy === "save" ? "Сохраняем…" : savedId ? "Сохранено ✓" : "Сохранить в контент"}
-            </button>
-            {savedId && (
-              <>
-                <button className="ws-btn ws-btn-outline" onClick={() => setWpOpen(true)}>WordPress</button>
-                <button className="ws-btn ws-btn-outline" onClick={() => void publishWp()} disabled={Boolean(busy)}>
-                  {busy === "wp" ? "Публикуем…" : wpLink ? "Опубликовано ✓" : "Опубликовать в WP"}
-                </button>
-              </>
-            )}
-            <button className="ws-btn ws-btn-outline" onClick={() => setStep("form")} disabled={Boolean(busy)}>
-              ← Новая статья
-            </button>
-          </div>
+            <div className="flex flex-wrap gap-2">
+              <button className="ws-btn ws-btn-primary" onClick={() => void save()} disabled={Boolean(busy) || Boolean(savedId)}>
+                {busy === "save" ? "Сохраняем…" : savedId ? "Сохранено ✓" : "Сохранить в контент"}
+              </button>
+              {markdown && (
+                <a href={`/kabinet/humanizer?text=${encodeURIComponent(markdown.slice(0, 2000))}`} className="ws-btn ws-btn-outline">
+                  Очеловечить →
+                </a>
+              )}
+              {savedId && (
+                <>
+                  <button className="ws-btn ws-btn-outline" onClick={() => setWpOpen(true)}>WordPress</button>
+                  <button className="ws-btn ws-btn-outline" onClick={() => void publishWp()} disabled={Boolean(busy)}>
+                    {busy === "wp" ? "Публикуем…" : wpLink ? "Опубликовано ✓" : "Опубликовать в WP"}
+                  </button>
+                </>
+              )}
+              <button className="ws-btn ws-btn-outline" onClick={() => setStep("form")} disabled={Boolean(busy)}>
+                ← Новая статья
+              </button>
+            </div>
           {wpLink && (
             <p className="text-[13px] text-[#0f766e]">
               <a className="underline" href={wpLink} target="_blank" rel="noreferrer">Открыть в WP →</a>

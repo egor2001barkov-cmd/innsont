@@ -45,6 +45,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/instrumenty", priority: 0.5 },
     { path: "/instrumenty/llms-txt", priority: 0.5 },
     { path: "/instrumenty/proverka-krawlerov", priority: 0.5 },
+    { path: "/instrumenty/ochelovechivatel", priority: 0.6 },
+    { path: "/instrumenty/kanibalizatsiya", priority: 0.6 },
     { path: "/resursy/indeks-reklamy", priority: 0.5 },
     { path: "/resursy/rukovodstvo-geo", priority: 0.5 },
     { path: "/resursy/pomoshch", priority: 0.4 },

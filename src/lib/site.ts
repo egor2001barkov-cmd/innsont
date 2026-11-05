@@ -418,6 +418,18 @@ export const RESOURCES: NavGroup[] = [
         icon: "scan",
       },
       {
+        href: "/instrumenty/ochelovechivatel",
+        title: "Очеловечиватель текста",
+        desc: "18 ИИ-паттернов: скор, автоочистка",
+        icon: "pen",
+      },
+      {
+        href: "/instrumenty/kanibalizatsiya",
+        title: "Проверка каннибализации",
+        desc: "Найти страницы, конкурирующие за один запрос",
+        icon: "search",
+      },
+      {
         href: "/instrumenty",
         title: "Все бесплатные инструменты",
         desc: "Без регистрации, без почты, полный вывод",

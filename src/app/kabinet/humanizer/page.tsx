@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
 
 type Hit = { fragment: string; index: number };
@@ -16,9 +18,10 @@ const CUSTOM_PRESETS = [
   { label: "Проверить письмо", desc: "Email-рассылка" },
 ];
 
-export default function HumanizerPage() {
+function HumanizerInner() {
+  const params = useSearchParams();
   const { ready } = useWorkspace();
-  const [text, setText] = useState("");
+  const [text, setText] = useState(params.get("text") || "");
   const [report, setReport] = useState<Report | null>(null);
   const [cleaned, setCleaned] = useState("");
   const [busy, setBusy] = useState(false);
@@ -170,6 +173,19 @@ export default function HumanizerPage() {
             </div>
           )}
 
+          {/* Перелинковка */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a href="/kabinet/statyi" className="ws-btn ws-btn-outline py-1.5 text-[13px]">
+              ← Создать статью
+            </a>
+            <a href="/kabinet/kontent" className="ws-btn ws-btn-outline py-1.5 text-[13px]">
+              Мой контент →
+            </a>
+            <a href="/instrumenty/ochelovechivatel" className="ws-btn ws-btn-outline py-1.5 text-[13px]" target="_blank" rel="noreferrer">
+              Публичная версия ↗
+            </a>
+          </div>
+
           {mode === "clean" && cleaned && (
             <div className="ws-card mt-4 p-5">
               <div className="mb-2 flex items-center justify-between">
@@ -197,5 +213,13 @@ export default function HumanizerPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function HumanizerPage() {
+  return (
+    <Suspense>
+      <HumanizerInner />
+    </Suspense>
   );
 }

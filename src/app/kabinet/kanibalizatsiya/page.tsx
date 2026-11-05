@@ -89,6 +89,21 @@ export default function CannibalizationPage() {
         )}
       </div>
 
+      {/* Перелинковка */}
+      <div className="mt-2 flex flex-wrap gap-2">
+        <a href="/kabinet/audit" className="text-[13px] text-[#6b7280] hover:text-[#ea580c]">
+          ← Аудит сайта
+        </a>
+        <span className="text-[#e5e7eb]">·</span>
+        <a href="/kabinet/statyi" className="text-[13px] text-[#6b7280] hover:text-[#ea580c]">
+          Создать статью →
+        </a>
+        <span className="text-[#e5e7eb]">·</span>
+        <a href="/instrumenty/kanibalizatsiya" className="text-[13px] text-[#6b7280] hover:text-[#ea580c]" target="_blank" rel="noreferrer">
+          Публичная версия ↗
+        </a>
+      </div>
+
       {err && <p className="mt-3 text-[13px] text-[#b91c1c]">{err}</p>}
 
       {report && (
