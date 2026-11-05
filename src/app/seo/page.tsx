@@ -391,6 +391,16 @@ export default function Page() {
               desc: "GigaChat, ChatGPT и Алиса рядом с поиском",
             },
             {
+              href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
+              title: "Технический аудит сайта своими силами",
+              desc: "25 проверок без подрядчика: от robots.txt до Core Web Vitals",
+            },
+            {
+              href: "/blog/skolko-stoit-seo-v-2026",
+              title: "Сколько стоит SEO в 2026 году",
+              desc: "Реальные бюджеты: агентство, фрилансер или платформа",
+            },
+            {
               href: "/keysy/sm-klinika",
               title: "Кейс СМ-Клиника",
               desc: "Цена и врач на услуге, заявки с поиска +19%",

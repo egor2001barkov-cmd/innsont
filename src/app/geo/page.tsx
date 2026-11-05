@@ -193,6 +193,8 @@ export default function Page() {
           title="Рядом"
           links={[
             { href: "/seo", title: "Продвижение в поиске", desc: "Яндекс, Google, витрина" },
+            { href: "/blog/geo-protiv-seo-chto-meniaetsia-v-2026", title: "GEO против SEO: что меняется в 2026", desc: "Как генеративные движки выбирают источники" },
+            { href: "/blog/kak-popast-v-otvety-gigachat", title: "Как попасть в ответы GigaChat", desc: "Факторы цитирования на живых примерах" },
             { href: "/platforma/issledovatel-brendov", title: "Исследователь брендов", desc: "Разовый прогон, кого называют вместо вас" },
             { href: "/instrumenty/llms-txt", title: "Генератор llms.txt", desc: "Файл в корень, без регистрации" },
             { href: "/resursy/rukovodstvo-geo", title: "Руководство AEO и GEO", desc: "Длинный разбор метода" },

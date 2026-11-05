@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { POSTS, getPost } from "@/lib/blog";
+import { POSTS, getPost, relatedPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/SiteChrome";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SeeAlso } from "@/components/SeeAlso";
@@ -87,10 +87,12 @@ export default async function PostPage({
       <PageAdvantages path={`/blog/${post.slug}`} />
       <SeeAlso
         links={[
-          { href: "/blog/issledovanie-ii-vidimosti-rf", title: "Исследование ИИ-видимости" },
-          { href: "/keysy", title: "Кейсы" },
-          { href: "/seo", title: "Продвижение в поиске" },
-          { href: "/blog", title: "Все статьи" },
+          ...relatedPosts(post.slug).map((r) => ({
+            href: `/blog/${r.slug}`,
+            title: r.title,
+            desc: r.excerpt.slice(0, 90) + (r.excerpt.length > 90 ? "…" : ""),
+          })),
+          { href: "/blog", title: "Все статьи", desc: "38 материалов о поиске, Вебмастере и ИИ-видимости" },
         ]}
       />
     </article>
