@@ -74,6 +74,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   verification: {
     yandex: "eab405796df2103e",
+    google: "ntD5B_pgxmT-8UGQs5Y6L8tcPZ9Zj6CpY83ySM1wBuk",
   },
   icons: {
     icon: [
