@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="10" fill="#7c3aed"/>
+  <text x="64" y="150" font-family="Georgia, serif" font-size="132" font-weight="700" fill="#1f1b16">INSONT</text>
+  <text x="64" y="205" font-family="system-ui, sans-serif" font-size="21" font-weight="600" fill="#7c3aed" letter-spacing="4">SEO · GEO · ИИ-ПОИСК</text>
+  <text x="64" y="300" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#1f1b16">Продвижение в Яндексе,</text>
+  <text x="64" y="362" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#1f1b16">Google и ответах нейросетей</text>
+  <line x1="64" y1="404" x2="700" y2="404" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="460" font-family="system-ui, sans-serif" font-size="26" fill="#7a6f60">Статьи, кейсы и инструменты: Wordstat, Вебмастер, llms.txt</text>
+  <text x="64" y="560" font-family="system-ui, sans-serif" font-size="30" font-weight="600" fill="#7c3aed">insont.ru</text>
+  <g>
+    <rect x="740" y="150" width="400" height="430" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+    <polyline points="780,480 830,440 880,455 930,400 980,415 1030,350 1080,330 1110,290" fill="none" stroke="#7c3aed" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1110" cy="290" r="13" fill="#7c3aed"/>
+    <circle cx="1110" cy="290" r="24" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.45"/>
+    <text x="780" y="545" font-family="system-ui, sans-serif" font-size="17" fill="#7a6f60">видимость в поиске и ИИ</text>
+  </g>
+</svg>
