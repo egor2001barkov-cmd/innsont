@@ -21,6 +21,9 @@ const CANIBAL_REDIRECTS: { from: string; to: string }[] = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Слэш-канонизация — в src/middleware.ts: существующим путям 308, несуществующим
+  // сразу 404 без хопа (фикс мягкой 404, 05.11.2026). Штатную отключаем.
+  skipTrailingSlashRedirect: true,
   // Сервер сборки — VPS с 1 ГБ RAM: фаза typecheck получает OOM-Kill.
   // Типы проверяются локально перед каждым пушем (npx tsc --noEmit);
   // линт в next build не выполняется (Next 16 его не запускает).

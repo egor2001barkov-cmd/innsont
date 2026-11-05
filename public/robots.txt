@@ -18,7 +18,6 @@ Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext&yclid
-Host: https://insont.ru
 
 User-agent: YandexBot
 Allow: /
@@ -30,7 +29,6 @@ Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from&_openstat&ref&etext
-Host: https://insont.ru
 
 User-agent: YandexImages
 Allow: /
@@ -72,4 +70,3 @@ Disallow: /ui-mock
 Disallow: /api/
 
 Sitemap: https://insont.ru/sitemap.xml
-Host: https://insont.ru
