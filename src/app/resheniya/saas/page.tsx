@@ -11,7 +11,7 @@ import {
   SaasDocsWallMock,
   SaasQueueMock,
 } from "@/components/SaasView";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -62,6 +62,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/resheniya/saas" },
   openGraph: {
+    images: OG_IMAGE,
     title: "SaaS в поиске и нейросетях — INSONT",
     description:
       "Справка, которую можно процитировать. Сравнения без грязи. Яндекс и Google вместе, не «мы же B2B».",

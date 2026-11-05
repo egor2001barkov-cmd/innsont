@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { CompanyPoints } from "@/components/CompanyPlay";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "О компании INSONT — кто делает продвижение в поиске и нейросетях",
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "INSONT, Москва, ИНН 773104369017. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
   alternates: { canonical: "/kompaniya" },
   openGraph: {
+    images: OG_IMAGE,
     title: "О компании INSONT",
     description: "Московское юрлицо. Поиск и ответы нейросетей в одном кабинете.",
     url: "/kompaniya",

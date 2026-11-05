@@ -5,7 +5,7 @@ import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
 import { RobotsBotsMock, RobotsFileMock } from "@/components/TechMocks";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo/robots-txt" },
   openGraph: {
+    images: OG_IMAGE,
     title: "robots.txt — INSONT",
     description:
       "Смотрим, кого пускает файл и куда робот упирается. Правка только после вашего согласия.",

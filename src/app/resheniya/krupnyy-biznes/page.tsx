@@ -4,7 +4,7 @@ import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -43,6 +43,7 @@ export const metadata: Metadata = {
     "Несколько юрлиц в одном кабинете: позиции в Яндексе и Google, видимость в GigaChat, роли, ЭДО, размещение в РФ. От 59 900 ₽ по счёту. Без «топа за месяц».",
   alternates: { canonical: "/resheniya/krupnyy-biznes" },
   openGraph: {
+    images: OG_IMAGE,
     title: "INSONT для холдинга и крупного бизнеса",
     description:
       "Несколько юрлиц в одном кабинете: роли, 152-ФЗ, отчёт совету, поиск и нейросети без зоопарка западных сервисов.",

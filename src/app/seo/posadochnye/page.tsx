@@ -5,7 +5,7 @@ import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
 import { LandingsLinksMock, LandingsListMock } from "@/components/TechMocks";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo/posadochnye" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Посадочные страницы — INSONT",
     description:
       "Кластер из Wordstat, город как есть, перелинковка без «купить купить». Клонов районов нет.",

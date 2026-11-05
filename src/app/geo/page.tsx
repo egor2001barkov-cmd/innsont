@@ -4,7 +4,7 @@ import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -36,6 +36,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/geo" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Продвижение в GigaChat, ChatGPT и Алисе — INSONT",
     description:
       "Как попасть в ответы моделей на русском. Вместе с обычным поиском, не вместо него.",

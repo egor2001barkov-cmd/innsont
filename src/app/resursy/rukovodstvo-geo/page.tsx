@@ -5,7 +5,7 @@ import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Руководство AEO и GEO — как попасть в ответы нейросетей",
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "Как сайт попадает в ответы GigaChat, ChatGPT и Алисы. Структура страницы, обход роботов, цитаты, замер. Рядом с продвижением в Яндексе и Google. Только Россия.",
   alternates: { canonical: "/resursy/rukovodstvo-geo" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Руководство AEO / GEO — INSONT",
     description:
       "Практический гайд: чем GEO отличается от SEO, какую страницу цитируют модели и как это мерить без сказки про миллиарды диалогов.",

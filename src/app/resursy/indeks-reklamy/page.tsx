@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Индекс рекламы в ответах ChatGPT — срез по России",
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "Ежедневный срез: как часто в русских ответах ChatGPT виден рекламный блок. Рядом — Директ и Google Ads. Выборка, не весь рынок.",
   alternates: { canonical: "/resursy/indeks-reklamy" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Индекс рекламы в ответах — INSONT",
     description:
       "Смотрим спонсорские блоки в ChatGPT на русском каждый день. Цифры скромные: в России это пока редко.",

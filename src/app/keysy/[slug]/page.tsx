@@ -7,7 +7,7 @@ import { PageAdvantages } from "@/components/Advantages";
 import { CASES, getCase } from "@/lib/cases";
 import { CASE_STORIES } from "@/lib/case-stories";
 import { CASE_STORY_EXTRA } from "@/lib/case-stories-extra";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export function generateStaticParams() {
   return CASES.map((c) => ({ slug: c.slug }));
@@ -26,6 +26,7 @@ export async function generateMetadata({
     description: item.description,
     alternates: { canonical: `/keysy/${item.slug}` },
     openGraph: {
+      images: OG_IMAGE,
       title: item.title,
       description: item.description,
       url: `/keysy/${item.slug}`,

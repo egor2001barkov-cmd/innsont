@@ -1,7 +1,7 @@
 import { AgencyPlans, CompareTable, PricingCards } from "@/components/Pricing";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { PageAdvantages } from "@/components/Advantages";
-import { PLANS, SITE } from "@/lib/site";
+import { PLANS, SITE, OG_IMAGE } from "@/lib/site";
 import type { Metadata } from "next";
 import { FaqList } from "@/components/FaqList";
 
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "Старт от 4 490 ₽ при годе, Базовый 10 790 ₽, Рост 22 490 ₽. Для агентств — питч 8 910 ₽ и корпоративный от 59 900 ₽ по счёту. Рубли, 152-ФЗ.",
   alternates: { canonical: "/tseny" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Тарифы INSONT | Старт, Базовый, Рост",
     description:
       "Месяц или год (−10%): Старт 4 490 ₽, Базовый 10 790 ₽, Рост 22 490 ₽ /мес при оплате года.",

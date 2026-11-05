@@ -13,7 +13,7 @@ import {
   SeoStage,
   SeoWordstatMock,
 } from "@/components/SeoPlay";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -59,6 +59,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Продвижение сайта в Яндексе и Google — INSONT",
     description:
       "Семантика, витрина, техника, тексты. Яндекс, Google и Bing в одном цикле. Без ссылок с бирж.",

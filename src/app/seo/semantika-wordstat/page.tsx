@@ -9,7 +9,7 @@ import {
   WordstatDemandMock,
   WordstatSeasonMock,
 } from "@/components/WordstatView";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const faqs = [
   {
@@ -48,6 +48,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo/semantika-wordstat" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Семантика Wordstat — INSONT",
     description:
       "Частота, хвосты, регион и сезон из Wordstat. Рядом подсказки Google. Кластеры по смыслу, не каша на одном URL.",

@@ -1,3 +1,6 @@
+/** Дефолтная OG-картинка 1200×630 (PNG): Telegram/WhatsApp не рендерят SVG. */
+export const OG_IMAGE = [{ url: "/og/og-default.png", width: 1200, height: 630 }];
+
 export const SITE = {
   name: "INSONT",
   legalName: "INSONT",

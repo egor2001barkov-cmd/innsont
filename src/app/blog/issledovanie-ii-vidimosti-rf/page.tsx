@@ -4,7 +4,7 @@ import { Breadcrumbs, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Что растит ИИ-видимость в России",
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "1 240 коммерческих сайтов РФ, март–июнь 2026. Доля цитирования коррелирует с ростом в GigaChat и ChatGPT на 0,38. Тональность — почти ноль. Что из этого делать команде.",
   alternates: { canonical: "/blog/issledovanie-ii-vidimosti-rf" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Что растит ИИ-видимость в России",
     description:
       "Исследование INSONT: цитаты домена важнее «добрых слов» модели. Плюс связка с коммерческими факторами Яндекса.",

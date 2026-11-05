@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 import { PageAdvantages } from "@/components/Advantages";
 import { FaqList } from "@/components/FaqList";
 
@@ -86,6 +86,7 @@ export const metadata: Metadata = {
     "Привели компанию в INSONT — 20% с её оплат 12 месяцев. Выплата от 1 000 ₽ на расчётный счёт. Для агентств и фрилансеров. Без саморефералов.",
   alternates: { canonical: "/resursy/partnerskaya" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Партнёрская программа INSONT",
     description:
       "20% с оплаты приведённого аккаунта год. Минимум к переводу 1 000 ₽. Окно ссылки 90 дней.",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { CASES } from "@/lib/cases";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 import { PageAdvantages } from "@/components/Advantages";
 
 export const metadata: Metadata = {
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "Разборы СМ-Клиники, МойСклада, Фабрики Окон, Фоксфорда, Центр-инвеста, Нордтеха: что увидели Яндекс и Google и почему сайт стал лучше.",
   alternates: { canonical: "/keysy" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Кейсы INSONT",
     description:
       "Реальные компании среднего размера. Что сделали на сайте и как это сказалось на поиске и ответах нейросетей.",

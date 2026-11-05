@@ -28,7 +28,7 @@ import {
 } from "@/components/HomeExtra";
 import { PageAdvantages } from "@/components/Advantages";
 import { FaqList } from "@/components/FaqList";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
@@ -51,6 +51,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Продвижение сайта в Яндексе и Google — INSONT",
     description: SITE.description,
     url: "/",
