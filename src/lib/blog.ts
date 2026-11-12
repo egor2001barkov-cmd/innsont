@@ -52,9 +52,29 @@ import { post as konkurentyVotvetah } from "./posts/modeli-upominayut-konkurento
 import { post as topvisorMegaindex } from "./posts/topvisor-ili-megaindex";
 import { post as keysSoVebmaster } from "./posts/keys-so-ili-vebmaster";
 import { post as insontAgentstvo } from "./posts/insont-ili-agentstvo";
+import { post as neyroOtvety } from "./posts/yandeks-neyro-kak-popast-v-otvety";
+import { post as chatgptSearch } from "./posts/kak-popast-v-chatgpt-search";
+import { post as geoUsugiB2b } from "./posts/geo-dlya-uslug-b2b";
+import { post as indexnowPost } from "./posts/indexnow-kak-podklyuchit";
+import { post as metrikaSeo } from "./posts/metrika-dlya-seo-celeji-povedenie";
+import { post as semadro } from "./posts/semanticheskoe-yadro-sbor-shagami";
+import { post as ssylkiNovyy } from "./posts/ssylki-dlya-novogo-sayta";
+import { post as seoKlinika } from "./posts/seo-dlya-kliniki-mediciny";
+import { post as ctrSnipet } from "./posts/ctr-snipeta-uvelichit-kliki";
+import { post as analizKonkurentov } from "./posts/analiz-konkurentov-v-poiske";
 
 export const POSTS: Post[] = [
   // Свежие материалы вперёд
+  neyroOtvety,
+  chatgptSearch,
+  geoUsugiB2b,
+  indexnowPost,
+  metrikaSeo,
+  semadro,
+  ssylkiNovyy,
+  seoKlinika,
+  ctrSnipet,
+  analizKonkurentov,
   insontAgentstvo,
   keysSoVebmaster,
   topvisorMegaindex,
@@ -115,8 +135,8 @@ const RELATED: Record<string, string[]> = {
   "beloe-seo-chto-eto": ["kommercheskie-faktory-chek-list", "kak-ponyat-chto-filtr-yandeksa", "skolko-stoit-seo-v-2026"],
   "kommercheskie-faktory-chek-list": ["beloe-seo-chto-eto", "geozaprosy-i-regionalnoe-prodvizhenie", "mikrorazmetka-schema-org-2026"],
   "geo-protiv-seo-chto-meniaetsia-v-2026": ["kak-popast-v-otvety-gigachat", "llms-txt-zachem-i-kak", "kak-izmerit-roi-ii-vidimosti"],
-  "kak-popast-v-otvety-gigachat": ["geo-protiv-seo-chto-meniaetsia-v-2026", "perplexity-i-ai-overviews-kak-citiruyut-sayty", "aeo-dlia-bankov-i-fintech"],
-  "perplexity-i-ai-overviews-kak-citiruyut-sayty": ["geo-protiv-seo-chto-meniaetsia-v-2026", "modeli-upominayut-konkurentov-chto-delat", "kak-otkryt-sayt-ii-krawleram"],
+  "kak-popast-v-otvety-gigachat": ["geo-protiv-seo-chto-meniaetsia-v-2026", "perplexity-i-ai-overviews-kak-citiruyut-sayty", "yandeks-neyro-kak-popast-v-otvety"],
+  "perplexity-i-ai-overviews-kak-citiruyut-sayty": ["geo-protiv-seo-chto-meniaetsia-v-2026", "modeli-upominayut-konkurentov-chto-delat", "kak-popast-v-chatgpt-search"],
   "modeli-upominayut-konkurentov-chto-delat": ["perplexity-i-ai-overviews-kak-citiruyut-sayty", "kak-izmerit-roi-ii-vidimosti", "kak-popast-v-otvety-gigachat"],
   "kak-izmerit-roi-ii-vidimosti": ["geo-protiv-seo-chto-meniaetsia-v-2026", "issledovanie-ii-vidimosti-rf", "modeli-upominayut-konkurentov-chto-delat"],
   "kak-otkryt-sayt-ii-krawleram": ["llms-txt-zachem-i-kak", "geo-protiv-seo-chto-meniaetsia-v-2026", "perplexity-i-ai-overviews-kak-citiruyut-sayty"],
@@ -139,7 +159,7 @@ const RELATED: Record<string, string[]> = {
   "kak-proverit-zakryat-li-sayt-ot-indeksacii": ["robots-txt-dlya-yandex-i-google-primery", "kak-proverit-i-uvelichit-indeksaciyu-sayta", "kak-otkryt-sayt-ii-krawleram"],
   "robots-txt-dlya-yandex-i-google-primery": ["clean-param-chto-eto-i-kak-napisat", "kak-proverit-zakryat-li-sayt-ot-indeksacii", "kak-dobavit-sayt-v-vebmaster-poshagovo"],
   "clean-param-chto-eto-i-kak-napisat": ["robots-txt-dlya-yandex-i-google-primery", "kak-proverit-i-uvelichit-indeksaciyu-sayta", "kak-proverit-zakryat-li-sayt-ot-indeksacii"],
-  "kak-proverit-i-uvelichit-indeksaciyu-sayta": ["kak-proverit-zakryat-li-sayt-ot-indeksacii", "yandex-vebmaster-instrumenty", "search-console-dlya-russkogo-saita"],
+  "kak-proverit-i-uvelichit-indeksaciyu-sayta": ["kak-proverit-zakryat-li-sayt-ot-indeksacii", "yandex-vebmaster-instrumenty", "indexnow-kak-podklyuchit"],
   "skolko-stoit-seo-v-2026": ["insont-ili-agentstvo", "kak-vybrat-seo-podryadchika", "topvisor-ili-megaindex"],
   "insont-ili-agentstvo": ["skolko-stoit-seo-v-2026", "kak-vybrat-seo-podryadchika", "keys-so-ili-vebmaster"],
   "kak-vybrat-seo-podryadchika": ["insont-ili-agentstvo", "skolko-stoit-seo-v-2026", "brendovye-zaprosy-i-iks"],
@@ -150,6 +170,16 @@ const RELATED: Record<string, string[]> = {
   "geozaprosy-i-regionalnoe-prodvizhenie": ["wordstat-instrukciya-s-chastotoy", "kommercheskie-faktory-chek-list", "wordstat-istoriya-zaprosov-sezonost"],
   "seo-internet-magazina-2026": ["kanibalizaciya-klyuchevyh-zaprosov", "aeo-dlya-internet-magazina", "kommercheskie-faktory-chek-list"],
   "issledovanie-ii-vidimosti-rf": ["kak-izmerit-roi-ii-vidimosti", "geo-protiv-seo-chto-meniaetsia-v-2026", "modeli-upominayut-konkurentov-chto-delat"],
+  "yandeks-neyro-kak-popast-v-otvety": ["kak-popast-v-otvety-gigachat", "geo-protiv-seo-chto-meniaetsia-v-2026", "kak-otkryt-sayt-ii-krawleram"],
+  "kak-popast-v-chatgpt-search": ["perplexity-i-ai-overviews-kak-citiruyut-sayty", "llms-txt-zachem-i-kak", "geo-dlya-uslug-b2b"],
+  "geo-dlya-uslug-b2b": ["kak-izmerit-roi-ii-vidimosti", "modeli-upominayut-konkurentov-chto-delat", "skolko-stoit-seo-v-2026"],
+  "indexnow-kak-podklyuchit": ["kak-proverit-i-uvelichit-indeksaciyu-sayta", "kak-dobavit-sayt-v-vebmaster-poshagovo", "robots-txt-dlya-yandex-i-google-primery"],
+  "metrika-dlya-seo-celeji-povedenie": ["yandex-vebmaster-instrumenty", "kommercheskie-faktory-chek-list", "search-console-dlya-russkogo-saita"],
+  "semanticheskoe-yadro-sbor-shagami": ["wordstat-instrukciya-s-chastotoy", "wordstat-istoriya-zaprosov-sezonost", "posadochnaya-stranica-anatomiya"],
+  "ssylki-dlya-novogo-sayta": ["beloe-seo-chto-eto", "skolko-stoit-seo-v-2026", "brendovye-zaprosy-i-iks"],
+  "seo-dlya-kliniki-mediciny": ["kommercheskie-faktory-chek-list", "mikrorazmetka-schema-org-2026", "beloe-seo-chto-eto"],
+  "ctr-snipeta-uvelichit-kliki": ["title-i-description-normy-dliny-primery", "search-console-dlya-russkogo-saita", "metrika-dlya-seo-celeji-povedenie"],
+  "analiz-konkurentov-v-poiske": ["topvisor-ili-megaindex", "keys-so-ili-vebmaster", "kanibalizaciya-klyuchevyh-zaprosov"],
 };
 
 /** До трёх связанных постов для блока «Читайте дальше». */

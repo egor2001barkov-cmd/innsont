@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#7c3aed"/>
+  <text x="64" y="110" font-family="Georgia, serif" font-size="96" font-weight="700" fill="#efe6d8">01</text>
+  <text x="64" y="158" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#7c3aed" letter-spacing="3">НЕЙРОСЕТИ</text>
+  <text x="64" y="248" font-family="system-ui, sans-serif" font-size="54" font-weight="700" fill="#1f1b16">Яндекс Нейро:</text>
+  <text x="64" y="312" font-family="system-ui, sans-serif" font-size="54" font-weight="700" fill="#1f1b16">как попасть в ответы</text>
+  <line x1="64" y1="352" x2="640" y2="352" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="404" font-family="system-ui, sans-serif" font-size="24" fill="#7a6f60">INSONT · insont.ru/blog/yandeks-neyro-kak-popast-v-otvety</text>
+  <g><polyline points="760,470 806,440 852,455 898,415 944,430 990,390 1036,405 1082,365 1128,350" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="1128" cy="350" r="12" fill="#7c3aed"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>
