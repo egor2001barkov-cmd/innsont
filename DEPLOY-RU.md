@@ -135,3 +135,29 @@ ssh elizon "chown -R 1001:65533 /opt/innsont/data"
 - Контроль: `df -h /` (держать <80%) и `docker system df`.
 - Сборки — вне часов пик; при 502 после сборки: `systemctl restart docker && cd /opt/innsont && docker compose up -d`.
 - Долгосрочно: собирать образ вне VPS (локально/CI) и доставлять через registry, либо поднять тариф VPS.
+
+## IndexNow и Bing Webmaster (с 15.11.2026)
+
+IndexNow — один POST, после которого Bing, Yandex, Seznam и Naver ставят URL в очередь
+переобхода. Ключ лежит открыто: `public/97b8285b4f079f10dfe0f9e8801a4217.txt`
+(имя файла = ключ, так требует протокол; содержимое — тот же ключ).
+
+После деплоя проверить ключ и отправить весь sitemap:
+
+```bash
+curl -s https://insont.ru/97b8285b4f079f10dfe0f9e8801a4217.txt   # должен вернуть ключ
+ssh elizon 'cd /opt/innsont && /opt/node/bin/node scripts/indexnow.mjs --dry-run'
+ssh elizon 'cd /opt/innsont && /opt/node/bin/node scripts/indexnow.mjs'
+# ждём «Ответ: HTTP 200» или «202»
+```
+
+Точечно после статьи: `node scripts/indexnow.mjs --url https://insont.ru/blog/<slug>`.
+Из кабинета/крона — `POST /api/indexnow` с заголовком `x-indexnow-secret: $INDEXNOW_SECRET`
+и телом `{"urls": [...]}` (пустое тело = весь sitemap). Без `INDEXNOW_SECRET` в `.env`
+эндпоинт отвечает 503.
+
+Bing Webmaster Tools: сайт добавляется вручную на bing.com/webmasters (импорт из GSC
+не работает — OAuth-клиент мёртв). Проверка файлом: Bing даёт токен вида
+`ABCD1234...`, его кладём в `/opt/innsont-app/.env` как `BING_SITE_AUTH=<токен>` и
+перезапускаем сервис — `/BingSiteAuth.xml` начнёт отдавать XML без пересборки.
+Проверка: `curl -s https://insont.ru/BingSiteAuth.xml`.
