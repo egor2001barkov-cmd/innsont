@@ -2,6 +2,7 @@
 // Полный список существующих путей (статические страницы + слаги динамики).
 // Используется middleware для решения: слэш-URL → 308 (путь есть) или сразу 404 (пути нет).
 export const KNOWN_PATHS = new Set<string>([
+  "/api-dokumentaciya",
   "/blog",
   "/blog/aeo-dlia-bankov-i-fintech",
   "/blog/aeo-dlya-internet-magazina",
@@ -69,6 +70,7 @@ export const KNOWN_PATHS = new Set<string>([
   "/instrumenty/proverka-krawlerov",
   "/kabinet",
   "/kabinet/akkaunt",
+  "/kabinet/api",
   "/kabinet/audit",
   "/kabinet/boty",
   "/kabinet/bulk",

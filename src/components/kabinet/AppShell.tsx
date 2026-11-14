@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { formatRub } from "@/lib/site";
 import { clearSession, isDevAccount, loadSession, planForSession, saveSession, type Session } from "@/lib/session";
@@ -40,6 +40,7 @@ const ANALYTICS = [
 
 const SETTINGS = [
   { href: "/kabinet/integratsii", label: "Интеграции", icon: "wrench" },
+  { href: "/kabinet/api", label: "API-ключи", icon: "key" },
   { href: "/kabinet/stili", label: "Стили письма", icon: "pen" },
   { href: "/kabinet/deystviya", label: "Центр действий", icon: "zap" },
   { href: "/kabinet/druzia", label: "Пригласить друга", icon: "mail" },
@@ -107,7 +108,6 @@ function NavLink({
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeId, setActiveId] = useState("site");
@@ -129,16 +129,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       const server = await apiMe();
       if (!server) {
         clearSession();
-        router.replace("/vhod");
+        window.location.replace("/vhod");
       }
     })();
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const sync = () => {
       const s = loadSession();
       if (!s) {
-        router.replace("/vhod");
+        window.location.replace("/vhod");
         return;
       }
       setSession(s);
@@ -161,14 +161,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       window.removeEventListener("insont-session", sync);
       window.removeEventListener("insont-workspace", sync);
     };
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     if (!session) return;
     if (!hasOnboardedProject(projects) && pathname !== "/kabinet/onboarding") {
-      router.replace("/kabinet/onboarding");
+      window.location.replace("/kabinet/onboarding");
     }
-  }, [session, projects, pathname, router]);
+  }, [session, projects, pathname]);
 
   const active = projects.find((p) => p.id === activeId) || projects[0];
   const plan = planForSession(session);
@@ -200,7 +200,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     setProjects(next);
     if (activeId === id) {
       if (next[0]) selectProject(next[0].id);
-      else router.push("/kabinet/onboarding");
+      else window.location.assign("/kabinet/onboarding");
     }
   }
 
@@ -385,7 +385,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               onClick={() => {
                 void apiLogout();
                 clearSession();
-                router.push("/");
+                window.location.assign("/");
               }}
             >
               Выйти
@@ -434,7 +434,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </button>
             <button
               className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e5e7eb] text-[11px] font-bold"
-              onClick={() => router.push("/kabinet/akkaunt")}
+              onClick={() => window.location.assign("/kabinet/akkaunt")}
             >
               {initials}
             </button>

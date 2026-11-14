@@ -44,6 +44,7 @@ export type Counters = {
   promptsUsed: number;
   articlesUsed: number;
   auditsUsed: number;
+  apiCallsUsed: number;
   freeQueriesUsed: number;
 };
 
@@ -106,8 +107,9 @@ function wpPath(id: string, projectId: string) {
 
 function normalizeAccount(raw: Account): Account {
   if (raw.counters.period !== currentPeriod()) {
-    raw.counters = { period: currentPeriod(), promptsUsed: 0, articlesUsed: 0, auditsUsed: 0, freeQueriesUsed: 0 };
+    raw.counters = { period: currentPeriod(), promptsUsed: 0, articlesUsed: 0, auditsUsed: 0, apiCallsUsed: 0, freeQueriesUsed: 0 };
   }
+  raw.counters.apiCallsUsed = raw.counters.apiCallsUsed || 0;
   return raw;
 }
 
@@ -126,7 +128,7 @@ export function createAccount(input: {
     id,
     email,
     password: input.password,
-    counters: { period: currentPeriod(), promptsUsed: 0, articlesUsed: 0, auditsUsed: 0, freeQueriesUsed: 0 },
+    counters: { period: currentPeriod(), promptsUsed: 0, articlesUsed: 0, auditsUsed: 0, apiCallsUsed: 0, freeQueriesUsed: 0 },
     name: (input.name || email.split("@")[0]).slice(0, 100),
     company: (input.company || "").slice(0, 150),
     plan: dev ? "growth" : "starter",
@@ -180,13 +182,14 @@ export function saveAccount(acc: Account) {
 export function limitsFor(acc: Account) {
   const plan = PLANS.find((p) => p.id === acc.plan) ?? PLANS[0];
   if (isDevEmail(acc.email)) {
-    return { articles: 9999, prompts: 999_999, audits: 9999, projects: 9999, styles: 9999, name: "Разработчик" };
+    return { articles: 9999, prompts: 999_999, audits: 9999, apiCalls: 99999, projects: 9999, styles: 9999, name: "Разработчик" };
   }
   const n = acc.referralCount || 0;
   return {
     articles: scaleLimit(plan.limits.articles, n),
     prompts: scaleLimit(plan.limits.prompts, n),
     audits: scaleLimit(plan.limits.audits, n),
+    apiCalls: scaleLimit(plan.limits.apiCalls, n),
     projects: scaleLimit(plan.limits.projects, n),
     styles: scaleLimit(plan.limits.styles, n),
     name: plan.name,
@@ -230,6 +233,7 @@ export function publicProfile(acc: Account) {
     ...rest,
     articlesUsed: counters.articlesUsed,
     auditsUsed: counters.auditsUsed,
+    apiCallsUsed: counters.apiCallsUsed || 0,
     promptsUsed: counters.promptsUsed,
     freeQueriesUsed: counters.freeQueriesUsed,
   };
