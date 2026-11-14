@@ -89,7 +89,7 @@ const res = await fetch(ENDPOINT, {
   body: JSON.stringify({ host: new URL(SITE).host, key, keyLocation, urlList: urls }),
 });
 
-const body = (await res.text()).catch(() => "");
+const body = await res.text().catch(() => "");
 console.log(`Ответ: HTTP ${res.status}${body ? ` — ${body.trim().slice(0, 300)}` : ""}`);
 
 // 200 — принято, 202 — принято, ключ проверяется асинхронно
