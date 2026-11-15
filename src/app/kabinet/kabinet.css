@@ -410,3 +410,47 @@ html[data-theme="dark"] .ws-app .hover\:text-\[\#111827\]:hover {
     animation: none;
   }
 }
+
+/* --- Kill AI slop: системный слой ------------------------------------------
+   Один акцент, спокойные радиусы, предсказуемые ховеры, без капса и градиентов. */
+
+.ws-app {
+  --ws-radius: 14px;
+  --ws-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* градиентные карточки → ровная поверхность */
+.ws-app [class*="bg-gradient"] {
+  background-image: none !important;
+  background-color: var(--ws-card) !important;
+}
+
+/* «пружинные» transition-all → конкретные свойства и 160 мс */
+.ws-app .transition-all {
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ws-ease);
+}
+
+/* капс-микрозаголовки → обычный регистр с мягким трекингом */
+.ws-app .uppercase {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+/* одинаковая геометрия карточек */
+.ws-app .rounded-xl,
+.ws-app .rounded-2xl {
+  border-radius: var(--ws-radius);
+}
+
+/* моноширинный только для кода и ключей: в остальных местах — обычный шрифт */
+.ws-app .font-mono:not(code):not(pre) {
+  font-family: "Manrope", var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.ws-app .font-mono:not(code):not(pre)::selection {
+  background: #fde68a;
+}
