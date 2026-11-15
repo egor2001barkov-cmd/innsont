@@ -80,6 +80,16 @@ export default function AuditPage() {
   const [depth, setDepth] = useState<"быстрый" | "полный">("полный");
   const [modules, setModules] = useState<Set<AuditModule>>(new Set(Object.keys(MODULE_LABELS) as AuditModule[]));
 
+  useEffect(() => {
+    if (!live) return;
+    const startedAt = live.startedAt;
+    const tick = () => setElapsed(Math.floor((Date.now() - startedAt) / 1000));
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [live?.startedAt]);
+
   if (!ready || !session || !project) return null;
 
   function toggleModule(m: AuditModule) {
@@ -90,16 +100,6 @@ export default function AuditPage() {
       return next;
     });
   }
-
-  useEffect(() => {
-    if (!live) return;
-    const startedAt = live.startedAt;
-    const tick = () => setElapsed(Math.floor((Date.now() - startedAt) / 1000));
-    tick();
-    const timer = setInterval(tick, 1000);
-    return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [live?.startedAt]);
 
   async function run() {
     setBusy(true);
