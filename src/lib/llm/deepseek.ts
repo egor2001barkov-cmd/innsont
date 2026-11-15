@@ -123,31 +123,38 @@ export async function* deepseekStream(
     const decoder = new TextDecoder();
     let buffer = "";
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
 
-      let nl: number;
-      while ((nl = buffer.indexOf("\n")) >= 0) {
-        const line = buffer.slice(0, nl).trim();
-        buffer = buffer.slice(nl + 1);
-        if (!line.startsWith("data:")) continue;
+        let nl: number;
+        while ((nl = buffer.indexOf("\n")) >= 0) {
+          const line = buffer.slice(0, nl).trim();
+          buffer = buffer.slice(nl + 1);
+          if (!line.startsWith("data:")) continue;
 
-        const payload = line.slice(5).trim();
-        if (payload === "[DONE]") return;
+          const payload = line.slice(5).trim();
+          if (payload === "[DONE]") return;
 
-        try {
-          const json = JSON.parse(payload) as {
-            choices?: { delta?: { content?: string; reasoning_content?: string } }[];
-          };
-          const delta = json.choices?.[0]?.delta;
-          if (delta?.reasoning_content) yield { type: "reasoning", text: delta.reasoning_content };
-          if (delta?.content) yield { type: "content", text: delta.content };
-        } catch {
-          // неполный JSON в потоке — пропускаем строку
+          try {
+            const json = JSON.parse(payload) as {
+              choices?: { delta?: { content?: string; reasoning_content?: string } }[];
+            };
+            const delta = json.choices?.[0]?.delta;
+            if (delta?.reasoning_content) yield { type: "reasoning", text: delta.reasoning_content };
+            if (delta?.content) yield { type: "content", text: delta.content };
+          } catch {
+            // неполный JSON в потоке — пропускаем строку
+          }
         }
       }
+    } finally {
+      // Закрываем соединение сразу: иначе после [DONE] сокет остаётся висеть,
+      // и на 3–4-м разделе провайдер рвёт следующий стрим (fetch failed).
+      await reader.cancel().catch(() => {});
+      controller.abort();
     }
   } finally {
     clearTimeout(timer);
