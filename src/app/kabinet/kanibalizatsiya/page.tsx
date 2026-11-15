@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
+import { Icon } from "@/components/Icons";
 
 type PageEntry = { url: string; title: string; source: string };
 type Conflict = { keywords: string[]; pages: PageEntry[]; severity: "высокая" | "средняя" | "низкая"; recommendation: string };
@@ -72,16 +73,16 @@ export default function CannibalizationPage() {
       <div className="ws-card mt-3 space-y-3 p-4">
         <div className="inline-flex rounded-lg bg-[#f3f4f6] p-1 text-[13px] font-medium">
           <button
-            className={`rounded-md px-4 py-2 ${mode === "library" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
+            className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 ${mode === "library" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
             onClick={() => setMode("library")}
           >
-            📝 Статьи кабинета
+            <Icon name="doc" className="h-4 w-4" /> Статьи кабинета
           </button>
           <button
-            className={`rounded-md px-4 py-2 ${mode === "sitemap" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
+            className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 ${mode === "sitemap" ? "bg-white shadow-sm" : "text-[#6b7280]"}`}
             onClick={() => setMode("sitemap")}
           >
-            🌐 Sitemap сайта
+            <Icon name="pages" className="h-4 w-4" /> Sitemap сайта
           </button>
         </div>
 
