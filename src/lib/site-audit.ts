@@ -21,7 +21,9 @@ export type BlockScore = {
   engine: "google" | "yandex";
   block: string;
   weight: number;
-  score: number; // 0–100
+  /** null — блок нечем измерить: в общую оценку он не входит. */
+  score: number | null;
+  measured: boolean;
   comment: string;
 };
 
@@ -29,8 +31,9 @@ export type SiteAudit = {
   site: string;
   startedAt: string;
   durationMs: number;
-  googleScore: number;
-  yandexScore: number;
+  googleScore: number | null;
+  yandexScore: number | null;
+  coverage: { blocksTotal: number; blocksMeasured: number; weightMeasured: number; weightTotal: number };
   blocks: BlockScore[];
   findings: SiteFinding[];
   facts: {
@@ -340,33 +343,63 @@ export async function auditSite(
     return Math.round((wGot / wSum) * 100);
   }
 
+  const mkBlock = (
+    engine: "google" | "yandex",
+    block: string,
+    weight: number,
+    score: number | null,
+    comment: string,
+  ): BlockScore => ({
+    engine,
+    block,
+    weight,
+    score,
+    measured: score !== null,
+    comment: score === null ? `нет данных · ${comment}` : comment,
+  });
+
   const idxChecks = [...checks.robots, ...checks.sitemap, ...checks.redirects, ...checks.notFound404];
   const googleBlocks: BlockScore[] = [
-    { engine: "google", block: "Индексация (sitemap, robots, дубли)", weight: 25, score: blockScore(idxChecks) ?? 50, comment: `${locs.length} URL в sitemap` },
-    { engine: "google", block: "Скорость (TTFB)", weight: 20, score: blockScore(checks.speed) ?? 50, comment: `средний ${avgTtfb} мс` },
-    { engine: "google", block: "Контент и структура", weight: 20, score: blockScore(checks.onpage) ?? 50, comment: `title ${title.length}, H1 ×${homepage.h1Count}` },
-    { engine: "google", block: "Schema.org", weight: 15, score: blockScore(checks.schemaBlock) ?? 50, comment: schemaTypes.slice(0, 4).join(", ") || "нет" },
-    { engine: "google", block: "Мобильная версия", weight: 10, score: viewportOk ? 100 : 30, comment: viewportOk ? "viewport корректный" : "viewport отсутствует" },
-    { engine: "google", block: "Безопасность (HTTPS, заголовки)", weight: 10, score: blockScore(checks.security) ?? 50, comment: headers.hsts ? "HSTS есть" : "HSTS нет" },
+    mkBlock("google", "Индексация (sitemap, robots, дубли)", 25, blockScore(idxChecks), `${locs.length} URL в sitemap`),
+    mkBlock("google", "Скорость (TTFB)", 20, blockScore(checks.speed), `средний ${avgTtfb} мс по ${speedPages.length} стр.`),
+    mkBlock("google", "Контент и структура", 20, blockScore(checks.onpage), `title ${title.length} симв., H1 ×${homepage.h1Count}`),
+    mkBlock("google", "Schema.org", 15, blockScore(checks.schemaBlock), schemaTypes.slice(0, 4).join(", ") || "разметки нет"),
+    mkBlock("google", "Мобильная версия", 10, viewportOk ? 100 : 30, viewportOk ? "viewport корректный" : "viewport отсутствует"),
+    mkBlock("google", "Безопасность (HTTPS, заголовки)", 10, blockScore(checks.security), headers.hsts ? "HSTS есть" : "HSTS нет"),
   ];
 
   const behaviorComment =
     opts.bounceRate !== undefined
       ? `отказы ${opts.bounceRate}% (Метрика)`
-      : "не проверено: подключите Метрику";
+      : "Метрика не подключена к аудиту";
   const behaviorScore =
-    opts.bounceRate === undefined ? 50 : opts.bounceRate < 40 ? 85 : opts.bounceRate < 55 ? 60 : 40;
+    opts.bounceRate === undefined ? null : opts.bounceRate < 40 ? 85 : opts.bounceRate < 55 ? 60 : 40;
+
   const yandexBlocks: BlockScore[] = [
-    { engine: "yandex", block: "Индексация (robots, Вебмастер)", weight: 20, score: blockScore(idxChecks) ?? 50, comment: robots.cleanParam ? "Clean-param есть" : "Clean-param нет" },
-    { engine: "yandex", block: "Коммерческие факторы", weight: 20, score: Math.round((commercialScore / 6) * 100), comment: `${commercialScore} из 6 факторов` },
-    { engine: "yandex", block: "Поведенческие (Метрика)", weight: 15, score: behaviorScore, comment: behaviorComment },
-    { engine: "yandex", block: "Контент и ИКС-факторы", weight: 15, score: blockScore(checks.onpage) ?? 50, comment: `текст главной ~${Math.round(plain.length / 1000)} тыс. знаков` },
-    { engine: "yandex", block: "Скорость для бота", weight: 10, score: blockScore(checks.speed) ?? 50, comment: `средний ${avgTtfb} мс` },
-    { engine: "yandex", block: "Регион и NAP", weight: 10, score: Math.round(((commercial.address ? 1 : 0) + (commercial.phone ? 1 : 0) + (commercial.address && commercial.phone ? 1 : 0)) / 3 * 100), comment: commercial.address && commercial.phone ? "адрес и телефон есть" : "NAP неполный" },
+    mkBlock("yandex", "Индексация (robots, sitemap, дубли)", 20, blockScore(idxChecks), robots.cleanParam ? "Clean-param есть" : "Clean-param нет"),
+    mkBlock("yandex", "Коммерческие факторы", 20, Math.round((commercialScore / 6) * 100), `${commercialScore} из 6 факторов`),
+    mkBlock("yandex", "Поведенческие (Метрика)", 15, behaviorScore, behaviorComment),
+    mkBlock("yandex", "Контент (ИКС не запрашивался)", 15, blockScore(checks.onpage), `текст главной ~${Math.round(plain.length / 1000)} тыс. знаков; ИКС — только через Вебмастер`),
+    mkBlock("yandex", "Скорость для бота", 10, blockScore(checks.speed), `средний ${avgTtfb} мс`),
+    mkBlock("yandex", "Регион и NAP", 10, Math.round(((commercial.address ? 1 : 0) + (commercial.phone ? 1 : 0) + (commercial.address && commercial.phone ? 1 : 0)) / 3 * 100), commercial.address && commercial.phone ? "адрес и телефон есть" : "NAP неполный"),
   ];
 
-  const googleScore = Math.round(googleBlocks.reduce((s, b) => s + (b.score * b.weight) / 100, 0));
-  const yandexScore = Math.round(yandexBlocks.reduce((s, b) => s + (b.score * b.weight) / 100, 0));
+  const allBlocks = [...googleBlocks, ...yandexBlocks];
+  const weighted = (blocks: BlockScore[]) => {
+    const measured = blocks.filter((b) => b.score !== null);
+    if (measured.length === 0) return null;
+    const weight = measured.reduce((sum, b) => sum + b.weight, 0);
+    return Math.round(measured.reduce((sum, b) => sum + (b.score as number) * b.weight, 0) / weight);
+  };
+
+  const googleScore = weighted(googleBlocks);
+  const yandexScore = weighted(yandexBlocks);
+  const coverage = {
+    blocksTotal: allBlocks.length,
+    blocksMeasured: allBlocks.filter((b) => b.measured).length,
+    weightMeasured: allBlocks.filter((b) => b.measured).reduce((sum, b) => sum + b.weight, 0),
+    weightTotal: allBlocks.reduce((sum, b) => sum + b.weight, 0),
+  };
 
   const sevRank: Record<AuditSeverity, number> = { critical: 0, high: 1, medium: 2, low: 3 };
   findings.sort((a, b) => sevRank[a.severity] - sevRank[b.severity]);
@@ -377,7 +410,8 @@ export async function auditSite(
     durationMs: Date.now() - t0,
     googleScore,
     yandexScore,
-    blocks: [...googleBlocks, ...yandexBlocks],
+    coverage,
+    blocks: allBlocks,
     findings,
     facts: {
       robots,
@@ -390,7 +424,7 @@ export async function auditSite(
       commercial,
       geo,
     },
-    note: "Аудит по методике seo-ru: HTML читается без выполнения JavaScript; поведенческий блок Яндекса считается по отказам из Метрики, если счётчик подключён.",
+    note: "Аудит по методике seo-ru: только измеренные факты. Блоки без данных не входят в оценку и помечены «нет данных» — оценка показывает покрытие, а не догадку.",
   };
 }
 

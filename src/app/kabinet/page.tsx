@@ -26,7 +26,7 @@ export default function KabinetHome() {
   const { session, setSession, project, plan, ready } = useWorkspace();
   const [stats, setStats] = useState<Stats | null>(null);
   const [articles, setArticles] = useState<ServerArticle[]>([]);
-  const [lastAudit, setLastAudit] = useState<{ google: number; yandex: number; at: string } | null>(null);
+  const [lastAudit, setLastAudit] = useState<{ google: number | null; yandex: number | null; at: string } | null>(null);
 
   useEffect(() => {
     if (!project) return;
@@ -93,7 +93,7 @@ export default function KabinetHome() {
           <span>
             <span className="block text-[17px] font-bold text-[#111827]">Аудит сайта</span>
             <span className="mt-0.5 block text-[13px] text-[#6b7280]">
-              {lastAudit ? `Последний: ${lastAudit.google}/${lastAudit.yandex} · ${lastAudit.at}` : "Двойной скор Google/Яндекс"}
+              {lastAudit ? `Последний: ${lastAudit.google ?? "н/д"}/${lastAudit.yandex ?? "н/д"} · ${lastAudit.at}` : "Двойной скор Google/Яндекс"}
             </span>
           </span>
         </Link>
@@ -127,7 +127,7 @@ export default function KabinetHome() {
           },
           {
             k: "Аудит сайта",
-            v: lastAudit ? `${lastAudit.google} / ${lastAudit.yandex}` : "—",
+            v: lastAudit ? `${lastAudit.google ?? "н/д"} / ${lastAudit.yandex ?? "н/д"}` : "—",
             sub: lastAudit ? `Google / Яндекс · ${lastAudit.at}` : "не запускался",
           },
           {

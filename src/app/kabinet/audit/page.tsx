@@ -19,9 +19,10 @@ type Finding = {
 type Audit = {
   site: string;
   durationMs: number;
-  googleScore: number;
-  yandexScore: number;
-  blocks: { engine: "google" | "yandex"; block: string; weight: number; score: number; comment: string }[];
+  googleScore: number | null;
+  yandexScore: number | null;
+  blocks: { engine: "google" | "yandex"; block: string; weight: number; score: number | null; measured: boolean; comment: string }[];
+  coverage: { blocksTotal: number; blocksMeasured: number; weightMeasured: number; weightTotal: number };
   findings: Finding[];
   facts: {
     robots: { found: boolean; cleanParam: boolean; sitemapDirective: boolean; aiBotsBanned: string[] };
@@ -152,7 +153,8 @@ export default function AuditPage() {
     if (!audit) return;
     const lines = [
       `# Аудит ${audit.site} — ${new Date().toISOString().slice(0, 10)}`,
-      `Google: ${audit.googleScore}/100 | Яндекс: ${audit.yandexScore}/100 | ${(audit.durationMs / 1000).toFixed(1)}с`,
+      `Google: ${audit.googleScore ?? "н/д"}/100 | Яндекс: ${audit.yandexScore ?? "н/д"}/100 | ${(audit.durationMs / 1000).toFixed(1)}с`,
+      `Измерено блоков: ${audit.coverage.blocksMeasured} из ${audit.coverage.blocksTotal} (${Math.round((audit.coverage.weightMeasured / audit.coverage.weightTotal) * 100)}% веса)`,
       "",
       "## Находки",
       ...audit.findings.map((f) => `### [${SEV[f.severity].label}] ${f.area}: ${f.title}\n${f.detail}\n**Чинить:** ${f.fix}\n**Проверка:** ${f.watch}\n`),
@@ -236,6 +238,9 @@ export default function AuditPage() {
             </div>
             <div className="ws-card p-4 text-[13px] leading-relaxed text-[#374151]">
               <p><b>{audit.site}</b> · {(audit.durationMs / 1000).toFixed(1)}с</p>
+              <p className="mt-1 text-[#6b7280]">
+                Оценка по {audit.coverage.blocksMeasured} из {audit.coverage.blocksTotal} блоков ({Math.round((audit.coverage.weightMeasured / audit.coverage.weightTotal) * 100)}% веса). Остальное — «нет данных», а не ноль.
+              </p>
               <p className="mt-1">
                 TTFB {audit.facts.speed.avgTtfbMs}мс · sitemap {audit.facts.sitemap.urls} URL ·
                 H1 ×{audit.facts.homepage.h1Count} · schema: {audit.facts.homepage.schemaTypes.slice(0, 3).join(", ") || "нет"}
@@ -259,11 +264,21 @@ export default function AuditPage() {
           <div className="mt-4 grid gap-4 lg:grid-cols-2">
             <div className="ws-card p-4">
               <h2 className="text-sm font-semibold">Блоки Google-скора</h2>
-              <HBars items={googleBlocks.map((b) => ({ label: `${b.block} (${b.weight})`, value: b.score, color: b.score >= 70 ? "#16a34a" : b.score >= 50 ? "#ea580c" : "#dc2626" }))} />
+              <HBars items={googleBlocks.filter((b) => b.score !== null).map((b) => ({ label: `${b.block} (${b.weight})`, value: b.score as number, color: (b.score as number) >= 70 ? "#16a34a" : (b.score as number) >= 50 ? "#ea580c" : "#dc2626" }))} />
+              {googleBlocks.some((b) => b.score === null) && (
+                <p className="mt-2 text-[12px] text-[#9ca3af]">
+                  Нет данных: {googleBlocks.filter((b) => b.score === null).map((b) => b.block).join(", ")}
+                </p>
+              )}
             </div>
             <div className="ws-card p-4">
               <h2 className="text-sm font-semibold">Блоки Яндекс-скора</h2>
-              <HBars items={yandexBlocks.map((b) => ({ label: `${b.block} (${b.weight})`, value: b.score, color: b.score >= 70 ? "#16a34a" : b.score >= 50 ? "#ea580c" : "#dc2626" }))} />
+              <HBars items={yandexBlocks.filter((b) => b.score !== null).map((b) => ({ label: `${b.block} (${b.weight})`, value: b.score as number, color: (b.score as number) >= 70 ? "#16a34a" : (b.score as number) >= 50 ? "#ea580c" : "#dc2626" }))} />
+              {yandexBlocks.some((b) => b.score === null) && (
+                <p className="mt-2 text-[12px] text-[#9ca3af]">
+                  Нет данных: {yandexBlocks.filter((b) => b.score === null).map((b) => b.block).join(", ")}
+                </p>
+              )}
             </div>
           </div>
 

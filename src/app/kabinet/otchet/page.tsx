@@ -24,7 +24,7 @@ export default function WeeklyReportPage() {
   const [report, setReport] = useState<Report | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
-  const [lastAudit, setLastAudit] = useState<{ at: string; scores: { google: number; yandex: number } } | null>(null);
+  const [lastAudit, setLastAudit] = useState<{ at: string; scores: { google: number | null; yandex: number | null } } | null>(null);
 
   useEffect(() => {
     if (!project) return;

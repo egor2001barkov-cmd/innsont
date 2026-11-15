@@ -152,12 +152,13 @@ export function Donut({
   );
 }
 
-export function Gauge({ value, label }: { value: number; label?: string }) {
-  const clamped = Math.max(0, Math.min(100, value));
+export function Gauge({ value, label }: { value: number | null; label?: string }) {
+  const known = value !== null;
+  const clamped = known ? Math.max(0, Math.min(100, value)) : 0;
   const r = 70;
   const c = Math.PI * r;
   const dash = (clamped / 100) * c;
-  const color = clamped >= 75 ? "#16a34a" : clamped >= 50 ? "#ea580c" : "#dc2626";
+  const color = !known ? "#d1d5db" : clamped >= 75 ? "#16a34a" : clamped >= 50 ? "#ea580c" : "#dc2626";
   return (
     <div className="flex flex-col items-center">
       <svg width="200" height="120" viewBox="0 0 200 120">
@@ -173,7 +174,7 @@ export function Gauge({ value, label }: { value: number; label?: string }) {
           />
         </g>
         <text x="100" y="88" textAnchor="middle" fontSize="28" fontWeight="700" fill="#111827">
-          {Math.round(clamped)}
+          {known ? Math.round(clamped) : "—"}
         </text>
       </svg>
       {label && <div className="-mt-2 text-sm text-[#6b7280]">{label}</div>}
