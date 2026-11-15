@@ -322,7 +322,7 @@ export default function AuditPage() {
                 <span className={p.status === 200 ? "text-[#15803d]" : "text-[#b91c1c]"}>{p.status}</span>
                 <span className="flex-1 truncate text-[#374151]">{p.url.replace(/^https?:\/\/[^/]+/, "") || "/"}</span>
                 <span className="text-[#9ca3af]">{p.words} слов</span>
-                {p.humanHits > 0 && <span className="text-[#b45309]">humanizer {p.humanHits}</span>}
+                {p.humanHits > 0 && <span className="text-[#b45309]">проверка {p.humanHits}</span>}
               </div>
             ))}
             {live.pages.length === 0 && <div className="ws-skeleton"><span /><span style={{ width: "70%" }} /></div>}
@@ -401,7 +401,7 @@ export default function AuditPage() {
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-[12px]">
-                  <thead><tr className="text-left text-[#9ca3af]"><th>URL</th><th>Код</th><th>Слов</th><th>H1</th><th>noindex</th><th>Schema</th><th>Humanizer</th></tr></thead>
+                  <thead><tr className="text-left text-[#9ca3af]"><th>URL</th><th>Код</th><th>Слов</th><th>H1</th><th>noindex</th><th>Schema</th><th>Проверка</th></tr></thead>
                   <tbody>
                     {audit.deep.pages.map((p) => (
                       <tr key={p.url} className="border-t border-[#f3f4f6]">

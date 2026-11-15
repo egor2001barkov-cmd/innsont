@@ -340,10 +340,10 @@ function Writer() {
       if (result.humanizer) {
         setHumanizerNote(
           result.humanizer.applied
-            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}${
+            ? `проверка: ${result.humanizer.before} → ${result.humanizer.after}${
                 result.humanizer.dashesBefore ? `, тире ${result.humanizer.dashesBefore} → ${result.humanizer.dashesAfter}` : ""
               }`
-            : `humanizer: чисто, правки не понадобились`,
+            : `проверка: чисто, правки не понадобились`,
         );
       }
     } catch (e) {
@@ -394,10 +394,10 @@ function Writer() {
       if (result.humanizer) {
         setHumanizerNote(
           result.humanizer.applied
-            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}${
+            ? `проверка: ${result.humanizer.before} → ${result.humanizer.after}${
                 result.humanizer.dashesBefore ? `, тире ${result.humanizer.dashesBefore} → ${result.humanizer.dashesAfter}` : ""
               }`
-            : `humanizer: чисто, правки не понадобились`,
+            : `проверка: чисто, правки не понадобились`,
         );
       }
       setSavedId("");
@@ -909,7 +909,7 @@ function Writer() {
             </div>
 
             <div className="ws-write-foot">
-              {busy === "revise" ? "Обычно 40–70 секунд: статья переписывается с учётом правок и прогоняется через humanizer." : "Обычно 80–110 секунд: план, разделы, FAQ и финальный проход humanizer. Вкладку можно не закрывать."}
+              {busy === "revise" ? "Обычно 40–70 секунд: статья переписывается с учётом правок и проходит проверку текста." : "Обычно 80–110 секунд: план, разделы, FAQ и финальная проверка текста. Вкладку можно не закрывать."}
             </div>
           </div>
         </div>
