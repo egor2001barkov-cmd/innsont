@@ -3,7 +3,8 @@ import { currentAccount, badRequest, unauthorized } from "@/lib/api";
 import { publicProfile, saveAccount, trySpend } from "@/lib/store/accounts";
 import { draftPromptSet, stripMarkdownTables, type ArticlePlan } from "@/lib/article";
 import { contextFromRequest } from "@/lib/article-request";
-import { deepseekConfigured, deepseekStream } from "@/lib/llm/deepseek";
+import type { ChatMessage } from "@/lib/llm";
+import { deepseekComplete, deepseekConfigured, deepseekStream } from "@/lib/llm/deepseek";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -69,16 +70,39 @@ export async function POST(req: Request) {
 
       const parts: string[] = [];
 
+      /**
+       * Стрим с аварийным фолбэком: если соединение с провайдером рвётся
+       * посреди раздела (в проде видели «fetch failed»), добираем этот же текст
+       * обычным нестримовым запросом, чтобы статья не обрывалась на середине.
+       */
+      async function collect(
+        messages: ChatMessage[],
+        opts: { temperature: number; maxTokens: number },
+        stage: string,
+      ): Promise<string> {
+        let text = "";
+        try {
+          for await (const chunk of deepseekStream(messages, opts)) {
+            if (chunk.type === "reasoning") pushReasoning(chunk.text);
+            else {
+              text += chunk.text;
+              send({ type: "content", stage, text: chunk.text });
+            }
+          }
+          return text;
+        } catch (error) {
+          const cause = (error as { cause?: unknown })?.cause;
+          console.error("[draft-stream] stream failed, fallback:", error, "cause:", cause);
+          const res = await deepseekComplete(messages, opts);
+          if (!res.ok) throw error;
+          send({ type: "content", stage, text: "\n" + res.text.trim() });
+          return res.text;
+        }
+      }
+
       try {
         send({ type: "status", stage: "lead", label: "Пишем вступление", progress: 5 });
-        let lead = "";
-        for await (const chunk of deepseekStream(prompts.lead, { temperature: 0.5, maxTokens: 700 })) {
-          if (chunk.type === "reasoning") pushReasoning(chunk.text);
-          else {
-            lead += chunk.text;
-            send({ type: "content", stage: "lead", text: chunk.text });
-          }
-        }
+        const lead = await collect(prompts.lead, { temperature: 0.5, maxTokens: 700 }, "lead");
         pushReasoning("", true);
         parts.push(`# ${plan.title}\n\n${lead.trim()}\n`);
 
@@ -94,28 +118,14 @@ export async function POST(req: Request) {
             progress,
           });
 
-          let text = "";
-          for await (const chunk of deepseekStream(section.messages, { temperature: 0.55, maxTokens: 1600 })) {
-            if (chunk.type === "reasoning") pushReasoning(chunk.text);
-            else {
-              text += chunk.text;
-              send({ type: "content", stage: "section", text: chunk.text });
-            }
-          }
+          const text = await collect(section.messages, { temperature: 0.55, maxTokens: 1600 }, "section");
           pushReasoning("", true);
           if (text.trim()) parts.push(text.trim() + "\n");
         }
 
         if (prompts.faq) {
           send({ type: "status", stage: "faq", label: "Собираем FAQ", progress: 92 });
-          let text = "";
-          for await (const chunk of deepseekStream(prompts.faq, { temperature: 0.4, maxTokens: 1100 })) {
-            if (chunk.type === "reasoning") pushReasoning(chunk.text);
-            else {
-              text += chunk.text;
-              send({ type: "content", stage: "faq", text: chunk.text });
-            }
-          }
+          const text = await collect(prompts.faq, { temperature: 0.4, maxTokens: 1100 }, "faq");
           pushReasoning("", true);
           if (text.trim()) parts.push(text.trim() + "\n");
         }
