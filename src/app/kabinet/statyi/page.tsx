@@ -153,29 +153,35 @@ function Writer() {
     };
   }
 
-  async function makePlan() {
+  async function fetchPlan(): Promise<ArticlePlan | null> {
     if (!key.trim()) {
       setErr("Введите ключевой запрос");
-      return;
+      return null;
     }
+    setErr("");
     setBusy("plan");
     const data = await call<{ plan: ArticlePlan; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/plan",
       requestBody()
     );
     setBusy("");
-    if (!data) return;
-    setPlanData(data.plan);
+    if (!data) return null;
     setProvider(data.provider);
+    return data.plan;
+  }
+
+  async function makePlan() {
+    const plan = await fetchPlan();
+    if (!plan) return;
+    setPlanData(plan);
     setStep("plan");
   }
 
-  async function makeDraft() {
-    if (!planData) return;
+  async function runDraft(plan: ArticlePlan) {
     setBusy("draft");
     const data = await call<{ markdown: string; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/draft",
-      { ...requestBody(), plan: planData }
+      { ...requestBody(), plan }
     );
     setBusy("");
     if (!data) return;
@@ -186,6 +192,21 @@ function Writer() {
     setSavedId("");
     setWpLink("");
     setStep("draft");
+  }
+
+  async function makeDraft() {
+    if (!planData) return;
+    await runDraft(planData);
+  }
+
+  // Один клик «Написать статью»: план собирается и сразу уходит в черновик,
+  // чтобы не получать на выходе только план (жалоба 15.11.2026).
+  async function makeArticle() {
+    const plan = await fetchPlan();
+    if (!plan) return;
+    setPlanData(plan);
+    setStep("plan");
+    await runDraft(plan);
   }
 
   async function polish() {
@@ -424,10 +445,17 @@ function Writer() {
             {err && <p className="text-[13px] text-[#b91c1c]">{err}</p>}
             <button
               className="ws-btn ws-btn-primary w-full py-3 text-[15px]"
+              onClick={() => void makeArticle()}
+              disabled={Boolean(busy)}
+            >
+              {busy === "plan" ? "Планируем…" : busy === "draft" ? "Пишем статью…" : "Написать статью →"}
+            </button>
+            <button
+              className="ws-btn ws-btn-outline w-full py-2 text-[13px]"
               onClick={() => void makePlan()}
               disabled={Boolean(busy)}
             >
-              {busy === "plan" ? "Собираем план…" : "Собрать план статьи →"}
+              Собрать только план
             </button>
           </div>
 
@@ -446,6 +474,11 @@ function Writer() {
             <div className="border-t border-[#f3f4f6] pt-3">
               <p className="text-[12px] text-[#9ca3af]">Осталось статей: {articlesLeft} из {planLimit.limits.articles}</p>
               {provider && <p className="mt-1 text-[12px] text-[#9ca3af]">Провайдер: {provider}</p>}
+              {provider === "demo" && (
+                <p className="mt-1 text-[12px] text-[#b45309]">
+                  demo-режим: статья будет заглушкой, пока на сервере не задан ключ LLM
+                </p>
+              )}
             </div>
           </div>
         </div>

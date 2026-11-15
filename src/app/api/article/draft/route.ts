@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { currentAccount, badRequest, unauthorized } from "@/lib/api";
-import { publicProfile, trySpend } from "@/lib/store/accounts";
+import { publicProfile, saveAccount, trySpend } from "@/lib/store/accounts";
 import { generateDraft, type ArticlePlan } from "@/lib/article";
 import { contextFromRequest } from "@/lib/article-request";
 
@@ -27,5 +27,18 @@ export async function POST(req: Request) {
   }
 
   const { markdown, provider } = await generateDraft(plan, ctx);
+
+  // Защита от «плана вместо статьи»: обрезанный ответ не отдаём как готовый текст,
+  // а списанные промпты возвращаем — иначе пользователь платит за пустоту.
+  const words = markdown.split(/\s+/).filter(Boolean).length;
+  if (words < 250) {
+    acc.counters.promptsUsed = Math.max(0, acc.counters.promptsUsed - 2);
+    saveAccount(acc);
+    return NextResponse.json(
+      { error: `Провайдер вернул обрезанный текст (${words} слов). Попробуйте ещё раз — промпты не списаны.` },
+      { status: 502 },
+    );
+  }
+
   return NextResponse.json({ markdown, provider, profile: publicProfile(acc) });
 }

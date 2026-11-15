@@ -189,10 +189,17 @@ ${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить
       { role: "system", text: PLAN_SYSTEM },
       { role: "user", text: user },
     ],
-    { temperature: 0.3, maxTokens: 1200 }
+    { temperature: 0.3, maxTokens: 2500 }
   );
   if (!res.ok) return { plan: demoPlan(ctx.key), provider: "demo" };
-  return { plan: sanitizePlan(extractJson(res.text), ctx.key), provider: activeProvider() };
+
+  // Если модель вернула не JSON или пустой план — честно отдаём demo-заглушку,
+  // а не выдаём её за сгенерированный план.
+  const parsed = extractJson(res.text) as { sections?: unknown[] } | null;
+  if (!parsed || !Array.isArray(parsed.sections) || parsed.sections.length < 2) {
+    return { plan: demoPlan(ctx.key), provider: "demo" };
+  }
+  return { plan: sanitizePlan(parsed, ctx.key), provider: activeProvider() };
 }
 
 const DRAFT_SYSTEM =
@@ -215,7 +222,7 @@ export async function generateDraft(
 Напиши вводный абзац (2–3 предложения, 40–60 слов) — прямой ответ на запрос: что это, для кого, ключевые цифры. Без воды и без «в современном мире». Первый абзац должен быть пригоден для цитаты нейросетью.`,
       },
     ],
-    { temperature: 0.5, maxTokens: 400 }
+    { temperature: 0.5, maxTokens: 700 }
   );
   if (!lead.ok) return { markdown: demoDraft(plan, ctx), provider: "demo" };
   parts.push(`# ${plan.title}\n\n${lead.text.trim()}\n`);
@@ -232,7 +239,7 @@ export async function generateDraft(
 Правила: 150–250 слов; если уместно — таблица markdown (модели цитируют таблицы); ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
         },
       ],
-      { temperature: 0.55, maxTokens: 900 }
+      { temperature: 0.55, maxTokens: 1600 }
     );
     if (sec.ok) parts.push(sec.text.trim() + "\n");
   }
@@ -249,7 +256,7 @@ export async function generateDraft(
 Ответы: по 2–4 предложения, прямо отвечают на вопрос первым предложением. Формат: «**Вопрос** — ответ» через пустую строку. Выход — только текст раздела, начиная с «## FAQ».`,
         },
       ],
-      { temperature: 0.4, maxTokens: 800 }
+      { temperature: 0.4, maxTokens: 1100 }
     );
     if (faq.ok) parts.push(faq.text.trim() + "\n");
   }

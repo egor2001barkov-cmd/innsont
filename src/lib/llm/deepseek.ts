@@ -26,6 +26,10 @@ export async function deepseekComplete(
   if (!apiKey) return { ok: false, error: "LLM-провайдер не настроен" };
   const model = process.env.DEEPSEEK_MODEL || "deepseek-4.1-flash";
 
+  // deepseek-flash — reasoning-модель: max_tokens считает и размышление, и ответ.
+  // Поэтому к запрошенному бюджету ответа добавляем запас на reasoning, иначе
+  // раздел приходит обрезанным (finish_reason=length) или пустым.
+  let budget = (opts.maxTokens ?? 2000) + 2500;
   let lastError = "LLM-провайдер недоступен";
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt > 0) await new Promise((r) => setTimeout(r, 3000 * attempt));
@@ -42,7 +46,7 @@ export async function deepseekComplete(
           model,
           messages: messages.map((m) => ({ role: m.role, content: m.text })),
           temperature: opts.temperature ?? 0.4,
-          max_tokens: opts.maxTokens ?? 2000,
+          max_tokens: budget,
         }),
         signal: controller.signal,
       });
@@ -56,9 +60,15 @@ export async function deepseekComplete(
         return { ok: false, error: `LLM: HTTP ${res.status} ${detail.slice(0, 200)}` };
       }
       const data = (await res.json()) as {
-        choices?: { message?: { content?: string } }[];
+        choices?: { message?: { content?: string }; finish_reason?: string }[];
       };
-      const text = data.choices?.[0]?.message?.content;
+      const choice = data.choices?.[0];
+      const text = choice?.message?.content;
+      if (choice?.finish_reason === "length") {
+        lastError = "LLM: ответ обрезан по лимиту токенов";
+        budget = Math.min(budget * 2, 16_000);
+        continue;
+      }
       if (!text) return { ok: false, error: "LLM: пустой ответ" };
       return { ok: true, text };
     } catch (e) {
