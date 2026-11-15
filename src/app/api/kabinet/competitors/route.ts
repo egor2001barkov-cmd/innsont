@@ -10,8 +10,8 @@ export const maxDuration = 180;
 export async function POST(req: Request) {
   const acc = currentAccount(req);
   if (!acc) return unauthorized();
-  if (!rateLimitOk(clientIp(req), "competitors", 5)) {
-    return NextResponse.json({ error: "Слишком часто — подождите 10 минут" }, { status: 429 });
+  if (!rateLimitOk(clientIp(req), "competitors", 30)) {
+    return NextResponse.json({ error: "Слишком часто: 30 сравнений за 10 минут. Подождите немного." }, { status: 429 });
   }
   const body = (await req.json().catch(() => ({}))) as { sites?: string[] };
   const sites = Array.isArray(body.sites) ? body.sites : [];

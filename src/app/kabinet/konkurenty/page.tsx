@@ -53,6 +53,15 @@ export default function CompetitorsPage() {
   const [err, setErr] = useState("");
   const [selected, setSelected] = useState<Set<MetricKey>>(new Set(METRICS.map((m) => m.key)));
   const [showHints, setShowHints] = useState(true);
+  const [localRaw, setLocalRaw] = useState("");
+  const [localBusy, setLocalBusy] = useState(false);
+  const [localErr, setLocalErr] = useState("");
+  const [localReport, setLocalReport] = useState<null | {
+    count: number; averageRating: number; medianReviews: number; withWebsite: number;
+    top: { name: string; rating: number; reviews: number; score: number }[];
+    vulnerable: { name: string; rating: number; reviews: number }[];
+    recommendations: string[];
+  }>(null);
 
   useEffect(() => {
     if (project) setRaw([project.url, ...loadCompetitors(project.id)].join("\n"));
@@ -81,6 +90,23 @@ export default function CompetitorsPage() {
     if (!res.ok || !data.profiles) { setErr(data.error || "Ошибка"); return; }
     setProfiles(data.profiles);
     saveCompetitors(project!.id, rows.slice(1).filter((s) => s !== project!.url));
+  }
+
+  async function runLocal() {
+    const businesses = localRaw.split("\n").map((line) => {
+      const [name, rating, reviews, website, category] = line.split(/[;|\t]/).map((x) => (x || "").trim());
+      return { name, rating: Number(rating) || 0, reviews: Number(reviews) || 0, website, category };
+    }).filter((b) => b.name);
+    if (!businesses.length) { setLocalErr("Заполните хотя бы одну строку: Название; 4.8; 120; сайт"); return; }
+    setLocalBusy(true); setLocalErr("");
+    const res = await fetch("/api/kabinet/competitors/local", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ businesses }),
+    });
+    const data = (await res.json().catch(() => ({}))) as { report?: typeof localReport; error?: string };
+    setLocalBusy(false);
+    if (!res.ok || !data.report) { setLocalErr(data.error || "Не удалось разобрать карточки"); return; }
+    setLocalReport(data.report);
   }
 
   function exportCsv() {
@@ -159,6 +185,48 @@ export default function CompetitorsPage() {
       </div>
 
       {err && <p className="mt-3 text-[13px] text-[#b91c1c]">{err}</p>}
+
+      <div className="ws-card mt-6 p-5">
+        <h2 className="text-[16px] font-semibold">Локальные конкуренты</h2>
+        <p className="mt-1 text-[13px] text-[#6b7280]">
+          Вставьте карточки из выгрузки Google Maps или 2ГИС: по строке на конкурента, поля через точку с запятой.
+        </p>
+        <textarea
+          className="ws-input mt-3 min-h-[110px]"
+          placeholder={"Клиника на Ленина; 4.8; 120; https://klinika.ru\nСтоматология Плюс; 3.9; 80; https://plus.ru"}
+          value={localRaw}
+          onChange={(e) => setLocalRaw(e.target.value)}
+        />
+        <div className="mt-2 flex items-center gap-3">
+          <button className="ws-btn ws-btn-primary text-[13px]" onClick={() => void runLocal()} disabled={localBusy}>
+            {localBusy ? "Считаем…" : "Разобрать рынок →"}
+          </button>
+          {localErr && <span className="text-[12px] text-[#b91c1c]">{localErr}</span>}
+        </div>
+
+        {localReport && (
+          <div className="mt-4 space-y-3 text-[13px]">
+            <p className="text-[#374151]">
+              Конкурентов: <b>{localReport.count}</b> · средний рейтинг <b>{localReport.averageRating}</b> ·
+              медиана отзывов <b>{localReport.medianReviews}</b> · с сайтом <b>{localReport.withWebsite}</b>
+            </p>
+            <table className="ws-table">
+              <thead><tr><th>Конкурент</th><th>Рейтинг</th><th>Отзывы</th><th>Видимость</th></tr></thead>
+              <tbody>
+                {localReport.top.map((b) => (
+                  <tr key={b.name}><td>{b.name}</td><td>{b.rating}</td><td>{b.reviews}</td><td>{b.score}</td></tr>
+                ))}
+              </tbody>
+            </table>
+            {localReport.vulnerable.length > 0 && (
+              <p className="text-[#b45309]">Уязвимые: {localReport.vulnerable.map((v) => `${v.name} (${v.rating}★, ${v.reviews})`).join(", ")}</p>
+            )}
+            <ul className="list-disc space-y-1 pl-5 text-[#374151]">
+              {localReport.recommendations.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </div>
+        )}
+      </div>
 
       {profiles && (
         <div className="ws-card mt-4 min-w-0 overflow-x-auto">
