@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   if ("error" in audit) return badRequest(audit.error);
 
   // Полный аудит: контент, humanizer, каннибализация, schema, AEO — только по живым страницам.
-  const deep = await deepAudit(site, { maxPages: Number((body as { maxPages?: number }).maxPages) || 10 });
+  const deep = await deepAudit(site, { maxPages: Number((body as { maxPages?: number }).maxPages) || 60 });
 
   return NextResponse.json({ audit, deep, profile: publicProfile(spend.acc) });
 }

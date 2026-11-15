@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         send({ type: "audit", audit });
         send({ type: "status", label: "Обходим страницы и считаем контент", progress: 35 });
 
-        const total = Math.min(Math.max(Number(body.maxPages) || 10, 3), 25);
+        const total = Math.min(Math.max(Number(body.maxPages) || 60, 3), 200);
         const deep = await deepAudit(site, {
           maxPages: total,
           onPage: (page, index, all) => {

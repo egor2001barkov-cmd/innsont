@@ -123,7 +123,7 @@ export default function AuditPage() {
       const res = await fetch("/api/kabinet/site-audit-stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ site: targetUrl, projectId: project!.id, maxPages: depth === "полный" ? 12 : 5 }),
+        body: JSON.stringify({ site: targetUrl, projectId: project!.id, maxPages: depth === "полный" ? 120 : 15 }),
       });
       const isStream = res.ok && res.body && (res.headers.get("content-type") || "").includes("text/event-stream");
       if (!isStream) throw new Error("stream unavailable");

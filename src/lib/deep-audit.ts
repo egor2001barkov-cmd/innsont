@@ -16,6 +16,8 @@ export type DeepPage = {
   schema: string[];
   humanHits: number;
   firstParagraphWords: number;
+  titleLen: number;
+  descLen: number;
 };
 
 export type DeepAction = {
@@ -39,6 +41,11 @@ export type DeepAudit = {
     questionsPages: number;
     tablesPages: number;
     llms: { status: number; bytes: number };
+    slowPages: number;
+    avgMs: number;
+    missingTitle: number;
+    missingDesc: number;
+    pagesWithSchema: number;
   };
   schema: { found: string[]; missing: string[] };
   cannibalization: { a: string; b: string; overlap: number }[];
@@ -98,23 +105,25 @@ const tokens = (s: string) => new Set(s.toLowerCase().replace(/[^\p{L}\p{N} ]/gu
 /** Полный аудит: контент, humanizer, каннибализация, schema, AEO. Только измеренное. */
 export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPage?: (page: DeepPage, index: number, total: number) => void } = {}): Promise<DeepAudit> {
   const origin = new URL(rawSite.match(/^https?:\/\//i) ? rawSite : `https://${rawSite}`).origin;
-  const maxPages = Math.min(Math.max(opts.maxPages ?? 10, 3), 25);
+  const maxPages = Math.min(Math.max(opts.maxPages ?? 60, 3), 200);
 
   const sitemap = await sitemapUrls(origin);
   const pool = [...new Set(sitemap)].filter((u) => !/\.(jpg|jpeg|png|webp|svg|pdf|xml|zip)$/i.test(u));
   const sample = [origin + "/", ...pool.filter((u) => u.replace(/\/$/, "") !== origin).slice(0, maxPages - 1)];
 
   const pages: DeepPage[] = [];
-  for (const url of sample) {
+
+  async function probe(url: string): Promise<DeepPage> {
     const r = await get(url);
     if (r.status !== 200) {
-      pages.push({ url, status: r.status, ms: r.ms, words: 0, h1: 0, h2: 0, questions: 0, tables: 0, noindex: false, canonical: "", schema: [], humanHits: 0, firstParagraphWords: 0 });
-      continue;
+      return { url, status: r.status, ms: r.ms, words: 0, h1: 0, h2: 0, questions: 0, tables: 0, noindex: false, canonical: "", schema: [], humanHits: 0, firstParagraphWords: 0, titleLen: 0, descLen: 0 };
     }
     const text = clean(r.body);
     const h2 = heads(r.body, "h2");
     const paras = [...r.body.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((m) => clean(m[1])).filter((t) => t.length > 40);
-    pages.push({
+    const title = (r.body.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || "";
+    const desc = (r.body.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)/i) || [])[1] || "";
+    return {
       url,
       status: r.status,
       ms: r.ms,
@@ -128,9 +137,20 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPa
       schema: ldTypes(r.body),
       humanHits: analyze(text, false).totalHits,
       firstParagraphWords: (paras[0] || "").split(/\s+/).filter(Boolean).length,
-    });
-    opts.onPage?.(pages[pages.length - 1], pages.length, sample.length);
-    await new Promise((res) => setTimeout(res, 450));
+      titleLen: clean(title).length,
+      descLen: clean(desc).length,
+    };
+  }
+
+  // Параллельно по 5 страниц: 200 URL укладываются в минуту вместо часа.
+  const BATCH = 5;
+  for (let i = 0; i < sample.length; i += BATCH) {
+    const chunk = await Promise.all(sample.slice(i, i + BATCH).map(probe));
+    for (const page of chunk) {
+      pages.push(page);
+      opts.onPage?.(page, pages.length, sample.length);
+    }
+    await new Promise((res) => setTimeout(res, 250));
   }
 
   const ok = pages.filter((p) => p.status === 200);
@@ -169,11 +189,15 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPa
   if (humanHits > 0) actions.push({ priority: "P1", title: `ИИ-паттерны: ${humanHits}`, evidence: `Проверка текста нашла ${humanHits} шаблонов на ${ok.length} страницах`, action: "Прогнать проверку текста, убрать шаблоны и тире", verify: "Повторный аудит: humanHits = 0" });
   if (missing.includes("FAQPage") && ok.some((p) => p.questions > 0)) actions.push({ priority: "P2", title: "FAQPage для страниц с вопросами", evidence: `Вопросы в H2 есть у ${ok.filter((p) => p.questions > 0).length} страниц, FAQPage нет`, action: "Добавить FAQPage JSON-LD с этими вопросами", verify: "Rich Results Test" });
   if (llms.status !== 200) actions.push({ priority: "P2", title: "llms.txt отсутствует", evidence: `GET /llms.txt → ${llms.status}`, action: "Сгенерировать llms.txt по sitemap", verify: "GET /llms.txt → 200" });
+  const slow = ok.filter((p) => p.ms > 800).length;
+  if (slow > 0) actions.push({ priority: "P1", title: `Медленные страницы: ${slow}`, evidence: `${slow} из ${ok.length} страниц отвечают дольше 800 мс (среднее ${Math.round(ok.reduce((s2, p) => s2 + p.ms, 0) / Math.max(ok.length, 1))} мс)`, action: "Включить кэш и проверить тяжёлые запросы к БД", verify: "Повторный аудит: slowPages = 0" });
+  if (ok.some((p) => p.titleLen === 0)) actions.push({ priority: "P1", title: `Без title: ${ok.filter((p) => p.titleLen === 0).length}`, evidence: `У ${ok.filter((p) => p.titleLen === 0).length} страниц нет title`, action: "Прописать уникальный title с ключом", verify: "Повторный аудит: missingTitle = 0" });
+  if (ok.some((p) => p.descLen === 0)) actions.push({ priority: "P2", title: `Без description: ${ok.filter((p) => p.descLen === 0).length}`, evidence: `У ${ok.filter((p) => p.descLen === 0).length} страниц нет description`, action: "Добавить описание 70–160 символов", verify: "Повторный аудит: missingDesc = 0" });
   if (cannibalization.length) actions.push({ priority: "P0", title: `Каннибализация: ${cannibalization.length} пар`, evidence: cannibalization.slice(0, 3).map((c) => `${c.a} ↔ ${c.b} (${c.overlap}%)`).join("; "), action: "Оставить сильный URL, второй — 301, уникальное перенести", verify: "В Вебмастере по запросу один URL" });
 
   return {
     pages,
-    summary: { pages: ok.length, avgWords, thinPages: thin, withoutH1: noH1, noindexPages: noindex, canonicalMismatch: canonMismatch, humanHits, questionsPages: ok.filter((p) => p.questions > 0).length, tablesPages: ok.filter((p) => p.tables > 0).length, llms: { status: llms.status, bytes: llms.body.length } },
+    summary: { pages: ok.length, avgWords, thinPages: thin, withoutH1: noH1, noindexPages: noindex, canonicalMismatch: canonMismatch, humanHits, questionsPages: ok.filter((p) => p.questions > 0).length, tablesPages: ok.filter((p) => p.tables > 0).length, llms: { status: llms.status, bytes: llms.body.length }, slowPages: ok.filter((p) => p.ms > 800).length, avgMs: ok.length ? Math.round(ok.reduce((s2, p) => s2 + p.ms, 0) / ok.length) : 0, missingTitle: ok.filter((p) => p.titleLen === 0).length, missingDesc: ok.filter((p) => p.descLen === 0).length, pagesWithSchema: ok.filter((p) => p.schema.length > 0).length },
     schema: { found, missing },
     cannibalization,
     actions,
