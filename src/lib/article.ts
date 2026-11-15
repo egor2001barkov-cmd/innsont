@@ -227,7 +227,7 @@ export function draftPromptSet(plan: ArticlePlan, ctx: ArticleContext) {
         role: "user",
         text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
 Напиши раздел с заголовком «## ${s.h2}». Что должно войти: ${s.hint || "конкретика по теме"}.
-Правила: 150–250 слов; если уместно — таблица markdown (модели цитируют таблицы); ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
+Правила: 150–250 слов; ${ctx.includeTables === false ? "таблицы не используй вообще, только текст и списки" : "если уместно — таблица markdown (модели цитируют таблицы)"}; ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
       },
     ] as ChatMessage[],
   }));
@@ -245,6 +245,17 @@ export function draftPromptSet(plan: ArticlePlan, ctx: ArticleContext) {
     : null;
 
   return { lead, sections, faq };
+}
+
+
+/** Убирает markdown-таблицы: строки, начинающиеся с «|». Нужен, когда в настройках выбрано «без таблиц». */
+export function stripMarkdownTables(markdown: string): string {
+  return markdown
+    .split("\n")
+    .filter((line) => !/^\s*\|/.test(line))
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 export async function generateDraft(
@@ -278,7 +289,11 @@ export async function generateDraft(
     if (faq.ok) parts.push(faq.text.trim() + "\n");
   }
 
-  return { markdown: parts.join("\n"), provider: activeProvider() };
+  const markdown = parts.join("\n");
+  return {
+    markdown: ctx.includeTables === false ? stripMarkdownTables(markdown) : markdown,
+    provider: activeProvider(),
+  };
 }
 
 export async function polishArticle(

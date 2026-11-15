@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { currentAccount, badRequest, unauthorized } from "@/lib/api";
 import { publicProfile, saveAccount, trySpend } from "@/lib/store/accounts";
-import { draftPromptSet, type ArticlePlan } from "@/lib/article";
+import { draftPromptSet, stripMarkdownTables, type ArticlePlan } from "@/lib/article";
 import { contextFromRequest } from "@/lib/article-request";
 import { deepseekConfigured, deepseekStream } from "@/lib/llm/deepseek";
 
@@ -120,7 +120,8 @@ export async function POST(req: Request) {
           if (text.trim()) parts.push(text.trim() + "\n");
         }
 
-        const markdown = parts.join("\n");
+        const raw = parts.join("\n");
+        const markdown = ctx.includeTables === false ? stripMarkdownTables(raw) : raw;
         const words = markdown.split(/\s+/).filter(Boolean).length;
 
         if (words < 250) {

@@ -420,6 +420,9 @@ function Writer() {
                   </button>
                 ))}
               </div>
+              <p className="mt-1.5 text-[12px] text-[#9ca3af]">
+                Выключенные пункты не попадут в статью: «Таблицы» убирает и разметку, и табличные строки.
+              </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
