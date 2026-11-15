@@ -67,6 +67,8 @@ function Writer() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [live, setLive] = useState<null | { md: string; reasoning: string; label: string; progress: number; startedAt: number }>(null);
   const [elapsed, setElapsed] = useState(0);
+  const [reviseText, setReviseText] = useState("");
+  const [prevMarkdown, setPrevMarkdown] = useState("");
 
   // Writesonic-уровень параметров
   const [length, setLength] = useState<Length>("средняя");
@@ -205,11 +207,84 @@ function Writer() {
     setStep("draft");
   }
 
+  function applyArticle(markdownText: string) {
+    setMarkdown(markdownText);
+    setProvider("deepseek");
+    setSeoTitle("");
+    setSeoDescription("");
+    setSavedId("");
+    setWpLink("");
+    setStep("draft");
+  }
+
+  /**
+   * Читает SSE-поток генерации: текст, reasoning, этапы.
+   * baseLength — длина исходной статьи при правках: по ней считаем прогресс,
+   * потому что там этап один и status приходит только в начале.
+   */
+  async function readSse(res: Response, opts: { baseLength?: number } = {}): Promise<{ markdown: string; words: number }> {
+    const reader = res.body!.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let acc = "";
+    let lastPaint = 0;
+    let finished: { markdown: string; words: number } | null = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let sep: number;
+      while ((sep = buffer.indexOf("\n\n")) >= 0) {
+        const raw = buffer.slice(0, sep);
+        buffer = buffer.slice(sep + 2);
+        const line = raw.split("\n").find((l) => l.startsWith("data:"));
+        if (!line) continue;
+
+        const evt = JSON.parse(line.slice(5).trim()) as {
+          type: string;
+          text?: string;
+          label?: string;
+          progress?: number;
+          markdown?: string;
+          words?: number;
+          message?: string;
+        };
+
+        if (evt.type === "content" && evt.text) {
+          acc += evt.text;
+          const now = Date.now();
+          if (now - lastPaint > 70) {
+            lastPaint = now;
+            const snapshot = acc;
+            const progress = opts.baseLength
+              ? Math.min(94, 10 + Math.round((snapshot.length / Math.max(opts.baseLength, 1)) * 84))
+              : undefined;
+            setLive((prev) => (prev ? { ...prev, md: snapshot, ...(progress ? { progress } : {}) } : prev));
+          }
+        } else if (evt.type === "reasoning" && evt.text) {
+          const snapshot = evt.text.replace(/deepseek/gi, "INSONT AI");
+          setLive((prev) => (prev ? { ...prev, reasoning: snapshot } : prev));
+        } else if (evt.type === "status") {
+          setLive((prev) => (prev ? { ...prev, label: evt.label || prev.label, progress: evt.progress ?? prev.progress } : prev));
+        } else if (evt.type === "done" && evt.markdown) {
+          finished = { markdown: evt.markdown, words: evt.words || 0 };
+        } else if (evt.type === "error") {
+          throw new Error(evt.message || "Генерация прервалась");
+        }
+      }
+    }
+
+    const result = finished as { markdown: string; words: number } | null;
+    if (!result) throw new Error("Поток завершился без текста");
+    return result;
+  }
+
   async function runDraft(plan: ArticlePlan) {
     setErr("");
     setBusy("draft");
-    const startedAt = Date.now();
-    setLive({ md: "", reasoning: "", label: "Пишем вступление", progress: 4, startedAt });
+    setLive({ md: "", reasoning: "", label: "Пишем вступление", progress: 4, startedAt: Date.now() });
 
     let res: Response;
     try {
@@ -233,68 +308,59 @@ function Writer() {
       return;
     }
 
-    const reader = res.body!.getReader();
-    const decoder = new TextDecoder();
-    let buffer = "";
-    let acc = "";
-    let lastPaint = 0;
-    let finished: { markdown: string; words: number } | null = null;
-
     try {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-
-        let sep: number;
-        while ((sep = buffer.indexOf("\n\n")) >= 0) {
-          const raw = buffer.slice(0, sep);
-          buffer = buffer.slice(sep + 2);
-          const line = raw.split("\n").find((l) => l.startsWith("data:"));
-          if (!line) continue;
-
-          const evt = JSON.parse(line.slice(5).trim()) as {
-            type: string;
-            text?: string;
-            label?: string;
-            progress?: number;
-            markdown?: string;
-            words?: number;
-            message?: string;
-          };
-
-          if (evt.type === "content" && evt.text) {
-            acc += evt.text;
-            const now = Date.now();
-            if (now - lastPaint > 70) {
-              lastPaint = now;
-              const snapshot = acc;
-              setLive((prev) => (prev ? { ...prev, md: snapshot } : prev));
-            }
-          } else if (evt.type === "reasoning" && evt.text) {
-            const snapshot = evt.text.replace(/deepseek/gi, "INSONT AI");
-            setLive((prev) => (prev ? { ...prev, reasoning: snapshot } : prev));
-          } else if (evt.type === "status") {
-            setLive((prev) => (prev ? { ...prev, label: evt.label || prev.label, progress: evt.progress ?? prev.progress } : prev));
-          } else if (evt.type === "done" && evt.markdown) {
-            finished = { markdown: evt.markdown, words: evt.words || 0 };
-          } else if (evt.type === "error") {
-            throw new Error(evt.message || "Генерация прервалась");
-          }
-        }
-      }
-
-      const result = finished as { markdown: string; words: number } | null;
-      if (!result) throw new Error("Поток завершился без текста");
-      setMarkdown(result.markdown);
-      setProvider("deepseek");
-      setSeoTitle("");
-      setSeoDescription("");
-      setSavedId("");
-      setWpLink("");
-      setStep("draft");
+      const result = await readSse(res);
+      applyArticle(result.markdown);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Генерация прервалась");
+    } finally {
+      setLive(null);
+      setBusy("");
+    }
+  }
+
+  async function runRevise() {
+    const instruction = reviseText.trim();
+    if (instruction.length < 3) {
+      setErr("Опишите, что исправить");
+      return;
+    }
+    setErr("");
+    setPrevMarkdown(markdown);
+    setBusy("revise");
+    setLive({ md: "", reasoning: "", label: "Применяем правки", progress: 8, startedAt: Date.now() });
+
+    let res: Response;
+    try {
+      res = await fetch("/api/article/revise-stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markdown, instruction }),
+      });
+    } catch {
+      setLive(null);
+      setBusy("");
+      setErr("Не удалось отправить правки — проверьте сеть");
+      return;
+    }
+
+    const isStream = res.ok && res.body && (res.headers.get("content-type") || "").includes("text/event-stream");
+    if (!isStream) {
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      setLive(null);
+      setBusy("");
+      setErr(data.error || "Не удалось применить правки");
+      return;
+    }
+
+    try {
+      const result = await readSse(res, { baseLength: markdown.length });
+      setMarkdown(result.markdown);
+      setSavedId("");
+      setWpLink("");
+      setReviseText("");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Правки не применились");
     } finally {
       setLive(null);
       setBusy("");
@@ -668,6 +734,47 @@ function Writer() {
               </button>
             </div>
           </div>
+          <div className="ws-card space-y-2 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-[13px] font-semibold">Правки к статье</p>
+              {prevMarkdown && (
+                <button
+                  className="text-[12px] text-[#6b7280] underline"
+                  onClick={() => {
+                    setMarkdown(prevMarkdown);
+                    setPrevMarkdown("");
+                  }}
+                >
+                  ← Вернуть прошлую версию
+                </button>
+              )}
+            </div>
+            <p className="text-[12px] text-[#9ca3af]">
+              Опишите, что исправить — статья перегенерируется целиком с учётом правок, структура и H1 сохранятся.
+            </p>
+            <textarea
+              className="ws-input min-h-[64px]"
+              maxLength={600}
+              placeholder="Например: сократи вступление, добавь блок про цены и сроки, убери канцелярит"
+              value={reviseText}
+              onChange={(e) => setReviseText(e.target.value)}
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <button className="ws-btn ws-btn-primary text-[13px]" onClick={() => void runRevise()} disabled={Boolean(busy)}>
+                {busy === "revise" ? "Применяем правки…" : "Перегенерировать с правками →"}
+              </button>
+              {["Сократить на 30%", "Добавить цены", "Проще язык", "Убрать воду"].map((chip) => (
+                <button
+                  key={chip}
+                  className="ws-btn ws-btn-outline px-2 py-1 text-[12px]"
+                  onClick={() => setReviseText(chip)}
+                  disabled={Boolean(busy)}
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+          </div>
           <textarea
             className="ws-input min-h-[400px] font-mono text-[13px] leading-relaxed"
             value={markdown}
@@ -714,7 +821,7 @@ function Writer() {
           <div className="ws-write-card">
             <div className="ws-write-head">
               <span className="ws-dot" />
-              <span className="ws-write-title">Пишем статью</span>
+              <span className="ws-write-title">{busy === "revise" ? "Правим статью" : "Пишем статью"}</span>
               <span className="ws-write-timer">{Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, "0")}</span>
               <span className="ws-write-pct">{live.progress}%</span>
             </div>
@@ -750,7 +857,7 @@ function Writer() {
             </div>
 
             <div className="ws-write-foot">
-              Обычно 60–90 секунд: план, разделы и FAQ пишутся по очереди. Вкладку можно не закрывать.
+              {busy === "revise" ? "Обычно 30–60 секунд: статья переписывается целиком с учётом правок." : "Обычно 60–90 секунд: план, разделы и FAQ пишутся по очереди. Вкладку можно не закрывать."}
             </div>
           </div>
         </div>
