@@ -90,6 +90,7 @@ export const KNOWN_PATHS = new Set<string>([
   "/kabinet/optimizatsiya",
   "/kabinet/otchet",
   "/kabinet/pereupakovka",
+  "/kabinet/plan",
   "/kabinet/posadochnye",
   "/kabinet/posadochnye/karta",
   "/kabinet/posadochnye/spisok",
