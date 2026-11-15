@@ -1,4 +1,5 @@
 import { activeProvider, llmComplete, type ChatMessage } from "@/lib/llm";
+import { HUMANIZER_RULES, humanizeArticle } from "./humanizer-llm";
 
 export type Provider = "deepseek" | "yandex" | "demo";
 
@@ -203,7 +204,8 @@ ${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить
 }
 
 const DRAFT_SYSTEM =
-  "Ты русский копирайтер уровня главного редактора. Пишешь фактурно: цифры, конкретика, ни воды. Текущий год — 2026, устаревшие годы не используй. Выход — только markdown-текст раздела, без пояснений.";
+  "Ты русский копирайтер уровня главного редактора. Пишешь фактурно: цифры, конкретика, ни воды. Текущий год — 2026, устаревшие годы не используй. Выход — только markdown-текст раздела, без пояснений.\n" +
+  HUMANIZER_RULES;
 
 /**
  * Промпты черновика в одном месте: их использует и обычная генерация,
@@ -289,11 +291,12 @@ export async function generateDraft(
     if (faq.ok) parts.push(faq.text.trim() + "\n");
   }
 
-  const markdown = parts.join("\n");
-  return {
-    markdown: ctx.includeTables === false ? stripMarkdownTables(markdown) : markdown,
-    provider: activeProvider(),
-  };
+  const raw = parts.join("\n");
+  const stripped = ctx.includeTables === false ? stripMarkdownTables(raw) : raw;
+
+  // Humanizer — обязательный этап, а не отдельная кнопка.
+  const humanized = await humanizeArticle(stripped);
+  return { markdown: humanized.markdown, provider: activeProvider() };
 }
 
 export async function polishArticle(

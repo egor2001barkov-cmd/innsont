@@ -69,6 +69,7 @@ function Writer() {
   const [elapsed, setElapsed] = useState(0);
   const [reviseText, setReviseText] = useState("");
   const [prevMarkdown, setPrevMarkdown] = useState("");
+  const [humanizerNote, setHumanizerNote] = useState("");
 
   // Writesonic-уровень параметров
   const [length, setLength] = useState<Length>("средняя");
@@ -222,13 +223,13 @@ function Writer() {
    * baseLength — длина исходной статьи при правках: по ней считаем прогресс,
    * потому что там этап один и status приходит только в начале.
    */
-  async function readSse(res: Response, opts: { baseLength?: number } = {}): Promise<{ markdown: string; words: number }> {
+  async function readSse(res: Response, opts: { baseLength?: number } = {}): Promise<{ markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } }> {
     const reader = res.body!.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
     let acc = "";
     let lastPaint = 0;
-    let finished: { markdown: string; words: number } | null = null;
+    let finished: { markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } } | null = null;
 
     while (true) {
       const { done, value } = await reader.read();
@@ -249,6 +250,7 @@ function Writer() {
           progress?: number;
           markdown?: string;
           words?: number;
+          humanizer?: { before: number; after: number; applied: boolean };
           message?: string;
         };
 
@@ -269,14 +271,14 @@ function Writer() {
         } else if (evt.type === "status") {
           setLive((prev) => (prev ? { ...prev, label: evt.label || prev.label, progress: evt.progress ?? prev.progress } : prev));
         } else if (evt.type === "done" && evt.markdown) {
-          finished = { markdown: evt.markdown, words: evt.words || 0 };
+          finished = { markdown: evt.markdown, words: evt.words || 0, humanizer: evt.humanizer };
         } else if (evt.type === "error") {
           throw new Error(evt.message || "Генерация прервалась");
         }
       }
     }
 
-    const result = finished as { markdown: string; words: number } | null;
+    const result = finished as { markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } } | null;
     if (!result) throw new Error("Поток завершился без текста");
     return result;
   }
@@ -311,6 +313,13 @@ function Writer() {
     try {
       const result = await readSse(res);
       applyArticle(result.markdown);
+      if (result.humanizer) {
+        setHumanizerNote(
+          result.humanizer.applied
+            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}`
+            : `humanizer: ${result.humanizer.before} паттернов, правки не понадобились`,
+        );
+      }
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Генерация прервалась");
     } finally {
@@ -356,6 +365,13 @@ function Writer() {
     try {
       const result = await readSse(res, { baseLength: markdown.length });
       setMarkdown(result.markdown);
+      if (result.humanizer) {
+        setHumanizerNote(
+          result.humanizer.applied
+            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}`
+            : `humanizer: ${result.humanizer.before} паттернов, правки не понадобились`,
+        );
+      }
       setSavedId("");
       setWpLink("");
       setReviseText("");
@@ -724,7 +740,10 @@ function Writer() {
       {step === "draft" && (
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-[16px] font-semibold">Черновик · {words} слов</h2>
+            <h2 className="text-[16px] font-semibold">
+              Черновик · {words} слов
+              {humanizerNote && <span className="ml-2 rounded bg-[#f0fdf4] px-2 py-0.5 text-[11px] font-normal text-[#15803d]">{humanizerNote}</span>}
+            </h2>
             <div className="flex gap-2">
               <button className="ws-btn ws-btn-outline py-1.5 text-[13px]" onClick={() => void polish()} disabled={Boolean(busy)}>
                 {busy === "polish" ? "Готовим…" : "Мета-описание"}
@@ -857,7 +876,7 @@ function Writer() {
             </div>
 
             <div className="ws-write-foot">
-              {busy === "revise" ? "Обычно 30–60 секунд: статья переписывается целиком с учётом правок." : "Обычно 60–90 секунд: план, разделы и FAQ пишутся по очереди. Вкладку можно не закрывать."}
+              {busy === "revise" ? "Обычно 40–70 секунд: статья переписывается с учётом правок и прогоняется через humanizer." : "Обычно 80–110 секунд: план, разделы, FAQ и финальный проход humanizer. Вкладку можно не закрывать."}
             </div>
           </div>
         </div>

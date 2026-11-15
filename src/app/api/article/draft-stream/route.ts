@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { currentAccount, badRequest, unauthorized } from "@/lib/api";
 import { publicProfile, saveAccount, trySpend } from "@/lib/store/accounts";
 import { draftPromptSet, stripMarkdownTables, type ArticlePlan } from "@/lib/article";
+import { humanizeArticle } from "@/lib/humanizer-llm";
 import { contextFromRequest } from "@/lib/article-request";
 import type { ChatMessage } from "@/lib/llm";
 import { deepseekComplete, deepseekConfigured, deepseekStream } from "@/lib/llm/deepseek";
@@ -131,7 +132,11 @@ export async function POST(req: Request) {
         }
 
         const raw = parts.join("\n");
-        const markdown = ctx.includeTables === false ? stripMarkdownTables(raw) : raw;
+        const stripped = ctx.includeTables === false ? stripMarkdownTables(raw) : raw;
+
+        send({ type: "status", stage: "humanize", label: "Прогоняем через humanizer", progress: 95 });
+        const humanized = await humanizeArticle(stripped);
+        const markdown = humanized.markdown;
         const words = markdown.split(/\s+/).filter(Boolean).length;
 
         if (words < 250) {
@@ -139,7 +144,7 @@ export async function POST(req: Request) {
           saveAccount(acc);
           send({ type: "error", message: `Модель вернула слишком короткий текст (${words} слов). Промпты не списаны.` });
         } else {
-          send({ type: "done", markdown, words, provider: "deepseek", profile: publicProfile(acc) });
+          send({ type: "done", markdown, words, provider: "deepseek", humanizer: { before: humanized.before, after: humanized.after, applied: humanized.applied }, profile: publicProfile(acc) });
         }
       } catch (error) {
         acc.counters.promptsUsed = Math.max(0, acc.counters.promptsUsed - 2);
