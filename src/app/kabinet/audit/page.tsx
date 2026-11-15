@@ -16,6 +16,15 @@ type Finding = {
   watch: string;
 };
 
+type DeepPage = { url: string; status: number; ms: number; words: number; h1: number; h2: number; humanHits: number; noindex: boolean; canonical: string; schema: string[] };
+type Deep = {
+  pages: DeepPage[];
+  summary: { pages: number; avgWords: number; thinPages: number; withoutH1: number; noindexPages: number; humanHits: number; questionsPages: number; tablesPages: number; llms: { status: number; bytes: number } };
+  schema: { found: string[]; missing: string[] };
+  cannibalization: { a: string; b: string; overlap: number }[];
+  actions: { priority: string; title: string; evidence: string; action: string; verify: string }[];
+};
+
 type Audit = {
   site: string;
   durationMs: number;
@@ -24,6 +33,7 @@ type Audit = {
   blocks: { engine: "google" | "yandex"; block: string; weight: number; score: number | null; measured: boolean; comment: string }[];
   coverage: { blocksTotal: number; blocksMeasured: number; weightMeasured: number; weightTotal: number };
   findings: Finding[];
+  deep?: Deep;
   facts: {
     robots: { found: boolean; cleanParam: boolean; sitemapDirective: boolean; aiBotsBanned: string[] };
     sitemap: { found: boolean; urls: number; lastmodNewest: string };
@@ -159,6 +169,14 @@ export default function AuditPage() {
       "## Находки",
       ...audit.findings.map((f) => `### [${SEV[f.severity].label}] ${f.area}: ${f.title}\n${f.detail}\n**Чинить:** ${f.fix}\n**Проверка:** ${f.watch}\n`),
       "",
+      "## Полный аудит",
+      ...(audit.deep ? [
+        `Страниц: ${audit.deep.summary.pages}, средний объём ${audit.deep.summary.avgWords} слов, тонких ${audit.deep.summary.thinPages}, без H1 ${audit.deep.summary.withoutH1}, noindex ${audit.deep.summary.noindexPages}, ИИ-паттернов ${audit.deep.summary.humanHits}`,
+        `Schema: есть ${audit.deep.schema.found.join(", ") || "—"}; нет ${audit.deep.schema.missing.join(", ") || "—"}`,
+        ...audit.deep.cannibalization.map((c) => `Каннибализация: ${c.a} ↔ ${c.b} — ${c.overlap}%`),
+        ...audit.deep.actions.map((a) => `- [${a.priority}] ${a.title}: ${a.evidence}. Действие: ${a.action}. Проверка: ${a.verify}`),
+      ] : ["нет данных"]),
+      "",
       "## Факты",
       `- robots: ${audit.facts.robots.found ? "есть" : "нет"}, Clean-param: ${audit.facts.robots.cleanParam ? "✓" : "—"}`,
       `- sitemap: ${audit.facts.sitemap.urls} URL`,
@@ -281,6 +299,61 @@ export default function AuditPage() {
               )}
             </div>
           </div>
+
+          {audit.deep && (
+            <div className="ws-card mt-4 space-y-4 p-4">
+              <div>
+                <h2 className="text-sm font-semibold">Полный аудит</h2>
+                <p className="mt-1 text-[12px] text-[#6b7280]">
+                  Проверено {audit.deep.summary.pages} стр. · средний объём {audit.deep.summary.avgWords} слов ·
+                  тонких {audit.deep.summary.thinPages} · без H1 {audit.deep.summary.withoutH1} ·
+                  noindex {audit.deep.summary.noindexPages} · ИИ-паттернов {audit.deep.summary.humanHits} ·
+                  llms.txt {audit.deep.summary.llms.status} ({audit.deep.summary.llms.bytes} б)
+                </p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[12px]">
+                  <thead><tr className="text-left text-[#9ca3af]"><th>URL</th><th>Код</th><th>Слов</th><th>H1</th><th>noindex</th><th>Schema</th><th>Humanizer</th></tr></thead>
+                  <tbody>
+                    {audit.deep.pages.map((p) => (
+                      <tr key={p.url} className="border-t border-[#f3f4f6]">
+                        <td className="max-w-[320px] truncate py-1" title={p.url}>{p.url.replace(audit.site, "") || "/"}</td>
+                        <td>{p.status}</td><td>{p.words}</td><td>{p.h1}</td><td>{p.noindex ? "да" : "—"}</td>
+                        <td>{p.schema.length || "нет"}</td><td>{p.humanHits || "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="grid gap-3 lg:grid-cols-2">
+                <div>
+                  <p className="text-[12px] font-semibold">Schema</p>
+                  <p className="text-[12px] text-[#6b7280]">Есть: {audit.deep.schema.found.join(", ") || "—"}</p>
+                  <p className="text-[12px] text-[#b45309]">Нет: {audit.deep.schema.missing.join(", ") || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold">Каннибализация</p>
+                  {audit.deep.cannibalization.length === 0 ? (
+                    <p className="text-[12px] text-[#6b7280]">По заголовкам не найдено</p>
+                  ) : (
+                    audit.deep.cannibalization.map((c, i) => (
+                      <p key={i} className="text-[12px] text-[#b45309]">{c.a.replace(audit.site, "")} ↔ {c.b.replace(audit.site, "")} — {c.overlap}%</p>
+                    ))
+                  )}
+                </div>
+              </div>
+              <div>
+                <p className="text-[12px] font-semibold">Что делать</p>
+                <ul className="mt-1 space-y-1">
+                  {audit.deep.actions.map((a, i) => (
+                    <li key={i} className="text-[12px] text-[#374151]">
+                      <b>{a.priority}</b> {a.title} — {a.evidence}. {a.action} <span className="text-[#9ca3af]">Проверка: {a.verify}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
 
           <div className="ws-card mt-4 overflow-hidden">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f3f4f6] p-4">

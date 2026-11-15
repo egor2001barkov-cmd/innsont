@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { currentAccount, badRequest, unauthorized } from "@/lib/api";
 import { publicProfile, trySpend } from "@/lib/store/accounts";
 import { auditSite } from "@/lib/site-audit";
+import { deepAudit } from "@/lib/deep-audit";
 import { loadIntegrations } from "@/lib/store/integrations";
 import { metrikaStats } from "@/lib/yandex-api";
 
@@ -38,5 +39,9 @@ export async function POST(req: Request) {
 
   const audit = await auditSite(site, { bounceRate });
   if ("error" in audit) return badRequest(audit.error);
-  return NextResponse.json({ audit, profile: publicProfile(spend.acc) });
+
+  // Полный аудит: контент, humanizer, каннибализация, schema, AEO — только по живым страницам.
+  const deep = await deepAudit(site, { maxPages: Number((body as { maxPages?: number }).maxPages) || 10 });
+
+  return NextResponse.json({ audit, deep, profile: publicProfile(spend.acc) });
 }
