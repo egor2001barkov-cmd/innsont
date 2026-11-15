@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
+import { Icon } from "@/components/Icons";
 
 type Bot = {
   name: string; kind: "поиск" | "ИИ"; note: string; robotsRule: string;
@@ -170,7 +171,7 @@ export default function BotsPage() {
               {shown.map((b) => (
                 <tr key={b.name}>
                   <td className="font-medium">{b.name}</td>
-                  <td>{b.kind === "ИИ" ? "🤖" : "🔍"}</td>
+                  <td><Icon name={b.kind === "ИИ" ? "bot" : "search"} className="h-4 w-4 text-[#6b7280]" /></td>
                   <td className={b.bannedInRobots ? "text-[#b91c1c]" : "text-[#15803d]"}>{b.robotsRule}</td>
                   <td className={b.siteResponds === true ? "text-[#15803d]" : b.siteResponds === false ? "text-[#b91c1c]" : ""}>
                     {b.siteResponds === true ? "✓" : b.siteResponds === false ? "✗" : "—"}
