@@ -49,6 +49,9 @@ export type DeepAudit = {
   };
   schema: { found: string[]; missing: string[] };
   cannibalization: { a: string; b: string; overlap: number }[];
+  geo: { score: number; aiBots: { bot: string; allowed: boolean | null }[]; llmsStatus: number; llmsBytes: number; questionsPages: number; tablesPages: number; schema: string[] };
+  indexing: { sitemapUrls: number; checked: number; noindex: number; canonicalMismatch: number; indexable: number; note: string };
+  businessCase: { available: boolean; needs: string[]; note: string };
   actions: DeepAction[];
 };
 
@@ -93,7 +96,7 @@ async function sitemapUrls(origin: string): Promise<string[]> {
     for (const sm of locs.slice(0, 4)) {
       const sub = await get(sm);
       out.push(...[...sub.body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim()));
-      await new Promise((res) => setTimeout(res, 250));
+      await new Promise((res) => setTimeout(res, 120));
     }
     if (out.length) return out;
   }
@@ -105,7 +108,7 @@ const tokens = (s: string) => new Set(s.toLowerCase().replace(/[^\p{L}\p{N} ]/gu
 /** Полный аудит: контент, humanizer, каннибализация, schema, AEO. Только измеренное. */
 export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPage?: (page: DeepPage, index: number, total: number) => void } = {}): Promise<DeepAudit> {
   const origin = new URL(rawSite.match(/^https?:\/\//i) ? rawSite : `https://${rawSite}`).origin;
-  const maxPages = Math.min(Math.max(opts.maxPages ?? 60, 3), 200);
+  const maxPages = Math.min(Math.max(opts.maxPages ?? 5000, 3), 5000);
 
   const sitemap = await sitemapUrls(origin);
   const pool = [...new Set(sitemap)].filter((u) => !/\.(jpg|jpeg|png|webp|svg|pdf|xml|zip)$/i.test(u));
@@ -143,14 +146,14 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPa
   }
 
   // Параллельно по 5 страниц: 200 URL укладываются в минуту вместо часа.
-  const BATCH = 5;
+  const BATCH = 8;
   for (let i = 0; i < sample.length; i += BATCH) {
     const chunk = await Promise.all(sample.slice(i, i + BATCH).map(probe));
     for (const page of chunk) {
       pages.push(page);
       opts.onPage?.(page, pages.length, sample.length);
     }
-    await new Promise((res) => setTimeout(res, 250));
+    await new Promise((res) => setTimeout(res, 120));
   }
 
   const ok = pages.filter((p) => p.status === 200);
@@ -175,6 +178,12 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPa
   const missing = wanted.filter((t) => !found.includes(t));
 
   const llms = await get(origin + "/llms.txt");
+  const robotsRes = await get(origin + "/robots.txt");
+  const aiBots = ["GPTBot", "ClaudeBot", "PerplexityBot", "YandexBot", "Googlebot", "Applebot-Extended"].map((bot) => {
+    const block = new RegExp(`User-agent:\\s*${bot}[\\s\\S]*?(?=\\nUser-agent:|$)`, "i").exec(robotsRes.body)?.[0] || "";
+    if (!block) return { bot, allowed: null };
+    return { bot, allowed: !/Disallow:\s*\/\s*$/m.test(block) };
+  });
   const humanHits = ok.reduce((s, p) => s + p.humanHits, 0);
   const thin = ok.filter((p) => p.words < 300).length;
   const noH1 = ok.filter((p) => p.h1 !== 1).length;
@@ -195,8 +204,13 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPa
   if (ok.some((p) => p.descLen === 0)) actions.push({ priority: "P2", title: `Без description: ${ok.filter((p) => p.descLen === 0).length}`, evidence: `У ${ok.filter((p) => p.descLen === 0).length} страниц нет description`, action: "Добавить описание 70–160 символов", verify: "Повторный аудит: missingDesc = 0" });
   if (cannibalization.length) actions.push({ priority: "P0", title: `Каннибализация: ${cannibalization.length} пар`, evidence: cannibalization.slice(0, 3).map((c) => `${c.a} ↔ ${c.b} (${c.overlap}%)`).join("; "), action: "Оставить сильный URL, второй — 301, уникальное перенести", verify: "В Вебмастере по запросу один URL" });
 
+  const geoScore = Math.round((((aiBots.some((b) => b.allowed) ? 1 : 0) + (llms.status === 200 ? 1 : 0) + (found.length ? 1 : 0) + (ok.filter((p) => p.questions > 0).length / Math.max(ok.length, 1)) + (ok.filter((p) => p.tables > 0).length / Math.max(ok.length, 1))) / 5) * 100);
+
   return {
     pages,
+    geo: { score: geoScore, aiBots, llmsStatus: llms.status, llmsBytes: llms.body.length, questionsPages: ok.filter((p) => p.questions > 0).length, tablesPages: ok.filter((p) => p.tables > 0).length, schema: found },
+    indexing: { sitemapUrls: sitemap.length, checked: ok.length, noindex, canonicalMismatch: canonMismatch, indexable: ok.length - noindex, note: "Фактическая индексация и позиции проверяются в Вебмастере и GSC — без них не выдумываем" },
+    businessCase: { available: false, needs: ["Вебмастер/GSC: показы, клики, позиции", "Вордстат: частотность по кластерам", "Директ: CPC по кластеру", "Конверсия и средний чек"], note: "Кейс считается по данным кабинетов: без них любая сумма была бы выдуманной" },
     summary: { pages: ok.length, avgWords, thinPages: thin, withoutH1: noH1, noindexPages: noindex, canonicalMismatch: canonMismatch, humanHits, questionsPages: ok.filter((p) => p.questions > 0).length, tablesPages: ok.filter((p) => p.tables > 0).length, llms: { status: llms.status, bytes: llms.body.length }, slowPages: ok.filter((p) => p.ms > 800).length, avgMs: ok.length ? Math.round(ok.reduce((s2, p) => s2 + p.ms, 0) / ok.length) : 0, missingTitle: ok.filter((p) => p.titleLen === 0).length, missingDesc: ok.filter((p) => p.descLen === 0).length, pagesWithSchema: ok.filter((p) => p.schema.length > 0).length },
     schema: { found, missing },
     cannibalization,

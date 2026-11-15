@@ -23,6 +23,9 @@ type Deep = {
   schema: { found: string[]; missing: string[] };
   cannibalization: { a: string; b: string; overlap: number }[];
   actions: { priority: string; title: string; evidence: string; action: string; verify: string }[];
+  geo: { score: number; aiBots: { bot: string; allowed: boolean | null }[]; llmsStatus: number; llmsBytes: number; questionsPages: number; tablesPages: number; schema: string[] };
+  indexing: { sitemapUrls: number; checked: number; noindex: number; canonicalMismatch: number; indexable: number; note: string };
+  businessCase: { available: boolean; needs: string[]; note: string };
 };
 
 type Audit = {
@@ -123,7 +126,7 @@ export default function AuditPage() {
       const res = await fetch("/api/kabinet/site-audit-stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ site: targetUrl, projectId: project!.id, maxPages: depth === "полный" ? 120 : 15 }),
+        body: JSON.stringify({ site: targetUrl, projectId: project!.id, maxPages: depth === "полный" ? 5000 : 30 }),
       });
       const isStream = res.ok && res.body && (res.headers.get("content-type") || "").includes("text/event-stream");
       if (!isStream) throw new Error("stream unavailable");
@@ -430,6 +433,24 @@ export default function AuditPage() {
                   )}
                 </div>
               </div>
+              <div className="grid gap-3 lg:grid-cols-3">
+                <div>
+                  <p className="text-[12px] font-semibold">GEO/AEO</p>
+                  <p className="text-[12px] text-[#6b7280]">{audit.deep.geo.score}/100 · llms.txt {audit.deep.geo.llmsStatus} · вопросы {audit.deep.geo.questionsPages} · таблицы {audit.deep.geo.tablesPages}</p>
+                  <p className="text-[11px] text-[#9ca3af]">{audit.deep.geo.aiBots.map((b) => `${b.bot}:${b.allowed === null ? "—" : b.allowed ? "да" : "нет"}`).join(" ")}</p>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold">Индексация</p>
+                  <p className="text-[12px] text-[#6b7280]">sitemap {audit.deep.indexing.sitemapUrls} · проверено {audit.deep.indexing.checked} · noindex {audit.deep.indexing.noindex} · canonical {audit.deep.indexing.canonicalMismatch}</p>
+                  <p className="text-[11px] text-[#9ca3af]">{audit.deep.indexing.note}</p>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold">Бизнес-кейс</p>
+                  <p className="text-[12px] text-[#6b7280]">{audit.deep.businessCase.available ? "рассчитан" : "нужны данные: " + audit.deep.businessCase.needs.join(", ")}</p>
+                  <p className="text-[11px] text-[#9ca3af]">{audit.deep.businessCase.note}</p>
+                </div>
+              </div>
+
               <div>
                 <p className="text-[12px] font-semibold">Что делать</p>
                 <ul className="mt-1 space-y-1">
