@@ -96,7 +96,7 @@ async function sitemapUrls(origin: string): Promise<string[]> {
 const tokens = (s: string) => new Set(s.toLowerCase().replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter((w) => w.length > 3));
 
 /** Полный аудит: контент, humanizer, каннибализация, schema, AEO. Только измеренное. */
-export async function deepAudit(rawSite: string, opts: { maxPages?: number } = {}): Promise<DeepAudit> {
+export async function deepAudit(rawSite: string, opts: { maxPages?: number; onPage?: (page: DeepPage, index: number, total: number) => void } = {}): Promise<DeepAudit> {
   const origin = new URL(rawSite.match(/^https?:\/\//i) ? rawSite : `https://${rawSite}`).origin;
   const maxPages = Math.min(Math.max(opts.maxPages ?? 10, 3), 25);
 
@@ -129,6 +129,7 @@ export async function deepAudit(rawSite: string, opts: { maxPages?: number } = {
       humanHits: analyze(text, false).totalHits,
       firstParagraphWords: (paras[0] || "").split(/\s+/).filter(Boolean).length,
     });
+    opts.onPage?.(pages[pages.length - 1], pages.length, sample.length);
     await new Promise((res) => setTimeout(res, 450));
   }
 

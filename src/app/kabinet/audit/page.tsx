@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Gauge, HBars } from "@/components/kabinet/Charts";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
 import { saveSession, type Session } from "@/lib/session";
@@ -71,6 +71,8 @@ export default function AuditPage() {
   const { session, setSession, project, plan, ready } = useWorkspace();
   const [audit, setAudit] = useState<Audit | null>(null);
   const [busy, setBusy] = useState(false);
+  const [live, setLive] = useState<null | { stage: string; progress: number; pages: { url: string; status: number; words: number; humanHits: number }[]; startedAt: number }>(null);
+  const [elapsed, setElapsed] = useState(0);
   const [err, setErr] = useState("");
   const [sev, setSev] = useState("все");
   const [savedNote, setSavedNote] = useState("");
@@ -89,29 +91,91 @@ export default function AuditPage() {
     });
   }
 
+  useEffect(() => {
+    if (!live) return;
+    const startedAt = live.startedAt;
+    const tick = () => setElapsed(Math.floor((Date.now() - startedAt) / 1000));
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [live?.startedAt]);
+
   async function run() {
     setBusy(true);
     setErr("");
     setSavedNote("");
     setAudit(null);
     const targetUrl = customUrl.trim() || project!.url;
-    const res = await fetch("/api/kabinet/site-audit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ site: targetUrl, projectId: project!.id }),
-    });
-    const data = (await res.json().catch(() => ({}))) as {
-      audit?: Audit;
-      error?: string;
-      profile?: Partial<Session>;
-    };
+    setLive({ stage: "Проверяем robots.txt и sitemap", progress: 4, pages: [], startedAt: Date.now() });
+    let data: { audit?: Audit; deep?: Audit["deep"]; error?: string; profile?: Partial<Session> } = {};
+
+    async function legacy() {
+      const res = await fetch("/api/kabinet/site-audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ site: targetUrl, projectId: project!.id }),
+      });
+      return { res, data: (await res.json().catch(() => ({}))) as typeof data };
+    }
+
+    try {
+      const res = await fetch("/api/kabinet/site-audit-stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ site: targetUrl, projectId: project!.id, maxPages: depth === "полный" ? 12 : 5 }),
+      });
+      const isStream = res.ok && res.body && (res.headers.get("content-type") || "").includes("text/event-stream");
+      if (!isStream) throw new Error("stream unavailable");
+
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let finished = false;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let sep: number;
+        while ((sep = buffer.indexOf("\n\n")) >= 0) {
+          const raw = buffer.slice(0, sep);
+          buffer = buffer.slice(sep + 2);
+          const line = raw.split("\n").find((l) => l.startsWith("data:"));
+          if (!line) continue;
+          const evt = JSON.parse(line.slice(5).trim()) as {
+            type: string; label?: string; progress?: number; audit?: Audit; deep?: Audit["deep"];
+            url?: string; status?: number; words?: number; humanHits?: number;
+            message?: string; profile?: Partial<Session>;
+          };
+          if (evt.type === "status") {
+            setLive((p) => (p ? { ...p, stage: evt.label || p.stage, progress: evt.progress ?? p.progress } : p));
+          } else if (evt.type === "page") {
+            setLive((p) => (p ? { ...p, progress: evt.progress ?? p.progress, pages: [...p.pages, { url: evt.url || "", status: evt.status || 0, words: evt.words || 0, humanHits: evt.humanHits || 0 }].slice(-12) } : p));
+          } else if (evt.type === "audit") {
+            data.audit = evt.audit;
+          } else if (evt.type === "done") {
+            data.audit = evt.audit; data.deep = evt.deep; data.profile = evt.profile; finished = true;
+          } else if (evt.type === "error") {
+            throw new Error(evt.message || "Аудит прервался");
+          }
+        }
+      }
+      if (!finished) throw new Error("Поток завершился без результата");
+    } catch {
+      const { res, data: fallback } = await legacy();
+      data = fallback;
+      if (!res.ok) data.error = data.error || "Не удалось выполнить аудит";
+    } finally {
+      setLive(null);
+    }
+
     setBusy(false);
     if (data.profile) {
       const next = { ...session, ...data.profile } as Session;
       saveSession(next);
       setSession(next);
     }
-    if (!res.ok || !data.audit) {
+    if (data.error || !data.audit) {
       setErr(data.error || "Не удалось выполнить аудит");
       return;
     }
@@ -125,7 +189,7 @@ export default function AuditPage() {
       if (!modules.has("security") && area.includes("безопасн")) return false;
       return true;
     });
-    setAudit({ ...data.audit, findings: depth === "быстрый" ? filtered.filter((f) => f.severity !== "low") : filtered });
+    setAudit({ ...data.audit, deep: data.deep, findings: depth === "быстрый" ? filtered.filter((f) => f.severity !== "low") : filtered });
     try {
       localStorage.setItem(
         `insont.lastAudit.${project!.id}`,
@@ -242,6 +306,30 @@ export default function AuditPage() {
           ))}
         </div>
       </div>
+
+      {live && (
+        <div className="ws-card mt-4 p-5">
+          <div className="flex items-center gap-2">
+            <span className="ws-dot" />
+            <span className="text-[14px] font-semibold">Аудит идёт</span>
+            <span className="ml-auto text-[12px] text-[#9ca3af]">{Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, "0")} · {live.progress}%</span>
+          </div>
+          <div className="ws-progress mt-3"><span style={{ width: `${live.progress}%` }} /></div>
+          <p className="mt-2 text-[13px] text-[#6b7280]">{live.stage}</p>
+          <div className="mt-3 space-y-1">
+            {live.pages.map((p, i) => (
+              <div key={i} className="flex items-center gap-2 text-[12px]">
+                <span className={p.status === 200 ? "text-[#15803d]" : "text-[#b91c1c]"}>{p.status}</span>
+                <span className="flex-1 truncate text-[#374151]">{p.url.replace(/^https?:\/\/[^/]+/, "") || "/"}</span>
+                <span className="text-[#9ca3af]">{p.words} слов</span>
+                {p.humanHits > 0 && <span className="text-[#b45309]">humanizer {p.humanHits}</span>}
+              </div>
+            ))}
+            {live.pages.length === 0 && <div className="ws-skeleton"><span /><span style={{ width: "70%" }} /></div>}
+          </div>
+          <p className="mt-3 text-[11px] text-[#9ca3af]">Проверяем robots, sitemap, редиректы, страницы, schema и ИИ-паттерны. Каждая строка — реально загруженная страница.</p>
+        </div>
+      )}
 
       {err && <p className="mt-3 rounded-lg bg-[#fef2f2] px-3 py-2 text-[13px] text-[#b91c1c]">{err}</p>}
 
