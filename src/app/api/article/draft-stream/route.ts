@@ -62,7 +62,9 @@ export async function POST(req: Request) {
         const now = Date.now();
         if (!force && now - lastReasoningAt < 200) return;
         lastReasoningAt = now;
-        send({ type: "reasoning", text: reasoning.slice(-700) });
+        // Белый лейбл: в интерфейсе не должно быть имени модели-провайдера.
+        const clean = reasoning.replace(/deepseek/gi, "INSONT AI");
+        send({ type: "reasoning", text: clean.slice(-700) });
       };
 
       const parts: string[] = [];

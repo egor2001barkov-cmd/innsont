@@ -272,7 +272,7 @@ function Writer() {
               setLive((prev) => (prev ? { ...prev, md: snapshot } : prev));
             }
           } else if (evt.type === "reasoning" && evt.text) {
-            const snapshot = evt.text;
+            const snapshot = evt.text.replace(/deepseek/gi, "INSONT AI");
             setLive((prev) => (prev ? { ...prev, reasoning: snapshot } : prev));
           } else if (evt.type === "status") {
             setLive((prev) => (prev ? { ...prev, label: evt.label || prev.label, progress: evt.progress ?? prev.progress } : prev));
@@ -585,7 +585,11 @@ function Writer() {
             </ul>
             <div className="border-t border-[#f3f4f6] pt-3">
               <p className="text-[12px] text-[#9ca3af]">Осталось статей: {articlesLeft} из {planLimit.limits.articles}</p>
-              {provider && <p className="mt-1 text-[12px] text-[#9ca3af]">Провайдер: {provider}</p>}
+              {provider && (
+                <p className="mt-1 text-[12px] text-[#9ca3af]">
+                  Движок: {provider === "deepseek" ? "INSONT AI" : provider === "yandex" ? "INSONT AI (YandexGPT)" : "demo"}
+                </p>
+              )}
               {provider === "demo" && (
                 <p className="mt-1 text-[12px] text-[#b45309]">
                   demo-режим: статья будет заглушкой, пока на сервере не задан ключ LLM
