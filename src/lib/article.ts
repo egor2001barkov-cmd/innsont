@@ -165,7 +165,7 @@ function contentIncludes(ctx: ArticleContext) {
 }
 
 const PLAN_SYSTEM =
-  "Ты старший SEO-редактор российского интернет-издания. Отвечаешь строго валидным JSON без markdown-обёртки.";
+  "Ты старший SEO-редактор российского интернет-издания. Отвечаешь строго валидным JSON без markdown-обёртки. Текущий год — 2026: не пиши устаревшие годы и «2024»/«2025» в заголовках.";
 
 export async function generatePlan(
   ctx: ArticleContext
@@ -203,7 +203,7 @@ ${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить
 }
 
 const DRAFT_SYSTEM =
-  "Ты русский копирайтер уровня главного редактора. Пишешь фактурно: цифры, конкретика, ни воды. Выход — только markdown-текст раздела, без пояснений.";
+  "Ты русский копирайтер уровня главного редактора. Пишешь фактурно: цифры, конкретика, ни воды. Текущий год — 2026, устаревшие годы не используй. Выход — только markdown-текст раздела, без пояснений.";
 
 export async function generateDraft(
   plan: ArticlePlan,
@@ -227,21 +227,30 @@ export async function generateDraft(
   if (!lead.ok) return { markdown: demoDraft(plan, ctx), provider: "demo" };
   parts.push(`# ${plan.title}\n\n${lead.text.trim()}\n`);
 
-  // секции (по одной — держим контекст и лимит токенов)
-  for (const s of plan.sections) {
-    const sec = await llmComplete(
-      [
-        { role: "system", text: DRAFT_SYSTEM },
-        {
-          role: "user",
-          text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
+  // Секции генерируем параллельно, но пачками по 3: последовательный цикл давал
+  // 60–90 секунд на статью, а полный параллелизм ловит 429 у провайдера.
+  const SECTION_CONCURRENCY = 3;
+  for (let i = 0; i < plan.sections.length; i += SECTION_CONCURRENCY) {
+    const chunk = plan.sections.slice(i, i + SECTION_CONCURRENCY);
+    const results = await Promise.all(
+      chunk.map((s) =>
+        llmComplete(
+          [
+            { role: "system", text: DRAFT_SYSTEM },
+            {
+              role: "user",
+              text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
 Напиши раздел с заголовком «## ${s.h2}». Что должно войти: ${s.hint || "конкретика по теме"}.
 Правила: 150–250 слов; если уместно — таблица markdown (модели цитируют таблицы); ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
-        },
-      ],
-      { temperature: 0.55, maxTokens: 1600 }
+            },
+          ],
+          { temperature: 0.55, maxTokens: 1600 }
+        )
+      )
     );
-    if (sec.ok) parts.push(sec.text.trim() + "\n");
+    for (const sec of results) {
+      if (sec.ok && sec.text.trim()) parts.push(sec.text.trim() + "\n");
+    }
   }
 
   // FAQ
