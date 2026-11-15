@@ -40,6 +40,7 @@ export function contextFromRequest(body: Record<string, unknown>): ArticleContex
     includeCta: bool(body.includeCta, false),
     keywords: arr(body.keywords),
     instructions: str(body.instructions, 600),
+    brief: str(body.brief, 4000),
     referenceUrl: str(body.referenceUrl, 250),
     bannedWords: arr(body.bannedWords),
     preferredPhrases: arr(body.preferredPhrases),

@@ -9,6 +9,10 @@ export type PlanItem = {
   status: PlanStatus;
   priority: number;
   source: "вручную" | "список" | "ключи" | "каннибализация" | "аудит";
+  competitors?: string[];
+  brief?: string;
+  briefAt?: string;
+  lastCheck?: { at: string; status: number; title: string; words: number; indexable: boolean };
   createdAt: string;
   updatedAt: string;
 };

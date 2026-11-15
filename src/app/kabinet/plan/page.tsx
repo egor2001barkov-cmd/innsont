@@ -27,6 +27,10 @@ export default function PlanPage() {
   const [bulk, setBulk] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState("");
+  const [briefFor, setBriefFor] = useState<string | null>(null);
+  const [briefUrls, setBriefUrls] = useState("");
+  const [briefBusy, setBriefBusy] = useState("");
+  const [briefErr, setBriefErr] = useState("");
 
   const load = useCallback(() => {
     if (!project) return;
@@ -124,7 +128,52 @@ export default function PlanPage() {
 
   async function write(item: PlanItem) {
     if (item.status === "идея") await patch(item, { status: "бриф" });
-    window.location.assign(`/kabinet/statyi?tema=${encodeURIComponent(item.key)}`);
+    window.location.assign(`/kabinet/statyi?tema=${encodeURIComponent(item.key)}&plan=${encodeURIComponent(item.id)}`);
+  }
+
+  async function measure(item: PlanItem) {
+    if (!project) return;
+    setBusy("measure:" + item.id);
+    try {
+      const res = await fetch("/api/plan/measure", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: project.id, id: item.id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Не удалось проверить страницу");
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Ошибка проверки");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function makeBrief(item: PlanItem) {
+    const urls = briefUrls.split("\n").map((u) => u.trim()).filter(Boolean).slice(0, 3);
+    if (urls.length === 0) {
+      setBriefErr("Добавьте 1–3 URL страниц конкурентов");
+      return;
+    }
+    setBriefBusy(item.id);
+    setBriefErr("");
+    try {
+      const res = await fetch("/api/brief", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: item.key, urls }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Не удалось собрать бриф");
+      await patch(item, { competitors: urls, brief: data.brief.markdown, briefAt: new Date().toISOString() });
+      setBriefFor(null);
+      setBriefUrls("");
+    } catch (e) {
+      setBriefErr(e instanceof Error ? e.message : "Ошибка");
+    } finally {
+      setBriefBusy("");
+    }
   }
 
   if (!ready || !project) return null;
@@ -225,7 +274,12 @@ export default function PlanPage() {
             <div key={item.id} className="grid gap-2 border-b border-[#f3f4f6] px-4 py-3 last:border-0 lg:grid-cols-[1fr_130px_120px_120px_120px] lg:items-center">
               <div>
                 <div className="text-[13.5px] font-medium">{item.key}</div>
-                <div className="mt-0.5 text-[11px] text-[#9ca3af]">{item.source} · {item.createdAt.slice(0, 10)}</div>
+                <div className="mt-0.5 text-[11px] text-[#9ca3af]">
+                  {item.source} · {item.createdAt.slice(0, 10)}
+                  {item.lastCheck && (
+                    <> · проверено {item.lastCheck.at.slice(0, 10)}: {item.lastCheck.status}, {item.lastCheck.indexable ? "индексируется" : "noindex"}, {item.lastCheck.words} слов</>
+                  )}
+                </div>
               </div>
               <div className="text-[12px] text-[#6b7280]">{item.intent}</div>
               <select
@@ -244,10 +298,53 @@ export default function PlanPage() {
                 <button className="ws-btn ws-btn-outline px-2 py-1 text-[12px]" onClick={() => void write(item)}>
                   Написать
                 </button>
+                <button
+                  className="px-2 py-1 text-[12px] text-[#6b7280] underline"
+                  disabled={!item.targetUrl}
+                  title={item.targetUrl ? "Проверить страницу" : "Сначала укажите целевой URL"}
+                  onClick={() => void measure(item)}
+                >
+                  Проверить
+                </button>
+                <button
+                  className={`px-2 py-1 text-[12px] ${item.brief ? "text-[#15803d]" : "text-[#6b7280] underline"}`}
+                  onClick={() => {
+                    setBriefFor(briefFor === item.id ? null : item.id);
+                    setBriefUrls((item.competitors || []).join("\n"));
+                    setBriefErr("");
+                  }}
+                >
+                  {item.brief ? "✓ бриф" : "Бриф"}
+                </button>
                 <button className="px-1 text-[12px] text-[#9ca3af]" title="Выше" onClick={() => void move(item, -1)}>↑</button>
                 <button className="px-1 text-[12px] text-[#9ca3af]" title="Ниже" onClick={() => void move(item, 1)}>↓</button>
                 <button className="px-1 text-[12px] text-[#b91c1c]" title="Удалить" onClick={() => void remove(item)}>×</button>
               </div>
+
+              {briefFor === item.id && (
+                <div className="mt-2 rounded-lg bg-[#fafafa] p-3 lg:col-span-5">
+                  <p className="text-[12px] text-[#6b7280]">
+                    Страницы из топа выдачи по этому запросу (1–3). Соберём структуру, объём и вопросы.
+                  </p>
+                  <textarea
+                    className="ws-input mt-2 min-h-[64px] font-mono text-[12px]"
+                    placeholder={"https://competitor1.ru/page\nhttps://competitor2.ru/page"}
+                    value={briefUrls}
+                    onChange={(e) => setBriefUrls(e.target.value)}
+                  />
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <button className="ws-btn ws-btn-primary px-3 py-1 text-[12px]" onClick={() => void makeBrief(item)} disabled={Boolean(briefBusy)}>
+                      {briefBusy === item.id ? "Собираем…" : "Собрать бриф"}
+                    </button>
+                    {briefErr && <span className="text-[12px] text-[#b91c1c]">{briefErr}</span>}
+                  </div>
+                  {item.brief && (
+                    <pre className="mt-2 max-h-[160px] overflow-auto whitespace-pre-wrap rounded bg-white p-2 text-[11px] text-[#4b5563]">
+                      {item.brief}
+                    </pre>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>

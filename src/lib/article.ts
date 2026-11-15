@@ -32,7 +32,8 @@ export type ArticleContext = {
   includeStats?: boolean;
   includeCta?: boolean;
   keywords?: string[]; // дополнительные LSI-ключи
-  instructions?: string; // свободные указания
+  instructions?: string;
+  brief?: string; // свободные указания
   referenceUrl?: string; // статья-референс
   bannedWords?: string[]; // запрещённые слова
   preferredPhrases?: string[]; // предпочтительные формулировки
@@ -131,6 +132,10 @@ ${plan.faq.map((f) => `**${f.q}** ${f.a}`).join("\n\n")}
 
 // --- Промпты ------------------------------------------------------------------
 
+function briefLine(ctx: ArticleContext) {
+  return ctx.brief ? `\n\nБриф по конкурентам (обязательные разделы и вопросы, не копируй текст дословно):\n${ctx.brief}` : "";
+}
+
 function styleLine(ctx: ArticleContext) {
   const parts = [`тон: ${cap(ctx.tone, 60) || "деловой, живой, без канцелярита"}`];
   if (ctx.audience) parts.push(`аудитория: ${cap(ctx.audience, 120)}`);
@@ -173,7 +178,7 @@ export async function generatePlan(
 ): Promise<{ plan: ArticlePlan; provider: Provider }> {
   if (activeProvider() === "demo") return { plan: demoPlan(ctx.key), provider: "demo" };
   const user = `Составь план SEO-статьи для Рунета по запросу: «${cap(ctx.key, 120)}».
-${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить: ${contentIncludes(ctx)}` : ""}.
+${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить: ${contentIncludes(ctx)}` : ""}.${briefLine(ctx)}
 
 Требования к плану:
 - title: заголовок H1 с ключом, до 70 символов, без точек в конце;
@@ -217,7 +222,7 @@ export function draftPromptSet(plan: ArticlePlan, ctx: ArticleContext) {
     {
       role: "user",
       text: `Статья для Рунета по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
-Напиши вводный абзац (2–3 предложения, 40–60 слов) — прямой ответ на запрос: что это, для кого, ключевые цифры. Без воды и без «в современном мире». Первый абзац должен быть пригоден для цитаты нейросетью.`,
+Напиши вводный абзац (2–3 предложения, 40–60 слов) — прямой ответ на запрос: что это, для кого, ключевые цифры. Без воды и без «в современном мире». Первый абзац должен быть пригоден для цитаты нейросетью.${briefLine(ctx)}`,
     },
   ];
 
@@ -229,7 +234,7 @@ export function draftPromptSet(plan: ArticlePlan, ctx: ArticleContext) {
         role: "user",
         text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
 Напиши раздел с заголовком «## ${s.h2}». Что должно войти: ${s.hint || "конкретика по теме"}.
-Правила: 150–250 слов; ${ctx.includeTables === false ? "таблицы не используй вообще, только текст и списки" : "если уместно — таблица markdown (модели цитируют таблицы)"}; ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
+Правила: 150–250 слов; ${ctx.includeTables === false ? "таблицы не используй вообще, только текст и списки" : "если уместно — таблица markdown (модели цитируют таблицы)"}; ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».${briefLine(ctx)}`,
       },
     ] as ChatMessage[],
   }));

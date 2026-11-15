@@ -70,6 +70,7 @@ function Writer() {
   const [reviseText, setReviseText] = useState("");
   const [prevMarkdown, setPrevMarkdown] = useState("");
   const [humanizerNote, setHumanizerNote] = useState("");
+  const [brief, setBrief] = useState("");
 
   // Writesonic-уровень параметров
   const [length, setLength] = useState<Length>("средняя");
@@ -87,10 +88,25 @@ function Writer() {
   const [referenceUrl, setReferenceUrl] = useState("");
   const [bannedWords, setBannedWords] = useState("");
 
+  const planId = params.get("plan") || "";
+
   useEffect(() => {
     const t = params.get("tema");
     if (t) setKey(t);
   }, [params]);
+
+  // Если статью открыли из контент-плана, подтягиваем бриф по конкурентам.
+  useEffect(() => {
+    if (!planId || !project) return;
+    void fetch(`/api/plan?projectId=${encodeURIComponent(project.id)}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => {
+        const item = (d.items || []).find((i: { id: string }) => i.id === planId) as { key?: string; brief?: string } | undefined;
+        if (item?.key) setKey(item.key);
+        if (item?.brief) setBrief(item.brief);
+      })
+      .catch(() => undefined);
+  }, [planId, project]);
 
   // Секундомер на экране генерации: 60–90 секунд без индикатора кажутся зависанием.
   useEffect(() => {
@@ -148,6 +164,7 @@ function Writer() {
       pov,
       goal,
       readingLevel,
+      brief,
       includeFaq,
       includeTables,
       includeStats,
@@ -209,6 +226,13 @@ function Writer() {
   }
 
   function applyArticle(markdownText: string) {
+    if (planId && project) {
+      void fetch("/api/plan", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: project.id, id: planId, patch: { status: "черновик" } }),
+      }).catch(() => undefined);
+    }
     setMarkdown(markdownText);
     setProvider("deepseek");
     setSeoTitle("");
@@ -638,6 +662,11 @@ function Writer() {
               </div>
             )}
 
+            {brief && (
+              <p className="text-[12px] text-[#15803d]">
+                ✓ Приложен бриф по конкурентам: обязательные разделы и вопросы попадут в план и текст.
+              </p>
+            )}
             {err && <p className="text-[13px] text-[#b91c1c]">{err}</p>}
             <button
               className="ws-btn ws-btn-primary w-full py-3 text-[15px]"

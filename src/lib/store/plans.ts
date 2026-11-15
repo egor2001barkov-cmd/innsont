@@ -85,7 +85,7 @@ export function updatePlanItem(
   accountId: string,
   projectId: string,
   id: string,
-  patch: Partial<Pick<PlanItem, "key" | "intent" | "targetUrl" | "status" | "priority">>,
+  patch: Partial<Pick<PlanItem, "key" | "intent" | "targetUrl" | "status" | "priority" | "competitors" | "brief" | "briefAt" | "lastCheck">>,
 ): PlanItem | null {
   const file = read(accountId, projectId);
   const item = file.items.find((i) => i.id === id);
@@ -96,6 +96,10 @@ export function updatePlanItem(
   if (typeof patch.targetUrl === "string") item.targetUrl = patch.targetUrl.trim().slice(0, 300);
   if (patch.status && PLAN_STATUSES.includes(patch.status as PlanStatus)) item.status = patch.status as PlanStatus;
   if (typeof patch.priority === "number" && Number.isFinite(patch.priority)) item.priority = patch.priority;
+  if (Array.isArray(patch.competitors)) item.competitors = patch.competitors.slice(0, 3).map(String);
+  if (typeof patch.brief === "string") item.brief = patch.brief.slice(0, 6000);
+  if (typeof patch.briefAt === "string") item.briefAt = patch.briefAt;
+  if (patch.lastCheck) item.lastCheck = patch.lastCheck;
   item.updatedAt = new Date().toISOString();
 
   write(accountId, projectId, file);
