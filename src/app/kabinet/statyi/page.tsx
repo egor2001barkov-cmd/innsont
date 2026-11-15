@@ -65,6 +65,8 @@ function Writer() {
   const [err, setErr] = useState("");
   const [wpOpen, setWpOpen] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [live, setLive] = useState<null | { md: string; reasoning: string; label: string; progress: number; startedAt: number }>(null);
+  const [elapsed, setElapsed] = useState(0);
 
   // Writesonic-уровень параметров
   const [length, setLength] = useState<Length>("средняя");
@@ -86,6 +88,17 @@ function Writer() {
     const t = params.get("tema");
     if (t) setKey(t);
   }, [params]);
+
+  // Секундомер на экране генерации: 60–90 секунд без индикатора кажутся зависанием.
+  useEffect(() => {
+    if (!live) return;
+    const startedAt = live.startedAt;
+    const tick = () => setElapsed(Math.floor((Date.now() - startedAt) / 1000));
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [live?.startedAt]);
 
   const styles = useMemo(
     () => (project ? loadStyles().filter((s) => s.projectId === project.id) : []),
@@ -177,13 +190,11 @@ function Writer() {
     setStep("plan");
   }
 
-  async function runDraft(plan: ArticlePlan) {
-    setBusy("draft");
+  async function runDraftLegacy(plan: ArticlePlan) {
     const data = await call<{ markdown: string; provider: "deepseek" | "yandex" | "demo" }>(
       "/api/article/draft",
       { ...requestBody(), plan }
     );
-    setBusy("");
     if (!data) return;
     setMarkdown(data.markdown);
     setProvider(data.provider);
@@ -192,6 +203,102 @@ function Writer() {
     setSavedId("");
     setWpLink("");
     setStep("draft");
+  }
+
+  async function runDraft(plan: ArticlePlan) {
+    setErr("");
+    setBusy("draft");
+    const startedAt = Date.now();
+    setLive({ md: "", reasoning: "", label: "Пишем вступление", progress: 4, startedAt });
+
+    let res: Response;
+    try {
+      res = await fetch("/api/article/draft-stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...requestBody(), plan }),
+      });
+    } catch {
+      setLive(null);
+      setBusy("");
+      await runDraftLegacy(plan);
+      return;
+    }
+
+    const isStream = res.ok && res.body && (res.headers.get("content-type") || "").includes("text/event-stream");
+    if (!isStream) {
+      setLive(null);
+      setBusy("");
+      await runDraftLegacy(plan);
+      return;
+    }
+
+    const reader = res.body!.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let acc = "";
+    let lastPaint = 0;
+    let finished: { markdown: string; words: number } | null = null;
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let sep: number;
+        while ((sep = buffer.indexOf("\n\n")) >= 0) {
+          const raw = buffer.slice(0, sep);
+          buffer = buffer.slice(sep + 2);
+          const line = raw.split("\n").find((l) => l.startsWith("data:"));
+          if (!line) continue;
+
+          const evt = JSON.parse(line.slice(5).trim()) as {
+            type: string;
+            text?: string;
+            label?: string;
+            progress?: number;
+            markdown?: string;
+            words?: number;
+            message?: string;
+          };
+
+          if (evt.type === "content" && evt.text) {
+            acc += evt.text;
+            const now = Date.now();
+            if (now - lastPaint > 70) {
+              lastPaint = now;
+              const snapshot = acc;
+              setLive((prev) => (prev ? { ...prev, md: snapshot } : prev));
+            }
+          } else if (evt.type === "reasoning" && evt.text) {
+            const snapshot = evt.text;
+            setLive((prev) => (prev ? { ...prev, reasoning: snapshot } : prev));
+          } else if (evt.type === "status") {
+            setLive((prev) => (prev ? { ...prev, label: evt.label || prev.label, progress: evt.progress ?? prev.progress } : prev));
+          } else if (evt.type === "done" && evt.markdown) {
+            finished = { markdown: evt.markdown, words: evt.words || 0 };
+          } else if (evt.type === "error") {
+            throw new Error(evt.message || "Генерация прервалась");
+          }
+        }
+      }
+
+      const result = finished as { markdown: string; words: number } | null;
+      if (!result) throw new Error("Поток завершился без текста");
+      setMarkdown(result.markdown);
+      setProvider("deepseek");
+      setSeoTitle("");
+      setSeoDescription("");
+      setSavedId("");
+      setWpLink("");
+      setStep("draft");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Генерация прервалась");
+    } finally {
+      setLive(null);
+      setBusy("");
+    }
   }
 
   async function makeDraft() {
@@ -457,6 +564,11 @@ function Writer() {
             >
               Собрать только план
             </button>
+            {busy === "plan" && (
+              <div className="ws-skeleton" aria-hidden>
+                <span /><span style={{ width: "70%" }} /><span style={{ width: "86%" }} />
+              </div>
+            )}
           </div>
 
           {/* Боковая панель со сводкой */}
@@ -587,6 +699,53 @@ function Writer() {
               <a className="underline" href={wpLink} target="_blank" rel="noreferrer">Открыть в WP →</a>
             </p>
           )}
+        </div>
+      )}
+
+      {live && (
+        <div className="ws-write-overlay" role="status" aria-live="polite">
+          <div className="ws-write-card">
+            <div className="ws-write-head">
+              <span className="ws-dot" />
+              <span className="ws-write-title">Пишем статью</span>
+              <span className="ws-write-timer">{Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, "0")}</span>
+              <span className="ws-write-pct">{live.progress}%</span>
+            </div>
+            <div className="ws-progress"><span style={{ width: `${live.progress}%` }} /></div>
+            <div className="ws-write-stage">{live.label}</div>
+
+            {live.reasoning && (
+              <details className="ws-think" open>
+                <summary>Модель думает</summary>
+                <div className="ws-think-text">{live.reasoning.slice(-420)}</div>
+              </details>
+            )}
+
+            <div className="ws-live">
+              {live.md ? (
+                live.md
+                  .split("\n")
+                  .filter((l) => l.trim())
+                  .slice(-30)
+                  .map((line, i) =>
+                    line.startsWith("## ") ? (
+                      <div key={i} className="ws-live-h">{line.slice(3)}</div>
+                    ) : (
+                      <p key={i} className="ws-live-p">{line}</p>
+                    )
+                  )
+              ) : (
+                <div className="ws-skeleton" aria-hidden>
+                  <span /><span style={{ width: "72%" }} /><span style={{ width: "88%" }} /><span style={{ width: "64%" }} />
+                </div>
+              )}
+              <span className="ws-caret" />
+            </div>
+
+            <div className="ws-write-foot">
+              Обычно 60–90 секунд: план, разделы и FAQ пишутся по очереди. Вкладку можно не закрывать.
+            </div>
+          </div>
         </div>
       )}
 

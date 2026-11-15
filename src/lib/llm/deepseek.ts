@@ -77,3 +77,79 @@ export async function deepseekComplete(
   }
   return { ok: false, error: lastError };
 }
+
+
+export type LlmStreamChunk = { type: "reasoning" | "content"; text: string };
+
+/**
+ * Потоковый вызов: отдаёт reasoning (размышление модели) и content по мере генерации.
+ * Нужен для экрана «пишем статью»: пользователь видит, что происходит, а не пустой экран.
+ */
+export async function* deepseekStream(
+  messages: ChatMessage[],
+  opts: { temperature?: number; maxTokens?: number; timeoutMs?: number } = {}
+): AsyncGenerator<LlmStreamChunk> {
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+  if (!apiKey) throw new Error("LLM-провайдер не настроен");
+  const model = process.env.DEEPSEEK_MODEL || "deepseek-flash";
+  const budget = (opts.maxTokens ?? 2000) + 2500;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), opts.timeoutMs ?? 240_000);
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: messages.map((m) => ({ role: m.role, content: m.text })),
+        temperature: opts.temperature ?? 0.5,
+        max_tokens: budget,
+        stream: true,
+      }),
+      signal: controller.signal,
+    });
+
+    if (!res.ok || !res.body) {
+      const detail = await res.text().catch(() => "");
+      throw new Error(`LLM: HTTP ${res.status} ${detail.slice(0, 160)}`);
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let nl: number;
+      while ((nl = buffer.indexOf("\n")) >= 0) {
+        const line = buffer.slice(0, nl).trim();
+        buffer = buffer.slice(nl + 1);
+        if (!line.startsWith("data:")) continue;
+
+        const payload = line.slice(5).trim();
+        if (payload === "[DONE]") return;
+
+        try {
+          const json = JSON.parse(payload) as {
+            choices?: { delta?: { content?: string; reasoning_content?: string } }[];
+          };
+          const delta = json.choices?.[0]?.delta;
+          if (delta?.reasoning_content) yield { type: "reasoning", text: delta.reasoning_content };
+          if (delta?.content) yield { type: "content", text: delta.content };
+        } catch {
+          // неполный JSON в потоке — пропускаем строку
+        }
+      }
+    }
+  } finally {
+    clearTimeout(timer);
+  }
+}

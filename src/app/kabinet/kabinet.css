@@ -159,3 +159,215 @@ html[data-theme="dark"] .ws-app .bg-\[\#111827\] {
 html[data-theme="dark"] .ws-app .hover\:text-\[\#111827\]:hover {
   color: #fff !important;
 }
+
+/* --- Экран «пишем статью»: прогресс, reasoning, живой текст ---------------- */
+
+.ws-write-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(4px);
+  animation: wsFade 0.18s ease-out;
+}
+
+.ws-write-card {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  border-radius: 18px;
+  background: var(--ws-card);
+  color: var(--ws-ink);
+  border: 1px solid var(--ws-line);
+  box-shadow: 0 24px 60px rgba(17, 24, 39, 0.28);
+  padding: 22px 22px 18px;
+}
+
+.ws-write-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ws-orange);
+  animation: wsPulse 1.5s ease-out infinite;
+  flex: none;
+}
+
+.ws-write-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.ws-write-timer,
+.ws-write-pct {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--ws-mute);
+}
+
+.ws-write-pct {
+  margin-left: 10px;
+  color: var(--ws-orange);
+  font-weight: 600;
+}
+
+.ws-progress {
+  margin-top: 12px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--ws-soft);
+  overflow: hidden;
+}
+
+.ws-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f59e0b, #e8590c, #f59e0b);
+  background-size: 200% 100%;
+  animation: wsShimmer 1.8s linear infinite;
+  transition: width 0.45s ease;
+}
+
+.ws-write-stage {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--ws-mute);
+  animation: wsFloat 0.25s ease-out;
+}
+
+.ws-think {
+  margin-top: 14px;
+  border: 1px dashed var(--ws-line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--ws-soft) 60%, transparent);
+}
+
+.ws-think summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ws-mute);
+  list-style: none;
+}
+
+.ws-think summary::before {
+  content: "▸ ";
+  color: var(--ws-orange);
+}
+
+.ws-think[open] summary::before {
+  content: "▾ ";
+}
+
+.ws-think-text {
+  margin-top: 8px;
+  max-height: 74px;
+  overflow: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--ws-mute);
+  white-space: pre-wrap;
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+.ws-live {
+  margin-top: 14px;
+  max-height: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 13.5px;
+  line-height: 1.6;
+  border-top: 1px solid var(--ws-line);
+  padding-top: 12px;
+}
+
+.ws-live-h {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.ws-live-p {
+  margin: 4px 0;
+  color: var(--ws-ink);
+}
+
+.ws-caret {
+  display: inline-block;
+  width: 2px;
+  height: 15px;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: var(--ws-orange);
+  animation: wsCaret 1s steps(1) infinite;
+}
+
+.ws-skeleton {
+  display: grid;
+  gap: 8px;
+}
+
+.ws-skeleton span {
+  display: block;
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--ws-soft), var(--ws-hover), var(--ws-soft));
+  background-size: 200% 100%;
+  animation: wsShimmer 1.4s linear infinite;
+}
+
+.ws-write-foot {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--ws-mute);
+}
+
+@keyframes wsCaret {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes wsPulse {
+  0% { box-shadow: 0 0 0 0 rgba(232, 89, 12, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(232, 89, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(232, 89, 12, 0); }
+}
+
+@keyframes wsShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes wsFloat {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes wsFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-caret,
+  .ws-dot,
+  .ws-progress span,
+  .ws-skeleton span {
+    animation: none;
+  }
+}

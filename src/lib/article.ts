@@ -1,4 +1,4 @@
-import { activeProvider, llmComplete } from "@/lib/llm";
+import { activeProvider, llmComplete, type ChatMessage } from "@/lib/llm";
 
 export type Provider = "deepseek" | "yandex" | "demo";
 
@@ -205,58 +205,35 @@ ${brandLine(ctx)}. ${styleLine(ctx)}${contentIncludes(ctx) ? `. Включить
 const DRAFT_SYSTEM =
   "Ты русский копирайтер уровня главного редактора. Пишешь фактурно: цифры, конкретика, ни воды. Текущий год — 2026, устаревшие годы не используй. Выход — только markdown-текст раздела, без пояснений.";
 
-export async function generateDraft(
-  plan: ArticlePlan,
-  ctx: ArticleContext
-): Promise<{ markdown: string; provider: Provider }> {
-  if (activeProvider() === "demo") return { markdown: demoDraft(plan, ctx), provider: "demo" };
+/**
+ * Промпты черновика в одном месте: их использует и обычная генерация,
+ * и потоковая (/api/article/draft-stream), чтобы тексты не расходились.
+ */
+export function draftPromptSet(plan: ArticlePlan, ctx: ArticleContext) {
+  const lead: ChatMessage[] = [
+    { role: "system", text: DRAFT_SYSTEM },
+    {
+      role: "user",
+      text: `Статья для Рунета по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
+Напиши вводный абзац (2–3 предложения, 40–60 слов) — прямой ответ на запрос: что это, для кого, ключевые цифры. Без воды и без «в современном мире». Первый абзац должен быть пригоден для цитаты нейросетью.`,
+    },
+  ];
 
-  const parts: string[] = [];
-  // вступление
-  const lead = await llmComplete(
-    [
+  const sections = plan.sections.map((s) => ({
+    h2: s.h2,
+    messages: [
       { role: "system", text: DRAFT_SYSTEM },
       {
         role: "user",
-        text: `Статья для Рунета по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
-Напиши вводный абзац (2–3 предложения, 40–60 слов) — прямой ответ на запрос: что это, для кого, ключевые цифры. Без воды и без «в современном мире». Первый абзац должен быть пригоден для цитаты нейросетью.`,
-      },
-    ],
-    { temperature: 0.5, maxTokens: 700 }
-  );
-  if (!lead.ok) return { markdown: demoDraft(plan, ctx), provider: "demo" };
-  parts.push(`# ${plan.title}\n\n${lead.text.trim()}\n`);
-
-  // Секции генерируем параллельно, но пачками по 3: последовательный цикл давал
-  // 60–90 секунд на статью, а полный параллелизм ловит 429 у провайдера.
-  const SECTION_CONCURRENCY = 3;
-  for (let i = 0; i < plan.sections.length; i += SECTION_CONCURRENCY) {
-    const chunk = plan.sections.slice(i, i + SECTION_CONCURRENCY);
-    const results = await Promise.all(
-      chunk.map((s) =>
-        llmComplete(
-          [
-            { role: "system", text: DRAFT_SYSTEM },
-            {
-              role: "user",
-              text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
+        text: `Раздел статьи «${plan.title}» по запросу «${cap(ctx.key, 120)}». ${brandLine(ctx)}. ${styleLine(ctx)}.
 Напиши раздел с заголовком «## ${s.h2}». Что должно войти: ${s.hint || "конкретика по теме"}.
 Правила: 150–250 слов; если уместно — таблица markdown (модели цитируют таблицы); ключевую фразу используй 1–2 раза, без переспама; пиши как для человека, который выбирает и сравнивает. Выход — только текст раздела, начиная с «## ».`,
-            },
-          ],
-          { temperature: 0.55, maxTokens: 1600 }
-        )
-      )
-    );
-    for (const sec of results) {
-      if (sec.ok && sec.text.trim()) parts.push(sec.text.trim() + "\n");
-    }
-  }
+      },
+    ] as ChatMessage[],
+  }));
 
-  // FAQ
-  if (plan.faq.length) {
-    const faq = await llmComplete(
-      [
+  const faq: ChatMessage[] | null = plan.faq.length
+    ? [
         { role: "system", text: DRAFT_SYSTEM },
         {
           role: "user",
@@ -264,9 +241,40 @@ export async function generateDraft(
 Вопросы:\n${plan.faq.map((f, i) => `${i + 1}. ${f.q}`).join("\n")}
 Ответы: по 2–4 предложения, прямо отвечают на вопрос первым предложением. Формат: «**Вопрос** — ответ» через пустую строку. Выход — только текст раздела, начиная с «## FAQ».`,
         },
-      ],
-      { temperature: 0.4, maxTokens: 1100 }
+      ]
+    : null;
+
+  return { lead, sections, faq };
+}
+
+export async function generateDraft(
+  plan: ArticlePlan,
+  ctx: ArticleContext
+): Promise<{ markdown: string; provider: Provider }> {
+  if (activeProvider() === "demo") return { markdown: demoDraft(plan, ctx), provider: "demo" };
+
+  const prompts = draftPromptSet(plan, ctx);
+  const parts: string[] = [];
+
+  const lead = await llmComplete(prompts.lead, { temperature: 0.5, maxTokens: 700 });
+  if (!lead.ok) return { markdown: demoDraft(plan, ctx), provider: "demo" };
+  parts.push(`# ${plan.title}\n\n${lead.text.trim()}\n`);
+
+  // Секции генерируем параллельно, но пачками по 3: последовательный цикл давал
+  // 60–90 секунд на статью, а полный параллелизм ловит 429 у провайдера.
+  const SECTION_CONCURRENCY = 3;
+  for (let i = 0; i < prompts.sections.length; i += SECTION_CONCURRENCY) {
+    const chunk = prompts.sections.slice(i, i + SECTION_CONCURRENCY);
+    const results = await Promise.all(
+      chunk.map((section) => llmComplete(section.messages, { temperature: 0.55, maxTokens: 1600 }))
     );
+    for (const sec of results) {
+      if (sec.ok && sec.text.trim()) parts.push(sec.text.trim() + "\n");
+    }
+  }
+
+  if (prompts.faq) {
+    const faq = await llmComplete(prompts.faq, { temperature: 0.4, maxTokens: 1100 });
     if (faq.ok) parts.push(faq.text.trim() + "\n");
   }
 
