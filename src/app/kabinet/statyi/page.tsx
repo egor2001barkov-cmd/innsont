@@ -223,13 +223,13 @@ function Writer() {
    * baseLength — длина исходной статьи при правках: по ней считаем прогресс,
    * потому что там этап один и status приходит только в начале.
    */
-  async function readSse(res: Response, opts: { baseLength?: number } = {}): Promise<{ markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } }> {
+  async function readSse(res: Response, opts: { baseLength?: number } = {}): Promise<{ markdown: string; words: number; humanizer?: { before: number; after: number; dashesBefore?: number; dashesAfter?: number; applied: boolean } }> {
     const reader = res.body!.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
     let acc = "";
     let lastPaint = 0;
-    let finished: { markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } } | null = null;
+    let finished: { markdown: string; words: number; humanizer?: { before: number; after: number; dashesBefore?: number; dashesAfter?: number; applied: boolean } } | null = null;
 
     while (true) {
       const { done, value } = await reader.read();
@@ -250,7 +250,7 @@ function Writer() {
           progress?: number;
           markdown?: string;
           words?: number;
-          humanizer?: { before: number; after: number; applied: boolean };
+          humanizer?: { before: number; after: number; dashesBefore?: number; dashesAfter?: number; applied: boolean };
           message?: string;
         };
 
@@ -278,7 +278,7 @@ function Writer() {
       }
     }
 
-    const result = finished as { markdown: string; words: number; humanizer?: { before: number; after: number; applied: boolean } } | null;
+    const result = finished as { markdown: string; words: number; humanizer?: { before: number; after: number; dashesBefore?: number; dashesAfter?: number; applied: boolean } } | null;
     if (!result) throw new Error("Поток завершился без текста");
     return result;
   }
@@ -316,8 +316,10 @@ function Writer() {
       if (result.humanizer) {
         setHumanizerNote(
           result.humanizer.applied
-            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}`
-            : `humanizer: ${result.humanizer.before} паттернов, правки не понадобились`,
+            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}${
+                result.humanizer.dashesBefore ? `, тире ${result.humanizer.dashesBefore} → ${result.humanizer.dashesAfter}` : ""
+              }`
+            : `humanizer: чисто, правки не понадобились`,
         );
       }
     } catch (e) {
@@ -368,8 +370,10 @@ function Writer() {
       if (result.humanizer) {
         setHumanizerNote(
           result.humanizer.applied
-            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}`
-            : `humanizer: ${result.humanizer.before} паттернов, правки не понадобились`,
+            ? `humanizer: ${result.humanizer.before} → ${result.humanizer.after}${
+                result.humanizer.dashesBefore ? `, тире ${result.humanizer.dashesBefore} → ${result.humanizer.dashesAfter}` : ""
+              }`
+            : `humanizer: чисто, правки не понадобились`,
         );
       }
       setSavedId("");

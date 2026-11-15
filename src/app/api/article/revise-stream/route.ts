@@ -93,7 +93,7 @@ export async function POST(req: Request) {
           saveAccount(acc);
           send({ type: "error", message: "Модель вернула слишком короткий текст, промпт не списан. Попробуйте ещё раз." });
         } else {
-          send({ type: "done", markdown: result, words: resultWords, provider: "deepseek", humanizer: { before: humanized.before, after: humanized.after, applied: humanized.applied }, profile: publicProfile(acc) });
+          send({ type: "done", markdown: result, words: resultWords, provider: "deepseek", humanizer: { before: humanized.before, after: humanized.after, dashesBefore: humanized.dashesBefore, dashesAfter: humanized.dashesAfter, applied: humanized.applied }, profile: publicProfile(acc) });
         }
       } catch (error) {
         const cause = (error as { cause?: unknown })?.cause;

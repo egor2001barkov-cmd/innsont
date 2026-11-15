@@ -14,7 +14,7 @@ import { analyze } from "./humanizer";
 export const HUMANIZER_RULES = `Пиши без шаблонов ИИ:
 - не строй фразы «не X, а Y», «это не просто X — это Y», «дело не в X, а в Y»;
 - без вводных «стоит отметить», «важно понимать», «давайте разберём», «в современном мире», «как известно»;
-- не используй тире как универсальный соединитель: ставь точку, запятую или двоеточие;
+- символ «—» запрещён полностью: вместо «X — Y» ставь точку, запятую или двоеточие;
 - не собирай триады ради ритма («быстро, удобно и надёжно»), если в них нет трёх разных мыслей;
 - без «играет ключевую роль», «свидетельствует о», «подчёркивает важность», «открывает новые горизонты»;
 - без рекламных эпитетов: «надёжный партнёр», «идеальное решение», «инновационный», «уникальный»;
@@ -28,15 +28,31 @@ export type HumanizeResult = {
   markdown: string;
   before: number;
   after: number;
+  dashesBefore: number;
+  dashesAfter: number;
   applied: boolean;
 };
+
+function countDashes(text: string) {
+  return (text.match(/\s[—–]\s/g) || []).length;
+}
 
 /** Финальный проход humanizer. При любой проблеме возвращает исходный текст. */
 export async function humanizeArticle(markdown: string): Promise<HumanizeResult> {
   const before = analyze(markdown, false).totalHits;
-  const unchanged: HumanizeResult = { markdown, before, after: before, applied: false };
+  const dashesBefore = countDashes(markdown);
+  const unchanged: HumanizeResult = {
+    markdown,
+    before,
+    after: before,
+    dashesBefore,
+    dashesAfter: dashesBefore,
+    applied: false,
+  };
 
-  if (!deepseekConfigured() || before === 0) return unchanged;
+  // Детектор ловит не всё (например, тире в нём нет), поэтому решение о проходе
+  // принимаем и по тире: иначе «0 паттернов» пропускал текст с «—» через строку.
+  if (!deepseekConfigured() || (before === 0 && dashesBefore === 0)) return unchanged;
 
   const words = markdown.split(/\s+/).filter(Boolean).length;
   if (words < 150) return unchanged;
@@ -76,5 +92,12 @@ export async function humanizeArticle(markdown: string): Promise<HumanizeResult>
     return unchanged;
   }
 
-  return { markdown: text, before, after: analyze(text, false).totalHits, applied: true };
+  return {
+    markdown: text,
+    before,
+    after: analyze(text, false).totalHits,
+    dashesBefore,
+    dashesAfter: countDashes(text),
+    applied: true,
+  };
 }

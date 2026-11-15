@@ -144,7 +144,7 @@ export async function POST(req: Request) {
           saveAccount(acc);
           send({ type: "error", message: `Модель вернула слишком короткий текст (${words} слов). Промпты не списаны.` });
         } else {
-          send({ type: "done", markdown, words, provider: "deepseek", humanizer: { before: humanized.before, after: humanized.after, applied: humanized.applied }, profile: publicProfile(acc) });
+          send({ type: "done", markdown, words, provider: "deepseek", humanizer: { before: humanized.before, after: humanized.after, dashesBefore: humanized.dashesBefore, dashesAfter: humanized.dashesAfter, applied: humanized.applied }, profile: publicProfile(acc) });
         }
       } catch (error) {
         acc.counters.promptsUsed = Math.max(0, acc.counters.promptsUsed - 2);
