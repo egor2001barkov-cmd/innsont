@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 /**
@@ -9,24 +9,18 @@ import { usePathname } from "next/navigation";
  */
 export function RouteProgress() {
   const pathname = usePathname();
-  const [phase, setPhase] = useState<"idle" | "run" | "done">("idle");
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const [phase, setPhase] = useState<"idle" | "run" | "done">("run");
 
   useEffect(() => {
-    // первый рендер — без полосы
-    if (phase === "idle" && !timers.current.length) {
-      timers.current.push(setTimeout(() => {}, 0));
-      return;
-    }
+    // Навигация в кабинете — браузерная (UrlBarLoad), каждая страница = новая загрузка:
+    // полоса показывается и на монтировании, и на смене пути.
     setPhase("run");
     const t1 = setTimeout(() => setPhase("done"), 450);
     const t2 = setTimeout(() => setPhase("idle"), 750);
-    timers.current.push(t1, t2);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   if (phase === "idle") return null;
