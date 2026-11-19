@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#faf6f0"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#7c3aed"/>
+  <text x="64" y="105" font-family="Georgia, serif" font-size="88" font-weight="700" fill="#efe6d8">17</text>
+  <text x="64" y="150" font-family="system-ui, sans-serif" font-size="19" font-weight="600" fill="#7c3aed" letter-spacing="3">ОТРАСЛИ</text>
+  <text x="64" y="245" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#1f1b16">Образование:</text>
+  <text x="64" y="308" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#1f1b16">сезонность набора</text>
+  <line x1="64" y1="348" x2="660" y2="348" stroke="#e0d5c4" stroke-width="3"/>
+  <text x="64" y="400" font-family="system-ui, sans-serif" font-size="24" fill="#7a6f60">INSONT · insont.ru/blog/seo-dlya-obrazovaniya-kursov</text>
+  <g><polyline points="760,458 806,472 852,432 898,448 944,405 990,422 1036,382 1082,398 1128,348" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="1128" cy="348" r="12" fill="#7c3aed"/></g>
+  <rect x="700" y="180" width="440" height="420" fill="none" stroke="#e0d5c4" stroke-width="2" rx="18"/>
+</svg>
