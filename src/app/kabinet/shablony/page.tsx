@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
 import { TEMPLATES, type TemplateDef } from "@/lib/templates";
 import { saveSession, type Session } from "@/lib/session";
+import { STYLE_PRESETS, loadStyles, type WritingStyle } from "@/lib/workspace";
 
 const GROUPS = ["Контент", "SEO", "Маркетинг", "E-commerce"] as const;
 
@@ -12,10 +13,29 @@ export default function TemplatesPage() {
   const [group, setGroup] = useState<(typeof GROUPS)[number] | "все">("все");
   const [openTpl, setOpenTpl] = useState<TemplateDef | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
+  const [styleId, setStyleId] = useState("none");
+  const [styles, setStyles] = useState<WritingStyle[]>([]);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [result, setResult] = useState<{ text: string; title: string; contentType: string } | null>(null);
   const [saved, setSaved] = useState("");
+
+  useEffect(() => {
+    setStyles(loadStyles());
+  }, [project?.id]);
+
+  // Brand Voice: пользовательские стили + встроенные пресеты
+  const styleOptions = [
+    { id: "none", name: "Без стиля" },
+    ...styles.map((s) => ({ id: s.id, name: `Стиль: ${s.name}` })),
+    ...STYLE_PRESETS.map((p) => ({ id: "preset:" + p.id, name: `Пресет: ${p.name}` })),
+  ];
+  const activeStyle =
+    styleId === "none"
+      ? undefined
+      : styleId.startsWith("preset:")
+        ? STYLE_PRESETS.find((p) => "preset:" + p.id === styleId)?.style
+        : styles.find((s) => s.id === styleId);
 
   if (!ready || !project) return null;
 
@@ -43,6 +63,7 @@ export default function TemplatesPage() {
         fields: values,
         projectName: project?.name,
         projectUrl: project?.url,
+        style: activeStyle,
       }),
     });
     const data = (await res.json().catch(() => ({}))) as {
@@ -146,6 +167,22 @@ export default function TemplatesPage() {
 
             {!result && (
               <div className="mt-4 space-y-3">
+                <label className="block">
+                  <span className="mb-1 block text-[13px] font-medium">Стиль бренда (Brand Voice)</span>
+                  <select
+                    className="ws-input"
+                    value={styleId}
+                    onChange={(e) => setStyleId(e.target.value)}
+                    disabled={busy}
+                  >
+                    {styleOptions.map((o) => (
+                      <option key={o.id} value={o.id}>{o.name}</option>
+                    ))}
+                  </select>
+                  <span className="mt-1 block text-[11px] text-[#9ca3af]">
+                    Тон, аудитория и правила из «Стили письма» применяются к генерации
+                  </span>
+                </label>
                 {openTpl.fields.map((f) => (
                   <label key={f.id} className="block">
                     <span className="mb-1 block text-[13px] font-medium">

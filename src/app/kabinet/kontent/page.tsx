@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useWorkspace } from "@/components/kabinet/useWorkspace";
 import { WpDialog } from "@/components/kabinet/WpDialog";
+import { SeoPanel } from "@/components/kabinet/SeoPanel";
 import { saveSession, type Session } from "@/lib/session";
 
 type ServerArticle = {
@@ -306,6 +307,7 @@ export default function ContentLibrary() {
                 <span className="ws-spinner ws-spinner-dark" /> Модель правит текст…
               </p>
             )}
+            <SeoPanel text={editBody} />
             <div className="mt-4 flex flex-wrap gap-2">
               <button className="ws-btn ws-btn-primary" onClick={() => void saveEdit()} disabled={Boolean(busy)}>
                 {busy === "save" ? "Сохраняем…" : "Сохранить правки"}
