@@ -47,7 +47,10 @@ export async function POST(req: Request) {
   // публичные хосты) и добавляем её текст как контекст ответа.
   let pageContext = "";
   const lastUser = [...history].reverse().find((m) => m.role === "user")?.text || "";
-  const urls = [...lastUser.matchAll(/https?:\/\/[^\s)>"']+/g)].map((m) => m[0]).slice(0, 2);
+  const urls = [...lastUser.matchAll(/https?:\/\/[^\s)>"']+/g)]
+    .map((m) => m[0].replace(/[.,;:!?»]+$/, ""))
+    .filter(Boolean)
+    .slice(0, 2);
   for (const raw of urls) {
     try {
       const u = new URL(raw);
