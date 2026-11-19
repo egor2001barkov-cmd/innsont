@@ -504,10 +504,12 @@ export default function AuditPage() {
                       onClick={() => {
                         const item: ActionItem = {
                           id: "audit-" + f.id,
+                          projectId: project?.id || "общее",
+                          cat: f.area.includes("Контент") ? "Контент" : "Техника",
                           title: `[${SEV[f.severity].label}] ${f.title}`,
+                          impact: f.severity === "critical" ? "Высокий" : f.severity === "high" ? "Средний" : "Низкий",
                           status: "Открыто",
-                          note: `${f.detail} — Чинить: ${f.fix}`,
-                          createdAt: new Date().toISOString().slice(0, 10),
+                          detail: `${f.detail} — Чинить: ${f.fix}`,
                         };
                         saveActions([...loadActions().filter((a) => a.id !== item.id), item]);
                         setSavedNote(`Добавлено в «Действия»: ${f.title}`);
