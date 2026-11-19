@@ -47,6 +47,13 @@ export function Ico({
           <path d="M12 8V5M9 13h.01M15 13h.01" />
         </svg>
       );
+    case "link":
+      return (
+        <svg {...p}>
+          <path d="M10 14a4 4 0 0 1 0-6l2-2a4 4 0 0 1 6 6l-1 1" />
+          <path d="M14 10a4 4 0 0 1 0 6l-2 2a4 4 0 0 1-6-6l1-1" />
+        </svg>
+      );
     case "zap":
       return (
         <svg {...p}>

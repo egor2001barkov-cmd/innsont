@@ -28,6 +28,7 @@ const NAV = [
 
 const SEO_TOOLS = [
   { href: "/kabinet/bulk", label: "Пакетная генерация", icon: "spark" },
+  { href: "/kabinet/perelinkovka", label: "Перелинковка", icon: "link" },
   { href: "/kabinet/humanizer", label: "Очеловечиватель", icon: "pen" },
   { href: "/kabinet/kluchi", label: "Ключи (Wordstat)", icon: "key" },
   { href: "/kabinet/kanibalizatsiya", label: "Каннибализация", icon: "search" },
@@ -54,6 +55,7 @@ const TITLES: Record<string, string> = {
   "/kabinet/statyi": "Создать статью",
   "/kabinet/kontent": "Мой контент",
   "/kabinet/bulk": "Пакетная генерация",
+  "/kabinet/perelinkovka": "Перелинковка",
   "/kabinet/humanizer": "Очеловечиватель",
   "/kabinet/kluchi": "Ключи (Wordstat)",
   "/kabinet/kanibalizatsiya": "Каннибализация",
