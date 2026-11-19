@@ -20,6 +20,7 @@ import { BrandMark, Ico } from "./icons";
 // Навигация в стиле Writesonic: фокусный сайдбар, конвейер «Создать → Проверить → Опубликовать»
 const NAV = [
   { href: "/kabinet", label: "Главная", icon: "home", exact: true },
+  { href: "/kabinet/shablony", label: "Шаблоны", icon: "grid" },
   { href: "/kabinet/statyi", label: "Создать статью", icon: "edit" },
   { href: "/kabinet/kontent", label: "Мой контент", icon: "file" },
   { href: "/kabinet/plan", label: "Контент-план", icon: "chart" },
@@ -49,6 +50,7 @@ const SETTINGS = [
 
 const TITLES: Record<string, string> = {
   "/kabinet": "Главная",
+  "/kabinet/shablony": "Шаблоны",
   "/kabinet/statyi": "Создать статью",
   "/kabinet/kontent": "Мой контент",
   "/kabinet/bulk": "Пакетная генерация",

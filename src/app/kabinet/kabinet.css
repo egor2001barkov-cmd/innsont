@@ -488,3 +488,23 @@ html[data-theme="dark"] .ws-app .hover\:text-\[\#111827\]:hover {
   from { width: 80%; }
   to { width: 100%; opacity: 0.9; }
 }
+
+/* Спиннер кнопок генерации */
+.ws-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: wsSpin 0.7s linear infinite;
+}
+@keyframes wsSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Тёмный спиннер (AI-команды в редакторе, на светлом фоне) */
+.ws-spinner-dark {
+  border-color: rgba(124, 58, 237, 0.25);
+  border-top-color: #7c3aed;
+}

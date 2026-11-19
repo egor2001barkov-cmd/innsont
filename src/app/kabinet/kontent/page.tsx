@@ -36,6 +36,7 @@ export default function ContentLibrary() {
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState("");
   const [wpOpen, setWpOpen] = useState(false);
+  const [aiNote, setAiNote] = useState("");
 
   const reload = useCallback(() => {
     if (!project) return;
@@ -108,6 +109,79 @@ export default function ContentLibrary() {
       setItems((prev) => prev.map((i) => (i.id === data.article!.id ? data.article! : i)));
       setOpen(data.article);
     }
+  }
+
+  // AI-команды редактора: полный текст уходит в revise-stream (SSE), результат
+  // стримится в textarea кусками content, финальный вариант приходит в done.markdown.
+  async function aiCommand(instruction: string) {
+    if (!open || busy || !instruction.trim()) return;
+    setBusy("ai");
+    setErr("");
+    try {
+      const res = await fetch("/api/article/revise-stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markdown: editBody, instruction }),
+      });
+      if (!res.ok || !res.body) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        setErr(data.error || "Правка не удалась");
+        setBusy("");
+        return;
+      }
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let acc = "";
+      let lastPaint = 0;
+      let final: string | null = null;
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let sep: number;
+        while ((sep = buffer.indexOf("\n\n")) >= 0) {
+          const raw = buffer.slice(0, sep);
+          buffer = buffer.slice(sep + 2);
+          const line = raw.split("\n").find((l) => l.startsWith("data:"));
+          if (!line) continue;
+          let evt: {
+            type?: string;
+            text?: string;
+            markdown?: string;
+            message?: string;
+            profile?: Partial<Session>;
+          };
+          try {
+            evt = JSON.parse(line.slice(5).trim());
+          } catch {
+            continue;
+          }
+          if (evt.type === "content" && evt.text) {
+            acc += evt.text;
+            const now = Date.now();
+            if (now - lastPaint > 90) {
+              lastPaint = now;
+              setEditBody(acc);
+            }
+          } else if (evt.type === "done" && evt.markdown) {
+            final = evt.markdown;
+            if (evt.profile && session) {
+              const next = { ...session, ...evt.profile };
+              saveSession(next);
+              setSession(next);
+            }
+          } else if (evt.type === "error") {
+            setErr(evt.message || "Модель не вернула текст");
+          }
+        }
+      }
+      if (final !== null) setEditBody(final);
+      else if (!err && acc) setEditBody(acc);
+    } catch {
+      setErr("Соединение прервано");
+    }
+    setBusy("");
   }
 
   return (
@@ -189,11 +263,49 @@ export default function ContentLibrary() {
               {open.meta?.provider === "demo" && " · демо-генерация"}
             </p>
             {err && <p className="mt-2 text-[13px] text-[#b91c1c]">{err}</p>}
+            {/* AI-команды: модель правит весь текст, результат стримится в редактор */}
+            <div className="mt-3 flex flex-wrap items-center gap-1.5 rounded-lg bg-[#f9fafb] p-2">
+              <span className="mr-1 text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">AI</span>
+              {[
+                ["Переписать", "Перепиши текст другими словами, сохранив все факты, структуру и объём"],
+                ["Расширить", "Расширь текст на треть: добавь примеры и детали, не разбавляя водой"],
+                ["Сократить", "Сократи текст на треть, убери повторы и слабые места, факты сохрани"],
+                ["Очеловечить", "Убери шаблонные ИИ-обороты и канцелярит, сохрани факты и структуру"],
+              ].map(([label, instruction]) => (
+                <button
+                  key={label}
+                  className="rounded-md border border-[#e5e7eb] bg-white px-2.5 py-1 text-[12px] font-medium text-[#374151] hover:border-[#7c3aed] hover:text-[#7c3aed] disabled:opacity-50"
+                  disabled={Boolean(busy)}
+                  onClick={() => void aiCommand(instruction)}
+                >
+                  {label}
+                </button>
+              ))}
+              <input
+                className="ws-input ml-1 h-7 flex-1 min-w-[160px] py-0.5 text-[12px]"
+                placeholder="своя правка: что изменить…"
+                value={aiNote}
+                onChange={(e) => setAiNote(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && aiNote.trim()) {
+                    e.preventDefault();
+                    void aiCommand(aiNote.trim());
+                    setAiNote("");
+                  }
+                }}
+                disabled={Boolean(busy)}
+              />
+            </div>
             <textarea
-              className="ws-input mt-3 min-h-[300px] flex-1 font-mono text-[13px]"
+              className="ws-input mt-2 min-h-[300px] flex-1 font-mono text-[13px]"
               value={editBody}
               onChange={(e) => setEditBody(e.target.value)}
             />
+            {busy === "ai" && (
+              <p className="mt-1 flex items-center gap-2 text-[12px] text-[#7c3aed]">
+                <span className="ws-spinner ws-spinner-dark" /> Модель правит текст…
+              </p>
+            )}
             <div className="mt-4 flex flex-wrap gap-2">
               <button className="ws-btn ws-btn-primary" onClick={() => void saveEdit()} disabled={Boolean(busy)}>
                 {busy === "save" ? "Сохраняем…" : "Сохранить правки"}
