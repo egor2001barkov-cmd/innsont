@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   GOALS,
   REVENUES,
@@ -19,7 +18,6 @@ import { useWorkspace } from "@/components/kabinet/useWorkspace";
 import { saveSession } from "@/lib/session";
 
 export default function OnboardingPage() {
-  const router = useRouter();
   const { session, setSession, projects, plan, ready } = useWorkspace();
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
@@ -85,7 +83,7 @@ export default function OnboardingPage() {
     const nextSession = { ...session, site, company: session.company || project.name };
     saveSession(nextSession);
     setSession(nextSession);
-    router.push("/kabinet/audit?first=1");
+    window.location.assign("/kabinet/audit?first=1");
   }
 
   return (

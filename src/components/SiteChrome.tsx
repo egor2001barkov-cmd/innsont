@@ -8,7 +8,7 @@ import { Header } from "./Header";
 import { SiteJsonLd } from "./SiteJsonLd";
 import { ThemeToggle } from "./ThemeToggle";
 import { CookieBanner } from "./CookieBanner";
-import { RouteProgress, RouteStage } from "./PageMotion";
+import { RouteStage } from "./PageMotion";
 export { Breadcrumbs } from "./Breadcrumbs";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -49,7 +49,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   if (path.startsWith("/kabinet")) {
     return (
       <main className="min-w-0 flex-1">
-        <RouteProgress />
         {children}
         <ThemeToggle />
       </main>
@@ -59,7 +58,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <SiteJsonLd />
       <Header />
-      <RouteProgress />
       <RouteStage path={path}>
         <main className="min-w-0 flex-1 pb-16 sm:pb-8">{children}</main>
         <Footer />

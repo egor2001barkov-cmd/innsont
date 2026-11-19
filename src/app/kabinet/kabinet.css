@@ -454,3 +454,37 @@ html[data-theme="dark"] .ws-app .hover\:text-\[\#111827\]:hover {
 .ws-app .font-mono:not(code):not(pre)::selection {
   background: #fde68a;
 }
+
+/* Полоса загрузки при переходах между разделами (RouteProgress) */
+.ws-route-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  background: transparent;
+}
+.ws-route-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #ea580c);
+  border-radius: 0 2px 2px 0;
+}
+.ws-route-run {
+  width: 0;
+  animation: wsRouteRun 0.45s ease-out forwards;
+}
+.ws-route-done {
+  width: 80%;
+  animation: wsRouteDone 0.3s ease-in forwards;
+}
+@keyframes wsRouteRun {
+  from { width: 0; }
+  to { width: 80%; }
+}
+@keyframes wsRouteDone {
+  from { width: 80%; }
+  to { width: 100%; opacity: 0.9; }
+}

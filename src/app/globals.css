@@ -331,70 +331,11 @@ html[data-theme="dark"] .compare-row:hover {
     transition: none;
   }
 
-  .nav-progress span {
-    transition: none;
-  }
-}
-
-.nav-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 400;
-  height: 2px;
-  pointer-events: none;
-  view-transition-name: nav-progress;
-}
-
-.nav-progress span {
-  display: block;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  transform: scaleX(0);
-  transform-origin: left center;
-  background: var(--orange);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--orange) 75%, transparent);
-  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.nav-progress span::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 72px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, #fff6);
-  box-shadow: 0 0 8px var(--orange);
-}
-
-.nav-progress.is-done {
-  opacity: 0;
-  transition: opacity 0.16s linear;
 }
 
 .route-stage {
   min-width: 0;
   max-width: 100%;
-}
-
-.route-veil {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  background: var(--bg);
-  pointer-events: none;
-}
-
-html[data-routing] .route-veil {
-  display: block;
-}
-
-html[data-routing] .route-stage {
-  visibility: hidden;
 }
 
 .btn-outline {

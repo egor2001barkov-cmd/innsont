@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { apiRegister } from "@/lib/client-auth";
 import { clearPendingRef, readPendingRef, rememberPendingRef } from "@/lib/referral";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 function Form() {
-  const router = useRouter();
   const params = useSearchParams();
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -50,7 +49,7 @@ function Form() {
             return;
           }
           clearPendingRef();
-          router.push("/kabinet/onboarding");
+          window.location.assign("/kabinet/onboarding");
         }}
       >
         <input className="input" name="name" required placeholder="Имя" autoComplete="name" />

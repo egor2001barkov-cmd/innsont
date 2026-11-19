@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { apiLogin } from "@/lib/client-auth";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -30,7 +28,7 @@ export default function LoginPage() {
             setErr(res.error);
             return;
           }
-          router.push("/kabinet");
+          window.location.assign("/kabinet");
         }}
       >
         <input className="input" type="email" name="email" required placeholder="Почта" autoComplete="email" />

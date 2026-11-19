@@ -1,13 +1,12 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { PLANS, formatRub } from "@/lib/site";
 import { loadSession, saveSession, type PlanId } from "@/lib/session";
 
 function Checkout() {
   const params = useSearchParams();
-  const router = useRouter();
   const planId = (params.get("plan") as PlanId) || "growth";
   const annual = params.get("period") !== "monthly";
   const plan = useMemo(() => PLANS.find((p) => p.id === planId) || PLANS[2], [planId]);
@@ -28,7 +27,7 @@ function Checkout() {
             В продакшене здесь СБП, карта МИР и счёт юрлица. Для демо тариф
             активирован в кабинете.
           </p>
-          <button className="btn-primary mt-4" onClick={() => router.push("/kabinet/tarify")}>
+          <button className="btn-primary mt-4" onClick={() => window.location.assign("/kabinet/tarify")}>
             В кабинет
           </button>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LogoMark } from "@/components/Icons";
 import { Wordmark } from "@/components/Wordmark";
@@ -28,14 +28,13 @@ const NAV = [
 
 export function KabinetShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
     const sync = () => {
       const s = loadSession();
       if (!s) {
-        router.replace("/vhod");
+        window.location.replace("/vhod");
         return;
       }
       setSession(s);
@@ -43,7 +42,7 @@ export function KabinetShell({ children }: { children: React.ReactNode }) {
     sync();
     window.addEventListener("insont-session", sync);
     return () => window.removeEventListener("insont-session", sync);
-  }, [router]);
+  }, []);
 
   if (!session) {
     return <div className="p-10 text-sm text-muted">Загрузка кабинета…</div>;
@@ -74,7 +73,7 @@ export function KabinetShell({ children }: { children: React.ReactNode }) {
             className="mt-8 px-3 text-sm text-muted"
             onClick={() => {
               clearSession();
-              router.push("/");
+              window.location.assign("/");
             }}
           >
             Выйти
