@@ -24,6 +24,7 @@ type ServerArticle = {
     source?: string;
     wpUrl?: string;
     wpPostId?: number;
+    shareId?: string;
   };
 };
 
@@ -38,6 +39,72 @@ export default function ContentLibrary() {
   const [busy, setBusy] = useState("");
   const [wpOpen, setWpOpen] = useState(false);
   const [aiNote, setAiNote] = useState("");
+  // inline-правки выделения (Writesonic-подход): фрагмент + undo-стек
+  const [sel, setSel] = useState<{ start: number; end: number } | null>(null);
+  const [undoStack, setUndoStack] = useState<string[]>([]);
+  const [fragBusy, setFragBusy] = useState("");
+  const [shareUrl, setShareUrl] = useState("");
+
+  // Правка выделенного фрагмента: модель возвращает новый текст куска
+  async function fragmentCommand(action: "rewrite" | "shorten" | "expand" | "improve") {
+    if (!sel || sel.end - sel.start < 20 || fragBusy) return;
+    const fragment = editBody.slice(sel.start, sel.end);
+    setFragBusy(action);
+    setErr("");
+    try {
+      const res = await fetch("/api/text/command", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: fragment, action }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { text?: string; error?: string; profile?: Partial<Session> };
+      if (!res.ok || !data.text) {
+        setErr(data.error || "Правка фрагмента не удалась");
+        return;
+      }
+      setUndoStack((st) => [...st.slice(-4), editBody]);
+      const next = editBody.slice(0, sel.start) + data.text + editBody.slice(sel.end);
+      setEditBody(next);
+      setSel({ start: sel.start, end: sel.start + data.text.length });
+      if (data.profile && session) {
+        const nx = { ...session, ...data.profile };
+        saveSession(nx);
+        setSession(nx);
+      }
+    } catch {
+      setErr("Соединение прервано");
+    }
+    setFragBusy("");
+  }
+
+  function undoLast() {
+    setUndoStack((st) => {
+      if (!st.length) return st;
+      setEditBody(st[st.length - 1]);
+      setSel(null);
+      return st.slice(0, -1);
+    });
+  }
+
+  async function toggleShare() {
+    if (!open) return;
+    setShareUrl("");
+    const res = await fetch("/api/content/share", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: open.id, revoke: Boolean(open.meta?.shareId) }),
+    });
+    const data = (await res.json().catch(() => ({}))) as { shareId?: string | null; url?: string; article?: ServerArticle; error?: string };
+    if (!res.ok) {
+      setErr(data.error || "Не удалось создать ссылку");
+      return;
+    }
+    if (data.article) {
+      setItems((prev) => prev.map((i) => (i.id === data.article!.id ? data.article! : i)));
+      setOpen(data.article);
+    }
+    if (data.shareId) setShareUrl(`${location.origin}${data.url}`);
+  }
 
   const reload = useCallback(() => {
     if (!project) return;
@@ -300,8 +367,41 @@ export default function ContentLibrary() {
             <textarea
               className="ws-input mt-2 min-h-[300px] flex-1 font-mono text-[13px]"
               value={editBody}
-              onChange={(e) => setEditBody(e.target.value)}
+              onChange={(e) => {
+                setEditBody(e.target.value);
+                setSel(null);
+              }}
+              onSelect={(e) => {
+                const t = e.target as HTMLTextAreaElement;
+                setSel(t.selectionStart !== t.selectionEnd ? { start: t.selectionStart, end: t.selectionEnd } : null);
+              }}
             />
+            {/* inline-правки выделения + отмена */}
+            <div className="mt-1 flex flex-wrap items-center gap-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-[#9ca3af]">
+                {sel && sel.end - sel.start >= 20 ? "выделено" : "выделите текст"}
+              </span>
+              {([
+                ["rewrite", "Переписать"],
+                ["shorten", "Сжать"],
+                ["expand", "Расширить"],
+                ["improve", "Живее"],
+              ] as const).map(([action, label]) => (
+                <button
+                  key={action}
+                  className="rounded-md border border-[#e5e7eb] bg-white px-2 py-0.5 text-[12px] font-medium text-[#374151] hover:border-[#7c3aed] hover:text-[#7c3aed] disabled:opacity-40"
+                  disabled={!sel || sel.end - sel.start < 20 || Boolean(fragBusy)}
+                  onClick={() => void fragmentCommand(action)}
+                >
+                  {fragBusy === action ? "…" : label}
+                </button>
+              ))}
+              {undoStack.length > 0 && (
+                <button className="text-[12px] text-[#6b7280] underline hover:text-[#b91c1c]" onClick={undoLast}>
+                  Отменить правку
+                </button>
+              )}
+            </div>
             {busy === "ai" && (
               <p className="mt-1 flex items-center gap-2 text-[12px] text-[#7c3aed]">
                 <span className="ws-spinner ws-spinner-dark" /> Модель правит текст…
@@ -315,6 +415,15 @@ export default function ContentLibrary() {
               <button className="ws-btn ws-btn-outline" onClick={() => void publishWp()} disabled={Boolean(busy)}>
                 {busy === "wp" ? "Публикуем…" : "В WordPress (черновик)"}
               </button>
+              <button className="ws-btn ws-btn-outline" onClick={() => void toggleShare()}>
+                {open.meta?.shareId ? "Закрыть доступ" : "Поделиться"}
+              </button>
+              {shareUrl && (
+                <span className="text-[12px] text-[#15803d]">
+                  <a className="underline" href={shareUrl} target="_blank" rel="noreferrer">{shareUrl}</a>{" "}
+                  <button className="ml-1 text-[#6b7280] underline" onClick={() => { void navigator.clipboard.writeText(shareUrl); }}>копировать</button>
+                </span>
+              )}
               <a
                 className="ws-btn ws-btn-outline"
                 href={`/api/content/export?id=${encodeURIComponent(open.id)}&format=md`}

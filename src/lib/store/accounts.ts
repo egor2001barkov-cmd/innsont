@@ -72,6 +72,8 @@ export type Article = {
     source?: "writer" | "bulk" | "manual";
     wpPostId?: number;
     wpUrl?: string;
+    /** Публичная ссылка только-для-чтения: /s/<shareId> */
+    shareId?: string;
   };
 };
 
@@ -296,6 +298,35 @@ export function putArticle(accountId: string, article: ArticleInput): Article {
 
 export function deleteArticle(accountId: string, articleId: string) {
   rmSync(articlePath(accountId, articleId), { force: true });
+}
+
+/** Публичный доступ по share-токену из meta.shareId (страницы /s/…). */
+export function findSharedArticle(shareId: string): Article | null {
+  const token = String(shareId || "").trim();
+  if (!/^[a-f0-9-]{8,40}$/i.test(token)) return null;
+  try {
+    for (const name of readdirSync(ACCOUNTS_DIR)) {
+      const dir = articlesDir(name);
+      let files: string[];
+      try {
+        files = readdirSync(dir);
+      } catch {
+        continue;
+      }
+      for (const f of files) {
+        if (!f.endsWith(".json")) continue;
+        try {
+          const a = JSON.parse(readFileSync(join(dir, f), "utf8")) as Article;
+          if (a.meta?.shareId === token) return a;
+        } catch {
+          /* пропускаем битые */
+        }
+      }
+    }
+  } catch {
+    /* каталога нет — пусто */
+  }
+  return null;
 }
 
 // --- WordPress-реквизиты проекта ----------------------------------------------
