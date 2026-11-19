@@ -466,7 +466,22 @@ export default function AuditPage() {
 
           <div className="ws-card mt-4 overflow-hidden">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f3f4f6] p-4">
-              <h2 className="text-sm font-semibold">Находки: {audit.findings.length}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm font-semibold">Находки: {audit.findings.length}</h2>
+                {/* счётчики по критичности — быстрый обзор без фильтра */}
+                {(["critical", "high", "medium", "low"] as const)
+                  .map((s) => ({ s, n: audit.findings.filter((f) => f.severity === s).length }))
+                  .filter((x) => x.n > 0)
+                  .map(({ s, n }) => (
+                    <button
+                      key={s}
+                      className={`rounded-md px-1.5 py-0.5 text-[11px] font-semibold ${SEV[s].cls} ${sev === SEV[s].label ? "ring-2 ring-offset-1 ring-[#7c3aed]" : "opacity-80"}`}
+                      onClick={() => setSev(sev === SEV[s].label ? "все" : SEV[s].label)}
+                    >
+                      {SEV[s].label} {n}
+                    </button>
+                  ))}
+              </div>
               <select className="ws-input w-auto py-1.5 text-[13px]" value={sev} onChange={(e) => setSev(e.target.value)}>
                 <option value="все">Все</option>
                 <option value="критично">Критично</option>
@@ -478,12 +493,28 @@ export default function AuditPage() {
             {savedNote && <p className="px-4 pt-3 text-[13px] text-[#0f766e]">{savedNote}</p>}
             <ul className="divide-y divide-[#f3f4f6]">
               {shown.map((f) => (
-                <li key={f.id} className="p-4">
+                <li key={f.id} className={`p-4 ${f.severity === "critical" ? "border-l-4 border-l-[#dc2626]" : f.severity === "high" ? "border-l-4 border-l-[#ea580c]" : ""}`}>
                   <div className="flex items-center gap-2">
                     <span className={`rounded-md px-1.5 py-0.5 text-[11px] font-semibold ${SEV[f.severity].cls}`}>
                       {SEV[f.severity].label}
                     </span>
                     <span className="text-[11px] font-medium uppercase tracking-wide text-[#9ca3af]">{f.area}</span>
+                    <button
+                      className="ml-auto text-[11px] text-[#6b7280] underline hover:text-[#ea580c]"
+                      onClick={() => {
+                        const item: ActionItem = {
+                          id: "audit-" + f.id,
+                          title: `[${SEV[f.severity].label}] ${f.title}`,
+                          status: "Открыто",
+                          note: `${f.detail} — Чинить: ${f.fix}`,
+                          createdAt: new Date().toISOString().slice(0, 10),
+                        };
+                        saveActions([...loadActions().filter((a) => a.id !== item.id), item]);
+                        setSavedNote(`Добавлено в «Действия»: ${f.title}`);
+                      }}
+                    >
+                      + в Действия
+                    </button>
                   </div>
                   <div className="mt-1 font-medium">{f.title}</div>
                   {f.detail && <div className="text-[13px] text-[#6b7280]">{f.detail}</div>}

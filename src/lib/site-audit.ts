@@ -335,11 +335,12 @@ export async function auditSite(
   }
 
   // ---------- Скоринг по методике seo-ru ----------
+  // pass = полный вес, null (предупреждение) = половина: предупреждения
+  // не выбрасывают блок из расчёта (раньше предупреждение = 100% блока).
   function blockScore(cs: CheckResult[]) {
-    const scored = cs.filter((c) => c.pass !== null);
-    if (!scored.length) return null;
-    const wSum = scored.reduce((s, c) => s + c.weight, 0);
-    const wGot = scored.filter((c) => c.pass).reduce((s, c) => s + c.weight, 0);
+    const wSum = cs.reduce((s, c) => s + c.weight, 0);
+    if (!wSum) return null;
+    const wGot = cs.reduce((s, c) => s + (c.pass === true ? c.weight : c.pass === null ? c.weight * 0.5 : 0), 0);
     return Math.round((wGot / wSum) * 100);
   }
 

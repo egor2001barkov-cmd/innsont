@@ -333,6 +333,40 @@ export async function auditPage(rawUrl: string, key?: string): Promise<PageAudit
     });
   }
 
+  // 7c. OG-теги для соцсетей и мессенджеров
+  const ogTitle = html.match(/<meta\s+property=["']og:title["'][^>]*content=["']([^"']*)["']/i)?.[1] || "";
+  const ogDesc = html.match(/<meta\s+property=["']og:description["'][^>]*content=["']([^"']*)["']/i)?.[1] || "";
+  const ogImage = html.match(/<meta\s+property=["']og:image["'][^>]*content=["']([^"']*)["']/i)?.[1] || "";
+  const ogCount = [ogTitle, ogDesc, ogImage].filter(Boolean).length;
+  check("og", ogCount === 3 ? "OG-теги полные" : ogCount > 0 ? `OG-теги: ${ogCount}/3` : "OG-тегов нет", ogCount === 3 ? true : ogCount > 0 ? null : false, 4);
+  if (ogCount < 3) {
+    findings.push({
+      id: "og",
+      severity: ogCount === 0 ? "важно" : "желательно",
+      area: "Соцсети",
+      title: `Open Graph: ${ogCount}/3 тегов`,
+      detail: `og:title ${ogTitle ? "✓" : "✗"}, og:description ${ogDesc ? "✓" : "✗"}, og:image ${ogImage ? "✓" : "✗"}`,
+      fix: "Добавьте og:title, og:description и og:image 1200×630 — карточка ссылки в Telegram/WhatsApp удваивает клики.",
+    });
+  }
+
+  // 7d. Цепочка редиректов (больше 1 прыжка = потеря веса)
+  check("redirects", chain.length <= 1 ? `Редиректов: ${chain.length}` : `Цепочка: ${chain.length} прыжка`, chain.length <= 1 ? true : chain.length === 2 ? null : false, 3);
+  if (chain.length > 2) {
+    findings.push({
+      id: "redirects",
+      severity: "важно",
+      area: "Техника",
+      title: `Цепочка из ${chain.length} редиректов`,
+      detail: chain.join(" → "),
+      fix: "Каждый лишний прыжок теряет вес и время обхода. Настройте прямой 301 с исходного URL на конечный.",
+    });
+  }
+
+  // 7e. Размер HTML (сырой вес страницы)
+  const htmlKb = Math.round(html.length / 1024);
+  check("size", htmlKb <= 300 ? `HTML: ${htmlKb} КБ` : `HTML: ${htmlKb} КБ (тяжёлый)`, htmlKb <= 300 ? true : htmlKb <= 700 ? null : false, 3);
+
   // 8. Индексируемость
   const noindex = /noindex/i.test(metaRobbots);
   check("robots", noindex ? "meta robots: noindex!" : "Индексация открыта", !noindex, 10);
@@ -459,10 +493,11 @@ export async function auditPage(rawUrl: string, key?: string): Promise<PageAudit
     });
   }
 
-  // Скоринг: средневзвешенно по проверкам (null не влияет)
-  const scored = checks.filter((c) => c.pass !== null);
-  const weightSum = scored.reduce((s, c) => s + c.weight, 0);
-  const weightGot = scored.filter((c) => c.pass).reduce((s, c) => s + c.weight, 0);
+  // Скоринг: pass = полный вес, null (предупреждение) = половина веса.
+  // Раньше null исключались из расчёта — страница из одних предупреждений
+  // получала 100/100 (завышение). Теперь предупреждения стоят 0.5.
+  const weightSum = checks.reduce((s, c) => s + c.weight, 0);
+  const weightGot = checks.reduce((s, c) => s + (c.pass === true ? c.weight : c.pass === null ? c.weight * 0.5 : 0), 0);
   const score = weightSum ? Math.round((weightGot / weightSum) * 100) : 0;
 
   const severityRank: Record<AuditSeverity, number> = { критично: 0, важно: 1, желательно: 2 };
