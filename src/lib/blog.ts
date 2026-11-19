@@ -62,9 +62,49 @@ import { post as ssylkiNovyy } from "./posts/ssylki-dlya-novogo-sayta";
 import { post as seoKlinika } from "./posts/seo-dlya-kliniki-mediciny";
 import { post as ctrSnipet } from "./posts/ctr-snipeta-uvelichit-kliki";
 import { post as analizKonkurentov } from "./posts/analiz-konkurentov-v-poiske";
+import { post as redirGid } from "./posts/redirekty-301-302-308-rukovodstvo";
+import { post as canonicalGid } from "./posts/canonical-teg-pravilno";
+import { post as paginaciya } from "./posts/paginaciya-seo-pravila";
+import { post as fasety } from "./posts/filtry-i-fasety-kataloga-seo";
+import { post as dubli } from "./posts/duplikaty-kontenta-diagnostika";
+import { post as oshibki404 } from "./posts/oshibki-404-410-kak-pravilno";
+import { post as altTegi } from "./posts/alt-tegi-kartinok-pravila";
+import { post as kroski } from "./posts/hlebnye-kroski-schema";
+import { post as perelinkovka } from "./posts/vnutrennyaya-perelinkovka-metodika";
+import { post as eeat } from "./posts/eeat-signaly-doveriya-yandeksa";
+import { post as povedenie } from "./posts/povedencheskie-faktory-yandeksa";
+import { post as lokalnoe } from "./posts/lokalnoe-seo-karty";
+import { post as saas } from "./posts/seo-dlya-saas-platformy";
+import { post as proizvodstvo } from "./posts/seo-dlya-proizvodstva-zavoda";
+import { post as yuruslugi } from "./posts/seo-dlya-yuridicheskih-uslug";
+import { post as nedvizhimost } from "./posts/seo-dlya-nedvizhimosti-zastroyshchika";
+import { post as obrazovanie } from "./posts/seo-dlya-obrazovaniya-kursov";
+import { post as restorany } from "./posts/seo-dlya-restoranov-dostavki";
+import { post as ogImage } from "./posts/og-image-prevyu-ssylok";
+import { post as kontentPlan } from "./posts/kontent-plan-na-kvartal";
 
 export const POSTS: Post[] = [
   // Свежие материалы вперёд
+  redirGid,
+  canonicalGid,
+  paginaciya,
+  fasety,
+  dubli,
+  oshibki404,
+  altTegi,
+  kroski,
+  perelinkovka,
+  eeat,
+  povedenie,
+  lokalnoe,
+  saas,
+  proizvodstvo,
+  yuruslugi,
+  nedvizhimost,
+  obrazovanie,
+  restorany,
+  ogImage,
+  kontentPlan,
   neyroOtvety,
   chatgptSearch,
   geoUsugiB2b,
