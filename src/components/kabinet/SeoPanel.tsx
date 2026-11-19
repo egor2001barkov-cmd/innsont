@@ -99,6 +99,32 @@ export function SeoPanel({ text }: { text: string }) {
   const [open, setOpen] = useState(false);
   const res = useMemo(() => analyze(text, kw), [text, kw]);
 
+  // NLP/LSI-термины (Surfer-подобный анализ): подгружаются по кнопке
+  const [terms, setTerms] = useState<{ term: string; group: string; use?: string }[]>([]);
+  const [termsBusy, setTermsBusy] = useState(false);
+  const [termsErr, setTermsErr] = useState("");
+
+  async function loadTerms() {
+    if (termsBusy || kw.trim().length < 3) {
+      setTermsErr(kw.trim().length < 3 ? "Сначала введите ключ" : "");
+      return;
+    }
+    setTermsBusy(true);
+    setTermsErr("");
+    const r = await fetch("/api/seo/terms", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: kw.trim() }),
+    });
+    const data = (await r.json().catch(() => ({}))) as { terms?: typeof terms; error?: string };
+    setTermsBusy(false);
+    if (!r.ok || !data.terms) {
+      setTermsErr(data.error || "Не удалось получить термины");
+      return;
+    }
+    setTerms(data.terms);
+  }
+
   const color = res.score >= 80 ? "text-[#15803d]" : res.score >= 50 ? "text-[#b45309]" : "text-[#b91c1c]";
 
   return (
@@ -116,12 +142,41 @@ export function SeoPanel({ text }: { text: string }) {
       </button>
       {open && (
         <div className="border-t border-[#f3f4f6] px-3 py-2">
-          <input
-            className="ws-input mb-2 h-8 py-0.5 text-[12px]"
-            placeholder="ключевой запрос для проверки вхождений…"
-            value={kw}
-            onChange={(e) => setKw(e.target.value)}
-          />
+          <div className="mb-2 flex gap-2">
+            <input
+              className="ws-input h-8 py-0.5 text-[12px]"
+              placeholder="ключевой запрос для проверки вхождений…"
+              value={kw}
+              onChange={(e) => setKw(e.target.value)}
+            />
+            <button
+              className="ws-btn ws-btn-outline h-8 shrink-0 py-0.5 text-[12px]"
+              onClick={() => void loadTerms()}
+              disabled={termsBusy}
+            >
+              {termsBusy ? "Подбираем…" : "NLP-термины"}
+            </button>
+          </div>
+          {termsErr && <p className="mb-2 text-[12px] text-[#b91c1c]">{termsErr}</p>}
+          {terms.length > 0 && (
+            <div className="mb-2 flex flex-wrap gap-1.5">
+              {terms.map((t) => {
+                const inText = text.toLowerCase().includes(t.term.toLowerCase().split(" ")[0]);
+                return (
+                  <span
+                    key={t.term}
+                    title={t.use || t.group}
+                    className={`cursor-help rounded-full px-2 py-0.5 text-[11.5px] ${
+                      inText ? "bg-[#f0fdf4] text-[#15803d]" : "bg-[#f3f4f6] text-[#6b7280]"
+                    }`}
+                  >
+                    {t.term}
+                  </span>
+                );
+              })}
+              <span className="ml-1 self-center text-[11px] text-[#9ca3af]">зелёные — уже в тексте</span>
+            </div>
+          )}
           <ul className="space-y-1">
             {res.checks.map((c) => (
               <li key={c.label} className="flex items-baseline gap-2 text-[12.5px]">

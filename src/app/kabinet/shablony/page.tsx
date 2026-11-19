@@ -208,6 +208,16 @@ export default function TemplatesPage() {
                           <option key={o} value={o}>{o}</option>
                         ))}
                       </select>
+                    ) : f.type === "url" ? (
+                      <input
+                        type="url"
+                        inputMode="url"
+                        className="ws-input"
+                        placeholder={f.placeholder || "https://…"}
+                        value={values[f.id] || ""}
+                        onChange={(e) => setValues((v) => ({ ...v, [f.id]: e.target.value.trim() }))}
+                        disabled={busy}
+                      />
                     ) : (
                       <input
                         className="ws-input"
