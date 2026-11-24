@@ -75,6 +75,21 @@ const brands = [
   "Coffee Like",
 ];
 
+const homeFaqs = [
+  {
+    q: "Вы правда не покупаете ссылки?",
+    a: "Да. Работаем в рамках рекомендаций Яндекса для вебмастеров и правил Google. Биржи и накрутка в продукт не заложены.",
+  },
+  {
+    q: "Почему не только Яндекс?",
+    a: "В коммерции РФ Яндекс часто даёт основной трафик. Но часть людей ищет только в Google, а B2B и справка там растут лучше. Bing подхватывает те же страницы. Ведём оба кабинета.",
+  },
+  {
+    q: "Можно ли вывести сайт в топ за неделю?",
+    a: "Нет. Смотрим позиции на 14 и 28 день. Если страница не выросла, переписываем смысл, а не обещаем чудо.",
+  },
+];
+
 export default function HomePage() {
   return (
     <div>
@@ -82,25 +97,15 @@ export default function HomePage() {
         data={[
           {
             "@context": "https://schema.org",
-            "@type": "Organization",
-            name: SITE.name,
-            url: SITE.url,
-            email: SITE.email,
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "ул. Академика Королёва, 5",
-              addressLocality: "Москва",
-              postalCode: "127427",
-              addressCountry: "RU",
-            },
-          },
-          {
-            "@context": "https://schema.org",
             "@type": "SoftwareApplication",
+            "@id": `${SITE.url}/#app`,
             name: SITE.name,
             applicationCategory: "BusinessApplication",
             operatingSystem: "Web",
+            url: SITE.url,
             description: SITE.description,
+            inLanguage: "ru-RU",
+            provider: { "@id": `${SITE.url}/#org` },
             featureList: [
               "Продвижение в Яндексе, Google и других поисковиках",
               "Семантика Wordstat, коммерческие факторы, Вебмастер и Search Console",
@@ -111,20 +116,16 @@ export default function HomePage() {
               "@type": "AggregateOffer",
               priceCurrency: "RUB",
               lowPrice: "4490",
-              highPrice: "24990",
-            },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.8",
-              reviewCount: "612",
+              highPrice: "22490",
+              offerCount: "3",
             },
           },
           {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "Автоматическое SEO и GEO продвижение",
-            provider: { "@type": "Organization", name: SITE.name },
-            areaServed: "RU",
+            provider: { "@id": `${SITE.url}/#org` },
+            areaServed: { "@type": "Country", name: "Россия" },
             serviceType: "SEO, GEO, AEO",
             description:
               "Продвигаем сайт в Яндексе, Google и ответах нейросетей. Чтобы вас находили, когда человек ищет услугу или спрашивает, кого выбрать.",
@@ -132,32 +133,11 @@ export default function HomePage() {
           {
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Как вы продвигаете сайт?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "В рамках рекомендаций Яндекса для вебмастеров и правил Google для сайтов: спрос, витрина, регион, техника, полезные страницы. Публикация только после вашего согласия.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Чем SEO в INSONT заточено под Россию?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Ядро из Wordstat и подсказок Google, регион, витрина, Вебмастер и Search Console, сниппеты, карточки организаций. Тексты без воды. Яндекс и Google ведём вместе, не вместо друг друга.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Как платформа выводит сайт в топ?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Агенты собирают семантику, усиливают коммерческие страницы, ставят честные title и description, чинят техничку и пишут полезный контент. Позиции в Яндексе и Google и ИИ-видимость меряются в одном цикле.",
-                },
-              },
-            ],
+            mainEntity: homeFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
           },
         ]}
       />
@@ -452,23 +432,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-[800px] px-5 pb-8">
-        <FaqList
-          title="Коротко о правилах"
-          items={[
-            {
-              q: "Вы правда не покупаете ссылки?",
-              a: "Да. Работаем в рамках рекомендаций Яндекса для вебмастеров и правил Google. Биржи и накрутка в продукт не заложены.",
-            },
-            {
-              q: "Почему не только Яндекс?",
-              a: "В коммерции РФ Яндекс часто даёт основной трафик. Но часть людей ищет только в Google, а B2B и справка там растут лучше. Bing подхватывает те же страницы. Ведём оба кабинета.",
-            },
-            {
-              q: "Можно ли вывести сайт в топ за неделю?",
-              a: "Нет. Смотрим позиции на 14 и 28 день. Если страница не выросла, переписываем смысл, а не обещаем чудо.",
-            },
-          ]}
-        />
+        <FaqList title="Коротко о правилах" items={homeFaqs} />
       </section>
 
       <section className="mx-auto max-w-[1100px] px-5 py-16">
