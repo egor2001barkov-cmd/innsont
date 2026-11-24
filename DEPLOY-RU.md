@@ -39,13 +39,29 @@ dig +short www.insont.ru A
 
 ## Деплой обновлений (через git, без правок на сервере)
 
-На VPS в каталоге проекта (там, где `docker-compose.yml`):
+Docker на VPS не используется. Сайт запускается systemd-юнитом `innsont-app`:
+standalone-сборка лежит в `/opt/innsont-app`, процесс `/opt/node/bin/node server.js`
+слушает порт 3001, Caddy проксирует домен.
+
+На VPS:
 
 ```bash
+export PATH=/opt/node/bin:$PATH
+cd /opt/innsont
 git pull
-docker compose build
-docker compose up -d
-curl -s -o /dev/null -w "%{http_code}" https://insont.ru/   # ждём 200
+npm run build
+rsync -a --delete --exclude 'data/' --exclude '.env' --exclude 'public/' .next/standalone/ /opt/innsont-app/
+rsync -a --delete .next/static/ /opt/innsont-app/.next/static/
+rsync -a public/ /opt/innsont-app/public/
+systemctl restart innsont-app
+curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3001/   # ждём 200
+```
+
+`data/` и `.env` в `/opt/innsont-app` не перезаписываются: они исключены из rsync.
+Бэкап перед выкладкой:
+
+```bash
+tar -czf /root/innsont-app-backup-$(date +%F-%H%M).tgz -C /opt --exclude=innsont-app/data innsont-app
 ```
 
 Прямые правки файлов на сервере не делаем: история и откат — только через git.
