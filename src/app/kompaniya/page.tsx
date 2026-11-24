@@ -25,18 +25,10 @@ export default function Page() {
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Organization",
-          name: SITE.name,
-          legalName: SITE.legalName,
-          url: SITE.url,
-          email: SITE.email,
-          taxID: SITE.inn,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "ул. Академика Королёва, 5",
-            addressLocality: "Москва",
-            addressCountry: "RU",
-          },
+          "@type": "AboutPage",
+          name: "О компании INSONT",
+          url: `${SITE.url}/kompaniya`,
+          mainEntity: { "@id": `${SITE.url}/#org` },
         }}
       />
       <article className="mx-auto max-w-[800px] px-5 py-14">
