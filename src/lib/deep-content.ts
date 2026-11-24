@@ -16,6 +16,7 @@ import { COMPARE_DEEP6 } from "./deep-content-compare6";
 import { COMPARE_DEEP7 } from "./deep-content-compare7";
 import { COMPARE_DEEP8 } from "./deep-content-compare8";
 import { COMPARE_DEEP9 } from "./deep-content-compare9";
+import { BACKLINKS_DEEP } from "./deep-content-backlinks";
 
 export type { DeepExtra };
 
@@ -38,4 +39,4 @@ function mergeMaps(...maps: Record<string, DeepExtra>[]): Record<string, DeepExt
   return out;
 }
 
-export const DEEP_CONTENT = mergeMaps(CITY_DEEP, SEO_DEEP, WAVE1_EXTRA, WAVE1_EXTRA2, WAVE1_EXTRA3, WAVE1_EXTRA4, WAVE1_EXTRA5, WAVE1_EXTRA6, WAVE1_RELATED, COMPARE_DEEP, COMPARE_DEEP2, COMPARE_DEEP3, COMPARE_DEEP4, COMPARE_DEEP5, COMPARE_DEEP6, COMPARE_DEEP7, COMPARE_DEEP8, COMPARE_DEEP9);
+export const DEEP_CONTENT = mergeMaps(CITY_DEEP, SEO_DEEP, WAVE1_EXTRA, WAVE1_EXTRA2, WAVE1_EXTRA3, WAVE1_EXTRA4, WAVE1_EXTRA5, WAVE1_EXTRA6, WAVE1_RELATED, COMPARE_DEEP, COMPARE_DEEP2, COMPARE_DEEP3, COMPARE_DEEP4, COMPARE_DEEP5, COMPARE_DEEP6, COMPARE_DEEP7, COMPARE_DEEP8, COMPARE_DEEP9, BACKLINKS_DEEP);
