@@ -3,6 +3,7 @@ import { LONG_PAGES } from "@/lib/long-pages";
 import { EXTRA_SEO_PAGES, GEO_PAGES } from "@/lib/rank-pages";
 import { KEYWORD_PAGES } from "@/lib/keyword-pages";
 import { DEMAND_PAGES } from "@/lib/demand-pages";
+import { DEEP_CONTENT } from "@/lib/deep-content";
 
 export const CITY_PAGES: RichPageData[] = [
   {
@@ -907,5 +908,15 @@ export function allLongPages(): RichPageData[] {
 }
 
 export function getLongPage(path: string) {
-  return allLongPages().find((p) => p.path === path);
+  const base = allLongPages().find((p) => p.path === path);
+  if (!base) return undefined;
+  const extra = DEEP_CONTENT[path];
+  if (!extra) return base;
+  return {
+    ...base,
+    sections: [...(base.sections ?? []), ...(extra.sections ?? [])],
+    faqs: [...base.faqs, ...(extra.faqs ?? [])],
+    bullets: extra.bullets ? [...(base.bullets ?? []), ...extra.bullets] : base.bullets,
+    related: extra.related ? [...base.related, ...extra.related] : base.related,
+  };
 }
