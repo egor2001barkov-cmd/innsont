@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/seo/glossariy",
+        destination: "/slovar",
+        permanent: true,
+      },
+      {
         source: "/pochemu-innsont",
         destination: "/pochemu-insont",
         permanent: true,

@@ -4,6 +4,7 @@ import { CASES } from "@/lib/cases";
 import { FEATURES, SOLUTIONS_PAGES } from "@/lib/features";
 import { allLongPages } from "@/lib/geo-pages";
 import { SITE } from "@/lib/site";
+import { TERMS } from "@/lib/slovar";
 
 const UPDATED = new Date(`${SITE.contentUpdated}T00:00:00+03:00`);
 
@@ -72,6 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/seo/skolko-stoit",
     "/seo/regionalnoe-prodvizhenie",
     "/geo/kak-popast-v-gigachat",
+    "/seo/glossariy",
     "/seo/prodvizhenie",
     "/seo/prodvizhenie-sayta",
     "/seo/raskrutka-sayta",
@@ -89,6 +91,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entry(`/blog/${p.slug}`, new Date(`${p.date}T00:00:00+03:00`), "monthly", 0.6)
     ),
     ...CASES.map((c) => entry(`/keysy/${c.slug}`, UPDATED, "monthly", 0.65)),
+    entry("/slovar", UPDATED, "weekly", 0.8),
+    ...TERMS.map((t) => entry(`/slovar/${t.slug}`, UPDATED, "monthly", 0.75)),
     ...longPages.map((p) =>
       entry(
         p.path,
