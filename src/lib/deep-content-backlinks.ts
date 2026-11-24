@@ -5,13 +5,20 @@ export const BACKLINKS_DEEP: Record<string, DeepExtra> = {
     related: [
       { href: "/seo/vs-serpstat", title: "INSONT и Serpstat" },
       { href: "/seo/vs-se-ranking", title: "INSONT и SE Ranking" },
+      { href: "/seo/vs-gpt-fox", title: "INSONT и GPT-Fox" },
     ],
   },
   "/seo/vs-megaindex": {
-    related: [{ href: "/seo/vs-serpstat", title: "INSONT и Serpstat" }],
+    related: [
+      { href: "/seo/vs-serpstat", title: "INSONT и Serpstat" },
+      { href: "/seo/vs-rush-analytics", title: "INSONT и Rush Analytics" },
+    ],
   },
   "/seo/vs-keys-so": {
-    related: [{ href: "/seo/vs-se-ranking", title: "INSONT и SE Ranking" }],
+    related: [
+      { href: "/seo/vs-se-ranking", title: "INSONT и SE Ranking" },
+      { href: "/seo/vs-rush-analytics", title: "INSONT и Rush Analytics" },
+    ],
   },
   "/resheniya/kliniki": {
     related: [{ href: "/resheniya/kliniki-kazan", title: "Клиники в Казани" }],

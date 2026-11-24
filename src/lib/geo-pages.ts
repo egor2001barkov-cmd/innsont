@@ -5,6 +5,7 @@ import { KEYWORD_PAGES } from "@/lib/keyword-pages";
 import { DEMAND_PAGES } from "@/lib/demand-pages";
 import { DEEP_CONTENT } from "@/lib/deep-content";
 import { COMPARE_PAGES } from "@/lib/compare-pages";
+import { COMPARE_PAGES_2 } from "@/lib/compare-pages-2";
 import { INDUSTRY_CITY_PAGES } from "@/lib/industry-city-pages";
 
 export const CITY_PAGES: RichPageData[] = [
@@ -907,6 +908,7 @@ export function allLongPages(): RichPageData[] {
     ...KEYWORD_PAGES,
     ...DEMAND_PAGES,
     ...COMPARE_PAGES,
+    ...COMPARE_PAGES_2,
     ...INDUSTRY_CITY_PAGES,
   ];
 }
