@@ -97,7 +97,7 @@ export const INDUSTRY_CITY_PAGES: RichPageData[] = [
       { href: "/resheniya/stomatologii-moskva", title: "Стоматологии в Москве" },
       { href: "/seo/kazan", title: "Продвижение в Казани" },
       { href: "/keysy/sm-klinika", title: "Кейс СМ-Клиники" },
-      { href: "/uslugi/prodvizhenie-v-neyrosetyah", title: "Продвижение в нейросетях" },
+      { href: "/geo", title: "Продвижение в нейросетях" },
     ],
   },
 
