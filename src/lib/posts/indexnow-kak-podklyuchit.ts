@@ -44,7 +44,7 @@ export const post: Post = {
 
 ## Шаг 3: отправка URL
 
-Один URL: GET-запрос на https://api.indexnow.org/indexnow?url=https%3A%2F%2Fваш-сайт.ру%2Fstranica&key=ВАШ_КЛЮЧ. Пакет до 10 000 URL: POST на тот же endpoint с JSON, где host, key и keyLocation, а urlList - массив адресов. Endpoint api.indexnow.org общий: он разрулит уведомление тем поисковикам, которые поддерживают протокол, сейчас это Яндекс, Bing, Seznam, Yep и Naver.
+Один URL: GET-запрос на https://api.indexnow.org/indexnow?url=https%3A%2F%2Fexample.ru%2Fstranica&key=ВАШ_КЛЮЧ. Пакет до 10 000 URL: POST на тот же endpoint с JSON, где host, key и keyLocation, а urlList - массив адресов. Endpoint api.indexnow.org общий: он разрулит уведомление тем поисковикам, которые поддерживают протокол, сейчас это Яндекс, Bing, Seznam, Yep и Naver.
 
 Ответы протокола: 200 или 202 принято; 400 битый запрос; 403 ключ не соответствует файлу; 422 URL не принадлежит хосту или ключ не проходит; 429 слишком часто. По 429: протокол рассчитан на уведомления об изменениях, а не на спам всем sitemap каждый час. Нормальный режим: отправка после публикации и после существенных правок, не по расписанию «на всякий случай».
 

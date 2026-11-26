@@ -34,7 +34,8 @@ export const metadata: Metadata = {
   title: {
     absolute: "Продвижение сайта в Яндексе, Google и нейросетях — INSONT",
   },
-  description: SITE.description,
+  description:
+    "Продвижение сайта в Яндексе, Google и ответах нейросетей: аудит, тексты, видимость в GigaChat и ChatGPT. Тарифы от 4 490 ₽ при годе.",
   keywords: [
     "белое SEO",
     "белое продвижение сайта",

@@ -1,3 +1,5 @@
+import { PAGE_ADVANTAGES } from "@/lib/advantages-pages";
+
 export type AdvIconName =
   | "scales"
   | "storefront"
@@ -2409,11 +2411,15 @@ export function advantagesFor(path: string): AdvantagesCopy | null {
     return null;
   }
   if (BY_PATH[clean]) return BY_PATH[clean];
+  // свой блок для страниц /seo/* и /geo/* вместо общего блока раздела (аудит 26.11.2026)
+  if (PAGE_ADVANTAGES[clean]) return PAGE_ADVANTAGES[clean];
   if (clean.startsWith("/blog/")) return BY_PATH["/blog"] ?? DEFAULT;
   if (clean.startsWith("/keysy/")) return BY_PATH["/keysy"] ?? DEFAULT;
-  if (clean.startsWith("/seo/")) return BY_PATH["/seo"] ?? DEFAULT;
-  if (clean.startsWith("/geo")) return BY_PATH["/geo"] ?? BY_PATH["/platforma"] ?? DEFAULT;
-  if (clean.startsWith("/platforma/")) return BY_PATH["/platforma"] ?? DEFAULT;
+  // Один общий блок раздела на каждой дочерней странице давал 45–66 % совпадающего
+  // текста — Google пометил 29 страниц как «копия». Поэтому дочерние страницы без
+  // своего блока его не получают; общий блок остаётся на хабах /seo, /geo, /platforma.
+  if (clean.startsWith("/seo/") || clean.startsWith("/geo/")) return null;
+  if (clean.startsWith("/platforma/")) return null;
   if (clean.startsWith("/resheniya/")) return BY_PATH["/resheniya"] ?? DEFAULT;
   if (clean.startsWith("/resursy/")) return BY_PATH["/resursy"] ?? DEFAULT;
   if (clean.startsWith("/instrumenty/")) return BY_PATH["/instrumenty"] ?? DEFAULT;
