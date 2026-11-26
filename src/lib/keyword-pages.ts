@@ -78,9 +78,9 @@ export const KEYWORD_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo", title: "Продвижение в поиске" },
-      { href: "/seo/prodvizhenie-sayta", title: "Продвижение сайта" },
+      { href: "/seo", title: "Продвижение сайта" },
       { href: "/seo/uslugi", title: "SEO услуги" },
-      { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
       { href: "/tseny", title: "Тарифы" },
     ],
   },
@@ -154,10 +154,10 @@ export const KEYWORD_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/prodvizhenie", title: "SEO продвижение" },
+      { href: "/seo", title: "SEO продвижение" },
       { href: "/seo/top-vydachi", title: "Топ выдачи" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
-      { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
       { href: "/seo/moskva", title: "Продвижение в Москве" },
     ],
   },
@@ -288,7 +288,7 @@ export const KEYWORD_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo/kontent", title: "Полезные тексты" },
-      { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
       { href: "/seo/metategi", title: "Title и description" },
       { href: "/platforma/avtor-statey", title: "Автор статей" },
     ],
@@ -366,7 +366,7 @@ export const KEYWORD_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/prodvizhenie", title: "SEO продвижение" },
+      { href: "/seo", title: "SEO продвижение" },
       { href: "/seo/spetsialist", title: "SEO специалист" },
       { href: "/seo/teksty", title: "SEO тексты" },
       { href: "/tseny", title: "Тарифы" },
@@ -433,9 +433,9 @@ export const KEYWORD_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo/pochemu-net-v-tope", title: "Почему нет в топе" },
-      { href: "/seo/prodvizhenie-sayta", title: "Продвижение сайта" },
+      { href: "/seo", title: "Продвижение сайта" },
       { href: "/seo/pravila-poiska", title: "Как не нарушать правила" },
-      { href: "/seo/skolko-stoit", title: "Сколько стоит SEO" },
+      { href: "/blog/skolko-stoit-seo-v-2026", title: "Сколько стоит SEO" },
     ],
   },
   {
@@ -583,12 +583,12 @@ export function keywordNav() {
       desc: p.title,
     })),
     {
-      href: "/seo/robots-txt",
+      href: "/blog/robots-txt-dlya-yandex-i-google-primery",
       name: "robots.txt",
       desc: "Кого пускаем на сайт: Яндекс, Google, GigaChat",
     },
     {
-      href: "/seo/posadochnye",
+      href: "/blog/posadochnaya-stranica-anatomiya",
       name: "Посадочные страницы",
       desc: "Кластер, город, перелинковка. Без клонов",
     },

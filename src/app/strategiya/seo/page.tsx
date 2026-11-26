@@ -31,7 +31,7 @@ export default function Page() {
         <h2 className="mt-12 text-2xl">1. Спрос, который можно посчитать</h2>
         <p className="mt-3 leading-relaxed text-[#3a3632]">
           Ядро снимаем в{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>{" "}
           и смотрим подсказки Google. Кластеры режем по интенту: «что такое»
@@ -53,7 +53,7 @@ export default function Page() {
         <p className="mt-3 leading-relaxed text-[#3a3632]">
           Яндекс в коммерции смотрит цены, контакты, оплату, доставку, регион.
           Google — то же плюс ясный заголовок и карточку организации. Это{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             коммерческие факторы
           </Link>
           , не «красивый лендинг». Пока их нет, статьи в блог почти не двигают
@@ -73,7 +73,7 @@ export default function Page() {
           Вебмастер, Яндекс Бизнес, Google Профиль, текст на странице — один
           город. Посадочные только там, где выезжаете или есть филиал. Клоны
           «услуга + 80 городов» не делаем. Подробнее —{" "}
-          <Link href="/seo/regionalnoe-prodvizhenie" className="font-semibold text-orange">
+          <Link href="/blog/geozaprosy-i-regionalnoe-prodvizhenie" className="font-semibold text-orange">
             региональное продвижение
           </Link>
           .
@@ -98,7 +98,7 @@ export default function Page() {
           robots, карта сайта, 404, скорость, мобильная версия. Агент часто
           находит закрытый blog или 403 на карточке, которые не видны в
           Метрике. Это{" "}
-          <Link href="/seo/tekhnicheskiy-audit" className="font-semibold text-orange">
+          <Link href="/blog/tehnicheskiy-audit-saita-samostoyatelno" className="font-semibold text-orange">
             аудит
           </Link>{" "}
           и{" "}
@@ -113,7 +113,7 @@ export default function Page() {
           Позиции и заявки смотрим на 14 и 28 день. Что не выросло —
           переписываем смысл. Ссылки не докупаем. Сроки и цифры по рынку — на
           странице{" "}
-          <Link href="/seo/skolko-stoit" className="font-semibold text-orange">
+          <Link href="/blog/skolko-stoit-seo-v-2026" className="font-semibold text-orange">
             сколько стоит
           </Link>
           .

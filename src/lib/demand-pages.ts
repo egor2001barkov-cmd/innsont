@@ -99,8 +99,8 @@ export const DEMAND_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/prodvizhenie-sayta", title: "Продвижение сайта" },
-      { href: "/seo/skolko-stoit", title: "Сколько стоит SEO" },
+      { href: "/seo", title: "Продвижение сайта" },
+      { href: "/blog/skolko-stoit-seo-v-2026", title: "Сколько стоит SEO" },
       { href: "/seo/pravila-poiska", title: "Как не нарушать правила" },
       { href: "/seo/pochemu-net-v-tope", title: "Почему нет в топе" },
     ],
@@ -186,8 +186,8 @@ export const DEMAND_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
       { href: "/instrumenty/proverka-krawlerov", title: "Проверка роботов" },
       { href: "/seo/pochemu-net-v-tope", title: "Почему нет в топе" },
     ],
@@ -277,7 +277,7 @@ export const DEMAND_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/yandex-biznes", title: "Яндекс Бизнес" },
       { href: "/seo/google-profil", title: "Google Профиль компании" },
-      { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+      { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
       { href: "/resheniya/stomatologii", title: "Стоматологии" },
     ],
   },
@@ -363,8 +363,8 @@ export const DEMAND_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
-      { href: "/seo/posadochnye", title: "Посадочные" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
+      { href: "/blog/posadochnaya-stranica-anatomiya", title: "Посадочные" },
       { href: "/platforma/obem-ii-poiska", title: "Объём ИИ-поиска" },
       { href: "/seo/kontent", title: "Полезные тексты" },
     ],
@@ -527,7 +527,7 @@ export const DEMAND_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/geo/chatgpt", title: "ChatGPT" },
-      { href: "/geo/kak-popast-v-gigachat", title: "Как попасть в GigaChat" },
+      { href: "/blog/kak-popast-v-otvety-gigachat", title: "Как попасть в GigaChat" },
       { href: "/resheniya/saas", title: "SaaS и IT" },
       { href: "/instrumenty/proverka-krawlerov", title: "Проверка роботов" },
     ],
@@ -763,8 +763,8 @@ export const DEMAND_PAGES: RichPageData[] = [
     related: [
       { href: "/resheniya/kliniki", title: "Клиники" },
       { href: "/seo/yandex-karty", title: "Яндекс Карты и 2ГИС" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
-      { href: "/geo/kak-popast-v-gigachat", title: "Как попасть в GigaChat" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
+      { href: "/blog/kak-popast-v-otvety-gigachat", title: "Как попасть в GigaChat" },
     ],
   },
   {
@@ -837,7 +837,7 @@ export const DEMAND_PAGES: RichPageData[] = [
     related: [
       { href: "/keysy/fabrika-okon", title: "Кейс Фабрика Окон" },
       { href: "/seo/yandex-karty", title: "Яндекс Карты" },
-      { href: "/seo/posadochnye", title: "Посадочные" },
+      { href: "/blog/posadochnaya-stranica-anatomiya", title: "Посадочные" },
       { href: "/seo/moskva", title: "Москва" },
     ],
   },
@@ -918,7 +918,7 @@ export const DEMAND_PAGES: RichPageData[] = [
       { href: "/seo/prodvizhenie-na-wildberries", title: "Wildberries" },
       { href: "/platforma/treker-pokupok", title: "Трекер покупок" },
       { href: "/resheniya/internet-magaziny", title: "Интернет-магазины" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
     ],
   },
   {

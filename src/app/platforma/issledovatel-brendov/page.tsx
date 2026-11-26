@@ -167,7 +167,7 @@ export default function Page() {
             Американские сервисы любят писать «два миллиарда диалогов». У нас
             рынок меньше, и мы это не прячем. Берём живые ответы GigaChat,
             Алисы, YandexGPT, ChatGPT и Gemini на русском. Плюс ядро из{" "}
-            <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+            <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
               Wordstat
             </Link>
             : иначе легко принять редкий вопрос за спрос.

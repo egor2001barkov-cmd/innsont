@@ -49,10 +49,8 @@ export const metadata: Metadata = {
     ICBM: "55.8217, 37.6114",
     "geo.position": "55.8217;37.6114",
   },
-  alternates: {
-    canonical: SITE.url,
-    languages: { "ru-RU": SITE.url },
-  },
+  // Каноническую ссылку каждая страница задаёт сама. Дефолт «на главную» здесь не ставим:
+  // иначе страница 404 и закрытые разделы отдают canonical на главную (аудит 26.11.2026, T2).
   authors: [{ name: SITE.name }],
   openGraph: {
     type: "website",
@@ -71,7 +69,8 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ["/og/og-default.png"],
   },
-  robots: { index: true, follow: true },
+  // robots не задаём: по умолчанию страница индексируемая, а Next для ответа 404
+  // подставляет noindex. Явное «index, follow» здесь давало на 404 два противоречащих тега.
   verification: {
     yandex: "eab405796df2103e",
     google: "ntD5B_pgxmT-8UGQs5Y6L8tcPZ9Zj6CpY83ySM1wBuk",

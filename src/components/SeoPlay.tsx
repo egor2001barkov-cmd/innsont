@@ -116,7 +116,7 @@ export function SeoActionMock() {
       d: "УЗИ, терапевт, анализы — сейчас «по запросу»",
       n: 18,
       prio: "Высокий",
-      href: "/seo/kommercheskie-faktory",
+      href: "/blog/kommercheskie-faktory-chek-list",
     },
     {
       icon: "search",
@@ -124,7 +124,7 @@ export function SeoActionMock() {
       d: "Сайт смотрит «всю Россию», заявки — из Москвы",
       n: 1,
       prio: "Высокий",
-      href: "/seo/vebmaster",
+      href: "/blog/yandex-vebmaster-instrumenty",
     },
     {
       icon: "doc",
@@ -140,7 +140,7 @@ export function SeoActionMock() {
       d: "Карточки врачей закрыты, дубли фильтров",
       n: 7,
       prio: "Высокий",
-      href: "/seo/tekhnicheskiy-audit",
+      href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
     },
   ];
   return (

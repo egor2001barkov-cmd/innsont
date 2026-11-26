@@ -146,7 +146,7 @@ export default function Page() {
               title: "Аналитика роботов",
               desc: "Лог: кто стучался и какой код получил",
             },
-            { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит", desc: "Если 403 не один, а система" },
+            { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит", desc: "Если 403 не один, а система" },
             { href: "/resursy/rukovodstvo-geo", title: "Руководство GEO", desc: "Сначала доступ, потом цитата" },
           ]}
         />

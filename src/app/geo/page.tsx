@@ -115,7 +115,7 @@ export default function Page() {
                 desc: "Русскоязычные ответы Сбера, часто опирается на открытые карточки",
               },
               {
-                href: "/geo/kak-popast-v-gigachat",
+                href: "/blog/kak-popast-v-otvety-gigachat",
                 name: "Как попасть в GigaChat",
                 desc: "Порядок работ: робот, факт, замер. Без накрутки промптов",
               },

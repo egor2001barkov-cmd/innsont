@@ -236,7 +236,7 @@ export default function Page() {
         </li>
         <li>
           Закройте витрину: цена, контакты, регион, дата. Это страница{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             коммерческих факторов
           </Link>
           , не «ещё контент».
@@ -277,7 +277,7 @@ export default function Page() {
       <SeeAlso
         links={[
           { href: "/keysy", title: "Кейсы компаний" },
-          { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+          { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
           { href: "/platforma/monitoring-vidimosti", title: "Мониторинг видимости" },
           { href: "/tseny", title: "Тарифы" },
         ]}

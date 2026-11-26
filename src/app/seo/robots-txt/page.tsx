@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "robots.txt — INSONT",
     description:
       "Смотрим, кого пускает файл и куда робот упирается. Правка только после вашего согласия.",
-    url: "/seo/robots-txt",
+    url: "/blog/robots-txt-dlya-yandex-i-google-primery",
     locale: "ru_RU",
     type: "website",
   },
@@ -97,7 +97,7 @@ export default function Page() {
           <Link href="/demo" className="btn-primary">
             Показать ваш robots
           </Link>
-          <Link href="/seo/tekhnicheskiy-audit" className="btn-outline">
+          <Link href="/blog/tehnicheskiy-audit-saita-samostoyatelno" className="btn-outline">
             Технический аудит
           </Link>
         </div>
@@ -129,19 +129,19 @@ export default function Page() {
         </p>
         <p className="mt-4 leading-relaxed">
           Связка дальше простая. Открыли карточку —{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             ставим цену
           </Link>
           . Есть спрос в{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>
           {" "}и нет URL —{" "}
-          <Link href="/seo/posadochnye" className="font-semibold text-orange">
+          <Link href="/blog/posadochnaya-stranica-anatomiya" className="font-semibold text-orange">
             посадочная
           </Link>
           . Робот ходит, а регион «вся Россия» —{" "}
-          <Link href="/seo/vebmaster" className="font-semibold text-orange">
+          <Link href="/blog/yandex-vebmaster-instrumenty" className="font-semibold text-orange">
             Вебмастер
           </Link>
           . Файл robots сам по себе топ не двигает. Без него остальное часто
@@ -152,10 +152,10 @@ export default function Page() {
         <FaqList items={faqs} />
         <SeeAlso
           links={[
-            { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
-            { href: "/seo/posadochnye", title: "Посадочные страницы" },
-            { href: "/seo/vebmaster", title: "Яндекс Вебмастер" },
-            { href: "/seo/search-console", title: "Search Console" },
+            { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
+            { href: "/blog/posadochnaya-stranica-anatomiya", title: "Посадочные страницы" },
+            { href: "/blog/yandex-vebmaster-instrumenty", title: "Яндекс Вебмастер" },
+            { href: "/blog/search-console-dlya-russkogo-saita", title: "Search Console" },
             { href: "/instrumenty/proverka-krawlerov", title: "Проверка роботов" },
             { href: "/instrumenty/llms-txt", title: "Генератор llms.txt" },
           ]}

@@ -142,7 +142,7 @@ export default function Page() {
           <h2 className="text-3xl">Люди спрашивают модель иначе, чем ищут</h2>
           <p className="mt-4 leading-relaxed text-[#3a3632]">
             В{" "}
-            <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+            <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
               Wordstat
             </Link>{" "}
             часто «вклад калькулятор». У модели — «какой вклад открыть, если

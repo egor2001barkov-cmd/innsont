@@ -28,8 +28,26 @@ export function mdToHtmlBody(md: string): string {
     }
   };
 
-  for (const raw of lines) {
+  // Блок кода (``` … ```): содержимое выводится как есть, без разметки — заголовки
+  // и ссылки внутри примеров не становятся настоящими <h1> и <a> на странице.
+  const FENCE = /^```\s*\S*\s*$/;
+  for (let li = 0; li < lines.length; li++) {
+    const raw = lines[li];
     const line = raw.trimEnd();
+    if (FENCE.test(line.trim())) {
+      closeList();
+      closeTable();
+      const buf: string[] = [];
+      li++;
+      while (li < lines.length && !FENCE.test(lines[li].trim())) {
+        buf.push(lines[li]);
+        li++;
+      }
+      // незакрытый забор: li ушёл за конец массива — следующая итерация завершит цикл
+      if (li >= lines.length) li = lines.length - 1;
+      out.push(`<pre><code>${esc(buf.join("\n"))}</code></pre>`);
+      continue;
+    }
     if (/^\|(.+)\|$/.test(line.trim())) {
       const cells = line.trim().slice(1, -1).split("|");
       if (cells.every((c) => /^\s*:?-{2,}:?\s*$/.test(c))) continue; // разделитель

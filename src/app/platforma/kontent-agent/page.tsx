@@ -95,7 +95,7 @@ export default function Page() {
                   text: (
                     <>
                       Карточки и сравнения. То, что просит{" "}
-                      <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+                      <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
                         коммерция в поиске
                       </Link>{" "}
                       и полка в{" "}

@@ -98,7 +98,7 @@ export default function Page() {
                   title: "Сначала спрос, не заголовок.",
                   text: (
                     <>
-                      <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+                      <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
                         Wordstat
                       </Link>{" "}
                       и{" "}

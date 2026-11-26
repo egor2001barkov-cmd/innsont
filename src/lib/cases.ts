@@ -52,7 +52,7 @@ export const CASES: CaseStudy[] = [
     person: "руководитель цифрового маркетинга",
     related: [
       { href: "/resheniya/kliniki", title: "SEO для клиник" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
       { href: "/seo/moskva", title: "Продвижение в Москве" },
     ],
     whyBetter:
@@ -157,10 +157,10 @@ export const CASES: CaseStudy[] = [
       "Раньше лили текст «про окна». Теперь человек сразу видит, сколько стоит и когда приедут. Это и есть SEO.",
     person: "владелец направления маркетинга",
     related: [
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
       { href: "/resheniya/okna", title: "Окна и рольставни" },
       { href: "/seo/moskva", title: "Москва" },
-      { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+      { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
     ],
     whyBetter:
       "Сайт стал похож на нормальную витрину, а не на статью из 8 000 знаков. Человек с телефона видит цену типовой створки и слот замера. Отказы упали не потому, что «улучшили поведенческие», а потому что страница перестала обманывать ожидание. Поиск это замечает: люди остаются и оставляют заявку.",
@@ -212,7 +212,7 @@ export const CASES: CaseStudy[] = [
     person: "руководитель интернет-продвижения",
     related: [
       { href: "/resheniya/banki", title: "Для банков" },
-      { href: "/seo/vebmaster", title: "Яндекс Вебмастер" },
+      { href: "/blog/yandex-vebmaster-instrumenty", title: "Яндекс Вебмастер" },
       { href: "/blog/aeo-dlia-bankov-i-fintech", title: "AEO для финтеха" },
     ],
     whyBetter:
@@ -265,7 +265,7 @@ export const CASES: CaseStudy[] = [
     person: "команда маркетинга",
     related: [
       { href: "/resheniya/obrazovanie", title: "Для образования" },
-      { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
+      { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
       { href: "/seo/kontent", title: "Полезные тексты" },
     ],
     whyBetter:
@@ -319,7 +319,7 @@ export const CASES: CaseStudy[] = [
     person: "коммерческий директор",
     related: [
       { href: "/seo/sankt-peterburg", title: "Санкт-Петербург" },
-      { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
       { href: "/resheniya/saas", title: "B2B и IT" },
     ],
     whyBetter:
@@ -373,7 +373,7 @@ export const CASES: CaseStudy[] = [
     related: [
       { href: "/resheniya/internet-magaziny", title: "Для магазинов" },
       { href: "/seo/novosibirsk", title: "Новосибирск" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
     ],
     whyBetter:
       "Магазин стал выглядеть как магазин. Цена, срок, город. Человек из Новосибирска видит, что товар доедет и сколько это стоит. Маркетплейс больше не единственная витрина с цифрами.",

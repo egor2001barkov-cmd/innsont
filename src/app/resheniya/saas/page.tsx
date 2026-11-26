@@ -123,7 +123,7 @@ export default function Page() {
           Пост на VC и карточка на Product Hunt дают неделю шума. Справка,
           сравнение с 1С и тарифы с датой живут годами. Мы достаём эти страницы
           на свет: смотрим, что ищут в{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>{" "}
           и Google, кого уже называют ChatGPT и GigaChat, и какой URL это должен
@@ -173,7 +173,7 @@ export default function Page() {
         <p className="mt-4 leading-relaxed">
           Самая частая дыра у SaaS не в текстах. Инструкция «как настроить»
           живёт в приложении. Человек после логина её видит.{" "}
-          <Link href="/seo/robots-txt" className="font-semibold text-orange">
+          <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
             Робот Яндекса
           </Link>
           , GPTBot и краулер GigaChat упираются в форму входа. В кабинете SEO
@@ -192,7 +192,7 @@ export default function Page() {
           «как будто вчера», модель идёт в обзор. Мы не придумываем новые
           тарифы. Ставим дату, вилку и «что входит» так, чтобы абзац можно было
           процитировать целиком. Это обычный{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             коммерческий факт
           </Link>
           , не маркетинговый трюк.
@@ -265,7 +265,7 @@ export default function Page() {
         </p>
         <p className="mt-4 leading-relaxed">
           Кабинет не публикует сам. Черновик title, абзац сравнения и правку{" "}
-          <Link href="/seo/robots-txt" className="font-semibold text-orange">
+          <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
             robots.txt
           </Link>{" "}
           смотрите вы. Можно отклонить. Если формулировку стыдно сказать
@@ -287,9 +287,9 @@ export default function Page() {
         <SeeAlso
           links={[
             { href: "/keysy/moysklad", title: "Кейс МойСклад" },
-            { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
-            { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
-            { href: "/seo/robots-txt", title: "robots.txt" },
+            { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
+            { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
+            { href: "/blog/robots-txt-dlya-yandex-i-google-primery", title: "robots.txt" },
             { href: "/platforma/monitoring-vidimosti", title: "Мониторинг видимости" },
             { href: "/platforma/avtor-statey", title: "Автор статей" },
           ]}

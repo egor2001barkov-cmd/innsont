@@ -17,7 +17,7 @@ Disallow: /oplata/
 Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
-Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext&yclid
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext
 
 User-agent: YandexBot
 Allow: /
@@ -28,7 +28,7 @@ Disallow: /oplata/
 Disallow: /vhod
 Disallow: /ui-mock
 Disallow: /api/
-Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&from&_openstat&ref&etext
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&gclid&gbraid&wbraid&fbclid&from&_openstat&ref&etext
 
 User-agent: YandexImages
 Allow: /

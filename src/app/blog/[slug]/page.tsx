@@ -11,6 +11,15 @@ import type { Metadata } from "next";
 
 const CUSTOM_SLUGS = new Set(["issledovanie-ii-vidimosti-rf"]);
 
+/** Русская форма слова по числу: 1 материал, 2 материала, 5 материалов. */
+function plural(n: number, one: string, few: string, many: string) {
+  const a = n % 10;
+  const b = n % 100;
+  if (a === 1 && b !== 11) return one;
+  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+  return many;
+}
+
 export function generateStaticParams() {
   return POSTS.filter((p) => !CUSTOM_SLUGS.has(p.slug)).map((p) => ({
     slug: p.slug,
@@ -92,7 +101,12 @@ export default async function PostPage({
             title: r.title,
             desc: r.excerpt.slice(0, 90) + (r.excerpt.length > 90 ? "…" : ""),
           })),
-          { href: "/blog", title: "Все статьи", desc: "38 материалов о поиске, Вебмастере и ИИ-видимости" },
+          {
+            href: "/blog",
+            title: "Все статьи",
+            // число считается по массиву статей, чтобы подпись не отставала от блога
+            desc: `${POSTS.length} ${plural(POSTS.length, "материал", "материала", "материалов")} о поиске, Вебмастере и ИИ-видимости`,
+          },
         ]}
       />
     </article>

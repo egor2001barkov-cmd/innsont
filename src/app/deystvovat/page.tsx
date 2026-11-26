@@ -30,7 +30,7 @@ export default function Page() {
           { href: "/priorizirovat", title: "Сначала очередь задач" },
           { href: "/platforma/avtor-statey", title: "Автор статей" },
           { href: "/seo/kontent", title: "Полезные тексты" },
-          { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
+          { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
         ]}
       />
     </div>

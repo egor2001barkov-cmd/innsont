@@ -50,9 +50,9 @@ export const LONG_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/prodvizhenie-v-yandekse", title: "Яндекс" },
       { href: "/seo/prodvizhenie-v-google", title: "Google" },
-      { href: "/seo/prodvizhenie", title: "SEO продвижение" },
+      { href: "/seo", title: "SEO продвижение" },
       { href: "/seo/uslugi", title: "SEO услуги" },
-      { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+      { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
       { href: "/seo/pravila-poiska", title: "Как не нарушать правила" },
     ],
   },
@@ -88,7 +88,7 @@ export const LONG_PAGES: RichPageData[] = [
       { q: "ИКС важен?", a: "Это следствие, не цель. Крутить его бессмысленно." },
       { q: "Вебмастер обязателен?", a: "Да. Без него не видно индекс, зеркало и безопасность. Search Console — второй кабинет, не замена." },
     ],
-    related: relSeo.concat([{ href: "/seo/vebmaster", title: "Вебмастер" }]),
+    related: relSeo.concat([{ href: "/blog/yandex-vebmaster-instrumenty", title: "Вебмастер" }]),
   },
   {
     path: "/seo/prodvizhenie-v-google",
@@ -163,10 +163,10 @@ export const LONG_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/search-console", title: "Google Search Console" },
+      { href: "/blog/search-console-dlya-russkogo-saita", title: "Google Search Console" },
       { href: "/seo/google-profil", title: "Google Профиль компании" },
       { href: "/seo/prodvizhenie-v-yandekse", title: "Продвижение в Яндексе" },
-      { href: "/seo/mikrorazmetka", title: "Микроразметка" },
+      { href: "/blog/mikrorazmetka-schema-org-2026", title: "Микроразметка" },
     ],
   },
   {
@@ -230,7 +230,7 @@ export const LONG_PAGES: RichPageData[] = [
       { q: "Нужен программист?", a: "Часть правок — сами. Часть — ТЗ разработчику из кабинета." },
       { q: "Это накрутка скорости?", a: "Нет. Сжимаем то, что реально тормозит, не подменяем HTML для бота." },
     ],
-    related: relSeo.concat([{ href: "/seo/vebmaster", title: "Вебмастер" }]),
+    related: relSeo.concat([{ href: "/blog/yandex-vebmaster-instrumenty", title: "Вебмастер" }]),
   },
   {
     path: "/seo/kommercheskie-faktory",
@@ -449,7 +449,7 @@ export const LONG_PAGES: RichPageData[] = [
       { q: "Можно демо на моём сайте?", a: "Да. На демо как раз разбираем, почему не в топе." },
     ],
     related: [
-      { href: "/seo/tekhnicheskiy-audit", title: "Аудит" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Аудит" },
       { href: "/demo", title: "Демо" },
     ],
   },
@@ -483,7 +483,7 @@ export const LONG_PAGES: RichPageData[] = [
       { q: "Договор?", a: "Оферта или двусторонний для юрлица." },
     ],
     related: [
-      { href: "/seo/skolko-stoit", title: "Цены" },
+      { href: "/blog/skolko-stoit-seo-v-2026", title: "Цены" },
       { href: "/resheniya/agentstva", title: "Для агентств" },
     ],
   },
@@ -554,7 +554,7 @@ export const LONG_PAGES: RichPageData[] = [
     ],
     related: [
       { href: "/seo/prodvizhenie-v-yandekse", title: "Яндекс" },
-      { href: "/seo/tekhnicheskiy-audit", title: "Аудит" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Аудит" },
     ],
   },
   {

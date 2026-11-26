@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { PageAdvantages } from "@/components/Advantages";
+import { OG_IMAGE } from "@/lib/site";
 
 export function resourceMeta(
   title: string,
@@ -11,7 +12,7 @@ export function resourceMeta(
     title,
     description,
     alternates: { canonical: path },
-    openGraph: { title, description, url: path, locale: "ru_RU" },
+    openGraph: { title, description, url: path, locale: "ru_RU", images: OG_IMAGE },
   };
 }
 

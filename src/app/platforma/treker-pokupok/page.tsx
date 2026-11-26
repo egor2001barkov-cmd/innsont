@@ -255,7 +255,7 @@ export default function Page() {
               desc: "Если в ответе уже не полка, а объявление",
             },
             {
-              href: "/seo/kommercheskie-faktory",
+              href: "/blog/kommercheskie-faktory-chek-list",
               title: "Коммерческие факторы",
               desc: "То же, что модели хотят увидеть на карточке",
             },

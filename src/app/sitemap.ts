@@ -3,6 +3,8 @@ import { POSTS } from "@/lib/blog";
 import { CASES } from "@/lib/cases";
 import { FEATURES, SOLUTIONS_PAGES } from "@/lib/features";
 import { allLongPages } from "@/lib/geo-pages";
+import { TOOLS } from "@/lib/llms-site";
+import { REDIRECTED_PATHS } from "@/lib/redirected";
 import { SITE } from "@/lib/site";
 import { TERMS } from "@/lib/slovar";
 
@@ -44,10 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/oferta", priority: 0.3 },
     { path: "/cookies", priority: 0.3 },
     { path: "/instrumenty", priority: 0.5 },
-    { path: "/instrumenty/llms-txt", priority: 0.5 },
-    { path: "/instrumenty/proverka-krawlerov", priority: 0.5 },
-    { path: "/instrumenty/ochelovechivatel", priority: 0.6 },
-    { path: "/instrumenty/kanibalizatsiya", priority: 0.6 },
     { path: "/resursy/indeks-reklamy", priority: 0.5 },
     { path: "/resursy/rukovodstvo-geo", priority: 0.5 },
     { path: "/resursy/pomoshch", priority: 0.4 },
@@ -60,31 +58,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/resursy/integratsii", priority: 0.4 },
   ];
 
-  // пути, ушедшие в 301 (каннибализация, аудит 29.10.2026) — в sitemap их быть не должно
-  const REDIRECTED = new Set([
-    "/seo/robots-txt",
-    "/seo/posadochnye",
-    "/seo/vebmaster",
-    "/seo/search-console",
-    "/seo/kommercheskie-faktory",
-    "/seo/tekhnicheskiy-audit",
-    "/seo/mikrorazmetka",
-    "/seo/semantika-wordstat",
-    "/seo/skolko-stoit",
-    "/seo/regionalnoe-prodvizhenie",
-    "/geo/kak-popast-v-gigachat",
-    "/seo/glossariy",
-    "/seo/prodvizhenie",
-    "/seo/prodvizhenie-sayta",
-    "/seo/raskrutka-sayta",
-  ]);
-
-  const longPages = allLongPages().filter((p) => p.path !== "/seo" && !REDIRECTED.has(p.path));
+  // пути, ушедшие в 301/308, — в sitemap их быть не должно (единый список с llms-файлами)
+  const longPages = allLongPages().filter((p) => p.path !== "/seo" && !REDIRECTED_PATHS.has(p.path));
 
   return [
     ...staticPaths.map(({ path, priority }) =>
       entry(path, UPDATED, path === "/" ? "weekly" : "monthly", priority)
     ),
+    ...TOOLS.map((t) => entry(t.path, UPDATED, "monthly", 0.6)),
     ...FEATURES.map((f) => entry(f.path, UPDATED, "monthly", 0.8)),
     ...SOLUTIONS_PAGES.map((f) => entry(f.path, UPDATED, "monthly", 0.7)),
     ...POSTS.map((p) =>

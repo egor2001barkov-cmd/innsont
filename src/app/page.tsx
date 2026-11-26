@@ -243,19 +243,19 @@ export default function HomePage() {
           {[
             {
               icon: "wordstat",
-              href: "/seo/semantika-wordstat",
+              href: "/blog/wordstat-instrukciya-s-chastotoy",
               t: "Семантика Wordstat",
               d: "Ядро из Яндекс.Вордстат: частота, «хвосты», регион, сезон. Кластеры под интент: информационный отдельно от коммерческого, без каши на одной URL.",
             },
             {
               icon: "shop",
-              href: "/seo/kommercheskie-faktory",
+              href: "/blog/kommercheskie-faktory-chek-list",
               t: "Коммерческие факторы",
               d: "Цены, наличие, контакты, способы оплаты и доставки, ассортимент, отзывы, регион на странице. То, без чего Яндекс почти не пускает витрину в топ. Google смотрит то же.",
             },
             {
               icon: "turizm",
-              href: "/seo/regionalnoe-prodvizhenie",
+              href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie",
               t: "Регион и локальность",
               d: "Привязка к региону в Вебмастере, Яндекс Бизнес и Картах, уникальные посадочные под города. Без дорвеев и шаблонных «городов-клонов».",
             },
@@ -267,7 +267,7 @@ export default function HomePage() {
             },
             {
               icon: "diagnose",
-              href: "/seo/vebmaster",
+              href: "/blog/yandex-vebmaster-instrumenty",
               t: "Вебмастер и Search Console",
               d: "Индексация, ошибки, зеркало, товары. Смотрим оба кабинета: Вебмастер для Яндекса, Search Console для Google.",
             },
@@ -279,7 +279,7 @@ export default function HomePage() {
             },
             {
               icon: "saas",
-              href: "/seo/tekhnicheskiy-audit",
+              href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
               t: "Техника",
               d: "robots, карта сайта, скорость, мобильная версия, разметка. Страница должна открываться роботам, а не только в браузере. Битрикс, Tilda, WordPress.",
             },

@@ -201,7 +201,7 @@ export default function Page() {
           </p>
           <p>
             Регион в{" "}
-            <Link href="/seo/vebmaster" className="font-semibold text-orange">
+            <Link href="/blog/yandex-vebmaster-instrumenty" className="font-semibold text-orange">
               Вебмастере
             </Link>{" "}
             и карточка в{" "}

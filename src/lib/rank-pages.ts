@@ -231,7 +231,7 @@ export const EXTRA_SEO_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/prodvizhenie-v-yandekse", title: "Продвижение в Яндексе" },
       { href: "/geo/alisa", title: "Алиса и YandexGPT" },
-      { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+      { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
     ],
   },
   {
@@ -289,8 +289,8 @@ export const EXTRA_SEO_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/prodvizhenie-v-google", title: "Продвижение в Google" },
       { href: "/seo/google-profil", title: "Google Профиль компании" },
-      { href: "/seo/vebmaster", title: "Яндекс Вебмастер" },
-      { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
+      { href: "/blog/yandex-vebmaster-instrumenty", title: "Яндекс Вебмастер" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
     ],
   },
   {
@@ -340,8 +340,8 @@ export const EXTRA_SEO_PAGES: RichPageData[] = [
     related: [
       { href: "/seo/prodvizhenie-v-google", title: "Продвижение в Google" },
       { href: "/seo/yandex-biznes", title: "Яндекс Бизнес" },
-      { href: "/seo/search-console", title: "Search Console" },
-      { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+      { href: "/blog/search-console-dlya-russkogo-saita", title: "Search Console" },
+      { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
     ],
   },
   {
@@ -379,7 +379,7 @@ export const EXTRA_SEO_PAGES: RichPageData[] = [
       },
     ],
     related: [
-      { href: "/seo/tekhnicheskiy-audit", title: "Технический аудит" },
+      { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },
       { href: "/seo/metategi", title: "Title и description" },
       { href: "/instrumenty/llms-txt", title: "Генератор llms.txt" },
     ],

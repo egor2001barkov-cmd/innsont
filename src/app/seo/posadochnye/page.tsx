@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Посадочные страницы — INSONT",
     description:
       "Кластер из Wordstat, город как есть, перелинковка без «купить купить». Клонов районов нет.",
-    url: "/seo/posadochnye",
+    url: "/blog/posadochnaya-stranica-anatomiya",
     locale: "ru_RU",
     type: "website",
   },
@@ -82,12 +82,12 @@ export default function Page() {
         <p className="mt-5 text-lg leading-relaxed">
           Человек ищет услугу, город, цену, «рядом». Главная это не закрывает.
           Под кластер из{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>{" "}
           нужна своя страница: что это, сколько стоит, как записаться, где вы
           сидите. Если в топе витрины — на URL должна быть{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             коммерция
           </Link>
           , не гид «что такое УЗИ».
@@ -102,7 +102,7 @@ export default function Page() {
           <Link href="/demo" className="btn-primary">
             Разобрать ваши URL
           </Link>
-          <Link href="/seo/regionalnoe-prodvizhenie" className="btn-outline">
+          <Link href="/blog/geozaprosy-i-regionalnoe-prodvizhenie" className="btn-outline">
             Региональное SEO
           </Link>
         </div>
@@ -119,7 +119,7 @@ export default function Page() {
         </p>
         <p className="mt-4 leading-relaxed">
           Прежде чем заводить страницу, проверяем,{" "}
-          <Link href="/seo/robots-txt" className="font-semibold text-orange">
+          <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
             пускает ли robots
           </Link>{" "}
           робота на этот путь. Писать текст в закрытый раздел бессмысленно:
@@ -145,7 +145,7 @@ export default function Page() {
         </p>
         <p className="mt-4 leading-relaxed">
           Черновик страницы, внутренние ссылки и файл{" "}
-          <Link href="/seo/robots-txt" className="font-semibold text-orange">
+          <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
             robots.txt
           </Link>{" "}
           смотрите вы. Можно отклонить. Кабинет не публикует сам.
@@ -155,10 +155,10 @@ export default function Page() {
         <FaqList items={faqs} />
         <SeeAlso
           links={[
-            { href: "/seo/semantika-wordstat", title: "Семантика Wordstat" },
-            { href: "/seo/robots-txt", title: "robots.txt" },
-            { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
-            { href: "/seo/regionalnoe-prodvizhenie", title: "Региональное SEO" },
+            { href: "/blog/wordstat-instrukciya-s-chastotoy", title: "Семантика Wordstat" },
+            { href: "/blog/robots-txt-dlya-yandex-i-google-primery", title: "robots.txt" },
+            { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
+            { href: "/blog/geozaprosy-i-regionalnoe-prodvizhenie", title: "Региональное SEO" },
             { href: "/seo/teksty", title: "SEO тексты" },
             { href: "/seo/metategi", title: "Title и description" },
           ]}

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Семантика Wordstat — INSONT",
     description:
       "Частота, хвосты, регион и сезон из Wordstat. Рядом подсказки Google. Кластеры по смыслу, не каша на одном URL.",
-    url: "/seo/semantika-wordstat",
+    url: "/blog/wordstat-instrukciya-s-chastotoy",
     locale: "ru_RU",
     type: "website",
   },
@@ -195,9 +195,9 @@ export default function Page() {
         <SeeAlso
           links={[
             { href: "/seo", title: "Продвижение в поиске" },
-            { href: "/seo/posadochnye", title: "Посадочные страницы" },
-            { href: "/seo/robots-txt", title: "robots.txt" },
-            { href: "/seo/kommercheskie-faktory", title: "Коммерческие факторы" },
+            { href: "/blog/posadochnaya-stranica-anatomiya", title: "Посадочные страницы" },
+            { href: "/blog/robots-txt-dlya-yandex-i-google-primery", title: "robots.txt" },
+            { href: "/blog/kommercheskie-faktory-chek-list", title: "Коммерческие факторы" },
             { href: "/seo/teksty", title: "SEO тексты" },
             { href: "/seo/metategi", title: "Title и description" },
           ]}

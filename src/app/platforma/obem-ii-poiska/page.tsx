@@ -113,7 +113,7 @@ export default function Page() {
 
         <p className="mt-10 max-w-3xl text-[16px] leading-relaxed text-[#3a3632]">
           Семантику для поиска вы и так снимаете в{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>
           . Другое дело — когда человек уже не ищет список сайтов, а спрашивает
@@ -177,7 +177,7 @@ export default function Page() {
           <p>
             Если 70% вопросов из Москвы, а посадочная написана «для всей
             России», сначала чиним регион в{" "}
-            <Link href="/seo/vebmaster" className="font-semibold text-orange">
+            <Link href="/blog/yandex-vebmaster-instrumenty" className="font-semibold text-orange">
               Вебмастере
             </Link>{" "}
             и карточку в{" "}
@@ -272,7 +272,7 @@ export default function Page() {
                   продвижение в Казани
                 </Link>{" "}
                 и{" "}
-                <Link href="/seo/regionalnoe-prodvizhenie" className="font-semibold text-orange">
+                <Link href="/blog/geozaprosy-i-regionalnoe-prodvizhenie" className="font-semibold text-orange">
                   региональный поиск
                 </Link>
                 .
@@ -338,7 +338,7 @@ export default function Page() {
               desc: "Ежедневный трекинг тех формулировок, что отобрали здесь",
             },
             {
-              href: "/seo/semantika-wordstat",
+              href: "/blog/wordstat-instrukciya-s-chastotoy",
               title: "Семантика и Wordstat",
               desc: "Спрос в поиске — вторая колонка той же таблицы",
             },

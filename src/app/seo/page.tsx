@@ -111,7 +111,7 @@ export default function Page() {
           <Link href="/demo" className="btn-primary">
             Разобрать ваш сайт
           </Link>
-          <Link href="/seo/skolko-stoit" className="btn-outline">
+          <Link href="/blog/skolko-stoit-seo-v-2026" className="btn-outline">
             Сколько это стоит
           </Link>
         </div>
@@ -140,7 +140,7 @@ export default function Page() {
             продвижении в Google
           </Link>{" "}
           и в{" "}
-          <Link href="/seo/search-console" className="font-semibold hover:underline">
+          <Link href="/blog/search-console-dlya-russkogo-saita" className="font-semibold hover:underline">
             Search Console
           </Link>
           .
@@ -156,7 +156,7 @@ export default function Page() {
             Снимаем позиции по вашему городу в Яндексе и Google. Не средний
             балл «по России»: клиника в Москве и та же клиника в выдаче
             Новосибирска — разные рынки. Регион в{" "}
-            <Link href="/seo/vebmaster" className="font-semibold hover:underline">
+            <Link href="/blog/yandex-vebmaster-instrumenty" className="font-semibold hover:underline">
               Вебмастере
             </Link>{" "}
             должен совпадать с тем, откуда вообще заявки.
@@ -181,7 +181,7 @@ export default function Page() {
             регион, сниппет, индекс. Статью «про пользу УЗИ» можно написать
             потом. Сначала то, без чего Яндекс в коммерции вас просто не
             пускает —{" "}
-            <Link href="/seo/kommercheskie-faktory" className="font-semibold hover:underline">
+            <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold hover:underline">
               коммерческие факторы
             </Link>
             .
@@ -234,7 +234,7 @@ export default function Page() {
             Для сети — только честные города. Посадочная «на Казань», если вы
             туда не возите, потом всплывает в жалобах и в Вебмастере. Как делать
             города правильно — в{" "}
-            <Link href="/seo/regionalnoe-prodvizhenie" className="font-semibold hover:underline">
+            <Link href="/blog/geozaprosy-i-regionalnoe-prodvizhenie" className="font-semibold hover:underline">
               региональном SEO
             </Link>
             .
@@ -249,7 +249,7 @@ export default function Page() {
           flip
         >
           <p>
-            <Link href="/seo/semantika-wordstat" className="font-semibold hover:underline">
+            <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold hover:underline">
               Wordstat
             </Link>{" "}
             — спрос в Яндексе. Подсказки и Search Console — как формулируют в
@@ -353,24 +353,24 @@ export default function Page() {
           <h2 className="text-2xl md:text-[28px]">По темам</h2>
           <ul className="mt-6 max-w-[720px] border-t border-line">
             {[
-              { href: "/seo/semantika-wordstat", name: "Семантика Wordstat" },
-              { href: "/seo/posadochnye", name: "Посадочные страницы" },
-              { href: "/seo/robots-txt", name: "robots.txt" },
-              { href: "/seo/tekhnicheskiy-audit", name: "Технический аудит" },
-              { href: "/seo/kommercheskie-faktory", name: "Коммерческие факторы" },
+              { href: "/blog/wordstat-instrukciya-s-chastotoy", name: "Семантика Wordstat" },
+              { href: "/blog/posadochnaya-stranica-anatomiya", name: "Посадочные страницы" },
+              { href: "/blog/robots-txt-dlya-yandex-i-google-primery", name: "robots.txt" },
+              { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", name: "Технический аудит" },
+              { href: "/blog/kommercheskie-faktory-chek-list", name: "Коммерческие факторы" },
               { href: "/seo/metategi", name: "Title и description" },
               { href: "/seo/kontent", name: "Полезные тексты" },
-              { href: "/seo/vebmaster", name: "Яндекс Вебмастер" },
+              { href: "/blog/yandex-vebmaster-instrumenty", name: "Яндекс Вебмастер" },
               { href: "/seo/yandex-biznes", name: "Яндекс Бизнес" },
-              { href: "/seo/search-console", name: "Google Search Console" },
+              { href: "/blog/search-console-dlya-russkogo-saita", name: "Google Search Console" },
               { href: "/seo/google-profil", name: "Google Профиль компании" },
-              { href: "/seo/mikrorazmetka", name: "Микроразметка" },
+              { href: "/blog/mikrorazmetka-schema-org-2026", name: "Микроразметка" },
               { href: "/seo/vs-writesonic", name: "INSONT и Writesonic" },
               { href: "/seo/vs-semrush", name: "INSONT и Semrush" },
-              { href: "/seo/skolko-stoit", name: "Сколько стоит SEO" },
+              { href: "/blog/skolko-stoit-seo-v-2026", name: "Сколько стоит SEO" },
               { href: "/seo/vs-agentstvo", name: "Кабинет или агентство" },
               { href: "/seo/vs-keys-so", name: "INSONT и Keys.so" },
-              { href: "/seo/glossariy", name: "Глоссарий" },
+              { href: "/slovar", name: "Глоссарий" },
             ].map((it) => (
               <li key={it.href} className="border-b border-line">
                 <Link href={it.href} className="block py-3 font-semibold hover:underline">
@@ -407,7 +407,7 @@ export default function Page() {
               desc: "Цена и врач на услуге, заявки с поиска +19%",
             },
             {
-              href: "/seo/kommercheskie-faktory",
+              href: "/blog/kommercheskie-faktory-chek-list",
               title: "Коммерческие факторы",
               desc: "То, без чего Яндекс не пускает витрину",
             },

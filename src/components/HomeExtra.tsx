@@ -390,11 +390,11 @@ export function HomeRobots() {
       <p className="mt-6 max-w-2xl text-[15px] leading-relaxed">
         Это не «валидный синтаксис». Это очередь: открыть /uzi, оставить
         закрытым /kabinet, прописать Sitemap. Дальше —{" "}
-        <Link href="/seo/robots-txt" className="font-semibold text-orange">
+        <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
           как мы читаем robots.txt
         </Link>
         ,{" "}
-        <Link href="/seo/tekhnicheskiy-audit" className="font-semibold text-orange">
+        <Link href="/blog/tehnicheskiy-audit-saita-samostoyatelno" className="font-semibold text-orange">
           технический аудит
         </Link>{" "}
         и{" "}
@@ -427,15 +427,15 @@ export function HomeLandings() {
       </div>
       <p className="mt-6 max-w-2xl text-[15px] leading-relaxed">
         Как собираем список и связываем страницы — в разделе{" "}
-        <Link href="/seo/posadochnye" className="font-semibold text-orange">
+        <Link href="/blog/posadochnaya-stranica-anatomiya" className="font-semibold text-orange">
           посадочных
         </Link>
         . Ядро берём из{" "}
-        <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+        <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
           семантики Wordstat
         </Link>
         , доступ роботу проверяем в{" "}
-        <Link href="/seo/robots-txt" className="font-semibold text-orange">
+        <Link href="/blog/robots-txt-dlya-yandex-i-google-primery" className="font-semibold text-orange">
           robots.txt
         </Link>
         .

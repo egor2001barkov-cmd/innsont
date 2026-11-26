@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { TERMS } from "@/lib/slovar";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Словарь SEO и GEO: термины простыми словами",
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     "Определения терминов SEO, Яндекса и нейросетей: canonical, robots.txt, редирект, ИКС, llms.txt. Пример, проверка и типичные ошибки на каждой странице.",
   alternates: { canonical: "/slovar" },
   openGraph: {
+    images: OG_IMAGE,
     title: "Словарь SEO и GEO",
     description: "Термины поиска и нейросетей с примерами и проверкой.",
     url: "/slovar",

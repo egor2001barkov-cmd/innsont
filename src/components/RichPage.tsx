@@ -3,7 +3,7 @@ import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
-import { SITE } from "@/lib/site";
+import { OG_IMAGE, SITE } from "@/lib/site";
 
 export type RichPageData = {
   path: string;
@@ -40,6 +40,8 @@ export function richMetadata(page: RichPageData) {
       url: page.path,
       locale: "ru_RU",
       type: "website" as const,
+      // Next заменяет объект openGraph целиком — без картинки здесь дефолт из layout не пробивается
+      images: OG_IMAGE,
     },
   };
 }

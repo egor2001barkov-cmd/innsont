@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { FeaturePage } from "@/lib/features";
 import { FEATURE_MEDIA } from "@/lib/enrich";
-import { SITE } from "@/lib/site";
+import { OG_IMAGE, SITE } from "@/lib/site";
 import { Breadcrumbs, CtaBand, JsonLd } from "./SiteChrome";
 import { SeeAlso } from "./SeeAlso";
 import { FaqList } from "./FaqList";
@@ -132,6 +132,7 @@ export function pageMetadata(page: FeaturePage) {
       url: page.path,
       locale: "ru_RU",
       type: "website",
+      images: OG_IMAGE,
     },
   };
 }

@@ -32,7 +32,7 @@ export default function Page() {
         <p className="mt-3 leading-relaxed text-[#3a3632]">
           Услуга, товар, вклад, курс — на странице должны быть цена или вилка,
           срок, кто делает, как начать. Это тот же смысл, что в{" "}
-          <Link href="/seo/kommercheskie-faktory" className="font-semibold text-orange">
+          <Link href="/blog/kommercheskie-faktory-chek-list" className="font-semibold text-orange">
             коммерческих факторах
           </Link>
           . Пока этого нет, статья «как выбрать» кормит чужую витрину. Так
@@ -50,7 +50,7 @@ export default function Page() {
         <h2 className="mt-10 text-2xl">Тема из спроса, не из «надо что-то выложить»</h2>
         <p className="mt-3 leading-relaxed text-[#3a3632]">
           Берём кластер{" "}
-          <Link href="/seo/semantika-wordstat" className="font-semibold text-orange">
+          <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="font-semibold text-orange">
             Wordstat
           </Link>{" "}
           и соседние формулировки из{" "}

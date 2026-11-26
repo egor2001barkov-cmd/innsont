@@ -110,7 +110,7 @@ export function ActionCenterShowcase() {
             d: "Обход, схема, индекс Вебмастера",
             n: "36",
             prio: "Высокий",
-            href: "/seo/tekhnicheskiy-audit",
+            href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
           },
         ].map((row) => (
           <div key={row.t} className="rounded-2xl bg-[#fbf7f0] px-3 py-3">
@@ -498,7 +498,7 @@ export function HomeWho() {
 export function HomeCabinet() {
   const blocks = [
     {
-      href: "/seo/semantika-wordstat",
+      href: "/blog/wordstat-instrukciya-s-chastotoy",
       t: "Семантика",
       d: "Запросы из Wordstat, кластеры, регион. Понятно, какие страницы писать.",
     },
@@ -508,7 +508,7 @@ export function HomeCabinet() {
       d: "Title и description под сниппет Яндекса. Без капслока и ключей в ряд.",
     },
     {
-      href: "/seo/kommercheskie-faktory",
+      href: "/blog/kommercheskie-faktory-chek-list",
       t: "Витрина",
       d: "Цены, контакты, оплата и доставка: то, без чего коммерция не попадает в топ.",
     },
@@ -523,7 +523,7 @@ export function HomeCabinet() {
       d: "Тексты для людей. Не простыни с ключами.",
     },
     {
-      href: "/seo/tekhnicheskiy-audit",
+      href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
       t: "Техника",
       d: "Индекс, скорость, robots, схема, ошибки Вебмастера.",
     },
@@ -991,7 +991,7 @@ export function HomeHeroSuite() {
             </span>
           </div>
           <div className="mt-4 flex sm:justify-end">
-            <Link href="/seo/semantika-wordstat" className="btn-primary w-full px-5 sm:w-auto">
+            <Link href="/blog/wordstat-instrukciya-s-chastotoy" className="btn-primary w-full px-5 sm:w-auto">
               Собрать ключи
             </Link>
           </div>

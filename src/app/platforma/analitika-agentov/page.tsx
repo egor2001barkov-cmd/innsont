@@ -156,7 +156,7 @@ export default function Page() {
               Центр действий
             </Link>{" "}
             или в{" "}
-            <Link href="/seo/tekhnicheskiy-audit" className="font-semibold text-orange">
+            <Link href="/blog/tehnicheskiy-audit-saita-samostoyatelno" className="font-semibold text-orange">
               технический аудит
             </Link>
             , если дыр много.
@@ -238,7 +238,7 @@ export default function Page() {
               desc: "Быстро глянуть, пускаете ли вы роботов",
             },
             {
-              href: "/seo/tekhnicheskiy-audit",
+              href: "/blog/tehnicheskiy-audit-saita-samostoyatelno",
               title: "Технический аудит",
               desc: "Если 404 не один, а система",
             },
