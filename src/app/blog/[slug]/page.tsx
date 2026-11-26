@@ -7,6 +7,7 @@ import { SeeAlso } from "@/components/SeeAlso";
 import { PageAdvantages } from "@/components/Advantages";
 import { SITE } from "@/lib/site";
 import { mdToHtmlBody } from "@/lib/markdown";
+import { seoOf } from "@/lib/seo-overrides";
 import type { Metadata } from "next";
 
 const CUSTOM_SLUGS = new Set(["issledovanie-ii-vidimosti-rf"]);
@@ -34,14 +35,18 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
-  const title = post.metaTitle ?? post.title;
+  // заголовок и описание для выдачи — с правками из SEO_OVERRIDES (аудит 26.11.2026)
+  const { title, description } = seoOf(`/blog/${post.slug}`, {
+    title: post.metaTitle ?? post.title,
+    description: post.description,
+  });
   return {
     title,
-    description: post.description,
+    description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title,
-      description: post.description,
+      description,
       type: "article",
       publishedTime: post.date,
       locale: "ru_RU",

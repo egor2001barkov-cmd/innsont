@@ -6,13 +6,20 @@ import { SITE } from "@/lib/site";
 import { PageAdvantages } from "@/components/Advantages";
 import { POSTS } from "@/lib/blog";
 import { keywordNav } from "@/lib/keyword-pages";
+import { REDIRECTED_PATHS } from "@/lib/redirected";
 
 export const metadata: Metadata = {
-  title: "Карта сайта INSONT — все разделы",
+  title: "Карта сайта: все разделы и страницы",
   description:
-    "Все страницы INSONT: продвижение в Яндексе и Google, тарифы, кейсы, города, отрасли и кабинет.",
+    "Все страницы INSONT в одном списке: продвижение в Яндексе и Google, нейросети, платформа, тарифы, инструменты, кейсы, города и отрасли.",
   alternates: { canonical: "/karta-sayta" },
 };
+
+const cleanPath = (href: string) => href.replace(/\/$/, "") || "/";
+// адреса, ушедшие в редирект, в карте сайта не показываем: посетитель идёт сразу на конечную страницу
+const live = <T extends { href: string }>(items: T[]) => items.filter((it) => !REDIRECTED_PATHS.has(cleanPath(it.href)));
+const SECTIONS = SITE_SECTIONS.map((s) => ({ ...s, items: live(s.items) }));
+const KEYWORDS = live(keywordNav());
 
 export default function SitemapPage() {
   return (
@@ -23,7 +30,7 @@ export default function SitemapPage() {
           "@type": "ItemList",
           name: "Карта сайта INSONT",
           url: `${SITE.url}/karta-sayta`,
-          numberOfItems: SITE_SECTIONS.reduce((n, s) => n + s.items.length, 0),
+          numberOfItems: SECTIONS.reduce((n, s) => n + s.items.length, 0) + KEYWORDS.length + POSTS.length,
         }}
       />
       <Breadcrumbs path="/karta-sayta" />
@@ -33,7 +40,7 @@ export default function SitemapPage() {
         городам и отраслям, помощь.
       </p>
       <div className="mt-10 grid gap-8 md:grid-cols-2">
-        {SITE_SECTIONS.map((sec) => (
+        {SECTIONS.map((sec) => (
           <section key={sec.title}>
             <h2 className="text-2xl">
               {sec.href ? (
@@ -65,7 +72,7 @@ export default function SitemapPage() {
             и в sitemap.xml они есть.
           </p>
           <ul className="mt-3 space-y-2 text-sm">
-            {keywordNav().map((it) => (
+            {KEYWORDS.map((it) => (
               <li key={it.href}>
                 <Link href={it.href} className="text-ink hover:text-orange">
                   {it.name}

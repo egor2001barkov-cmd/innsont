@@ -5,9 +5,9 @@ import { CannibalizationTool } from "@/components/tools/CannibalizationTool";
 import { PageAdvantages } from "@/components/Advantages";
 
 export const metadata: Metadata = {
-  title: "Проверка каннибализации: найти страницы, конкурирующие за один запрос",
+  title: "Проверка каннибализации запросов — бесплатно",
   description:
-    "Бесплатный онлайн-инструмент: вставьте заголовки страниц — найдём пары с пересекающимся интентом. Скор, общие слова, рекомендации. Без регистрации.",
+    "Бесплатный онлайн-инструмент: вставьте заголовки страниц — найдём пары с пересекающимся интентом. Доля совпадения, общие слова, рекомендации.",
   alternates: { canonical: "/instrumenty/kanibalizatsiya" },
 };
 

@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Блог: продвижение в Яндексе, Google и нейросетях",
   description:
-    "Статьи INSONT: как расти в Яндексе и Google, как попасть в ответы GigaChat и ChatGPT, техника и тексты без воды.",
+    "Статьи о Яндексе, Google и нейросетях: индексация, Вордстат, Вебмастер, robots.txt, каннибализация и перелинковка. С таблицами и разборами.",
   alternates: { canonical: "/blog" },
 };
 
@@ -16,7 +16,7 @@ export default function BlogIndex() {
     <div className="mx-auto max-w-[1000px] px-5 py-14">
       <Breadcrumbs path="/blog" />
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-orange">Блог</p>
-      <h1 className="mt-3 text-4xl md:text-6xl">ИИ-поиск, AEO и видимость</h1>
+      <h1 className="mt-3 text-4xl md:text-6xl">Блог INSONT: поиск и нейросети</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">
         Разборы данных, плейбуки и исследования для команд, которые хотят
         попадать в ответы, а не только в выдачу.

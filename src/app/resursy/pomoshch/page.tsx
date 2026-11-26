@@ -1,8 +1,8 @@
 import { ResourceShell, resourceMeta } from "@/lib/resources";
 
 export const metadata = resourceMeta(
-  "Центр помощи INSONT — кабинет, тарифы, агенты",
-  "Документация и поддержка: как пользоваться кабинетом, тарифами, статьями и API INSONT.",
+  "Центр помощи INSONT: кабинет, тарифы, статьи, API",
+  "Ответы на вопросы о кабинете INSONT: как начать, что входит в тариф, как работают статьи, аудит, ключи и API. Письмо в поддержку.",
   "/resursy/pomoshch"
 );
 

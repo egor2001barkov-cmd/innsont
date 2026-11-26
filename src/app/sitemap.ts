@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/oferta", priority: 0.3 },
     { path: "/cookies", priority: 0.3 },
     { path: "/instrumenty", priority: 0.5 },
+    { path: "/api-dokumentaciya", priority: 0.5 },
     { path: "/resursy/indeks-reklamy", priority: 0.5 },
     { path: "/resursy/rukovodstvo-geo", priority: 0.5 },
     { path: "/resursy/pomoshch", priority: 0.4 },

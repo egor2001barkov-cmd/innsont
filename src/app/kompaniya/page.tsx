@@ -6,9 +6,9 @@ import { CompanyPoints } from "@/components/CompanyPlay";
 import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "О компании INSONT — кто делает продвижение в поиске и нейросетях",
+  title: "О компании INSONT: кто мы и как работаем",
   description:
-    "INSONT, Москва, ИНН 773104369017. Продвигаем сайты в Яндексе, Google и ответах GigaChat. Рубли, 152-ФЗ, Wordstat. Без покупки ссылок.",
+    "Кто делает INSONT, как устроена работа и каких принципов мы держимся: без покупки ссылок и накрутки. Москва, ИНН 773104369017.",
   alternates: { canonical: "/kompaniya" },
   openGraph: {
     images: OG_IMAGE,

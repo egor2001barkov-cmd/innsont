@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { FeaturePage } from "@/lib/features";
 import { FEATURE_MEDIA } from "@/lib/enrich";
+import { seoOf } from "@/lib/seo-overrides";
 import { OG_IMAGE, SITE } from "@/lib/site";
 import { Breadcrumbs, CtaBand, JsonLd } from "./SiteChrome";
 import { SeeAlso } from "./SeeAlso";
@@ -122,13 +123,14 @@ export function FeatureView({ page }: { page: FeaturePage; section: string }) {
 }
 
 export function pageMetadata(page: FeaturePage) {
+  const { title, description } = seoOf(page.path, page);
   return {
-    title: page.title,
-    description: page.description,
+    title,
+    description,
     alternates: { canonical: page.path },
     openGraph: {
-      title: page.title,
-      description: page.description,
+      title,
+      description,
       url: page.path,
       locale: "ru_RU",
       type: "website",

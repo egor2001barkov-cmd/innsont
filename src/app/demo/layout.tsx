@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Демо INSONT — разбор сайта в поиске и нейросетях",
   description:
-    "30 минут: где вас нет в Яндексе, Google, GigaChat и ChatGPT, что чинить первым и как считать заявки. Без обязательства.",
+    "Разбор вашего сайта за 30 минут: где вас нет в Яндексе, Google, GigaChat и ChatGPT и что чинить первым. Онлайн, без обязательств.",
   alternates: { canonical: "/demo" },
 };
 

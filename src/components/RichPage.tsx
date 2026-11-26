@@ -3,6 +3,7 @@ import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { FaqList } from "@/components/FaqList";
 import { PageAdvantages } from "@/components/Advantages";
+import { seoOf } from "@/lib/seo-overrides";
 import { OG_IMAGE, SITE } from "@/lib/site";
 
 export type RichPageData = {
@@ -29,14 +30,16 @@ export type RichPageData = {
 };
 
 export function richMetadata(page: RichPageData) {
+  // заголовок и описание для выдачи — с правками из SEO_OVERRIDES (аудит 26.11.2026)
+  const { title, description } = seoOf(page.path, page);
   return {
-    title: page.title,
-    description: page.description,
+    title,
+    description,
     keywords: page.keywords,
     alternates: { canonical: page.path },
     openGraph: {
-      title: page.title,
-      description: page.description,
+      title,
+      description,
       url: page.path,
       locale: "ru_RU",
       type: "website" as const,

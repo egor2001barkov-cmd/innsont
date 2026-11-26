@@ -22,9 +22,9 @@ const faqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "Продвижение в нейросетях — GigaChat, ChatGPT, Алиса",
+  title: "Продвижение в нейросетях (GEO): цены и что входит",
   description:
-    "GEO и AEO для России: видимость в GigaChat, ChatGPT, Алисе и YandexGPT. Рядом ведём Яндекс и Google. Без накрутки и без покупки ссылок.",
+    "GEO-продвижение для России: сайт попадает в ответы GigaChat, ChatGPT, Алисы и YandexGPT. Что делаем, сроки и тарифы от 4 490 ₽ при годе.",
   keywords: [
     "GEO оптимизация",
     "AEO",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/geo" },
   openGraph: {
     images: OG_IMAGE,
-    title: "Продвижение в GigaChat, ChatGPT и Алисе — INSONT",
+    title: "Продвижение в нейросетях (GEO): цены и что входит — INSONT",
     description:
-      "Как попасть в ответы моделей на русском. Вместе с обычным поиском, не вместо него.",
+      "GEO-продвижение для России: сайт попадает в ответы GigaChat, ChatGPT, Алисы и YandexGPT. Что делаем, сроки и тарифы.",
     url: "/geo",
     locale: "ru_RU",
     type: "website",

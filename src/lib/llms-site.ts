@@ -12,18 +12,25 @@ import { allLongPages } from "@/lib/geo-pages";
 import { TERMS } from "@/lib/slovar";
 import { PLANS, SITE } from "@/lib/site";
 import { REDIRECTED_PATHS } from "@/lib/redirected";
+import { seoOf } from "@/lib/seo-overrides";
+import { SITE_TOOLS } from "@/lib/tools-registry";
 
 type Entry = { path: string; title: string; description: string };
 
 const clean = (s: string) => (s || "").replace(/\s+/g, " ").trim();
 const url = (path: string) => `${SITE.url}${path === "/" ? "" : path}`;
+/** Строка карты с заголовком и описанием для выдачи (с правками из SEO_OVERRIDES). */
+const entry = (path: string, base: { title: string; description: string }): Entry => ({
+  path,
+  ...seoOf(path, base),
+});
 
-export const TOOLS: Entry[] = [
-  { path: "/instrumenty/ochelovechivatel", title: "Очеловечиватель текста", description: "Находит и убирает шаблонные ИИ-обороты в тексте. Без регистрации." },
-  { path: "/instrumenty/llms-txt", title: "Генератор llms.txt", description: "Собирает llms.txt по обходу сайта. Без регистрации." },
-  { path: "/instrumenty/kanibalizatsiya", title: "Проверка каннибализации", description: "Находит страницы с пересекающимся интентом по заголовкам. Без регистрации." },
-  { path: "/instrumenty/proverka-krawlerov", title: "Проверка обхода", description: "Сравнивает, что видят в странице человек и робот. Без регистрации." },
-];
+/** Инструменты — из единого реестра (src/lib/tools-registry.ts), как на хабе /instrumenty. */
+export const TOOLS: Entry[] = SITE_TOOLS.map((t) => ({
+  path: t.path,
+  title: t.name,
+  description: `${t.short}. Без регистрации.`,
+}));
 
 const STATIC_PAGES: Entry[] = [
   { path: "/", title: "INSONT — продвижение сайта в поиске и нейросетях", description: SITE.description },
@@ -42,7 +49,7 @@ const STATIC_PAGES: Entry[] = [
   { path: "/resursy/partnerskaya", title: "Партнёрская программа", description: "20% с оплат приведённого клиента в течение 12 месяцев." },
   { path: "/resursy/integratsii", title: "Интеграции", description: "Метрика, Вебмастер, Search Console, WordPress, API." },
   { path: "/resursy/pomoshch", title: "Центр помощи", description: "Как пользоваться кабинетом, тарифами, статьями и API." },
-  { path: "/resursy/api", title: "Документация API", description: "Доступ к проверкам и генерации по ключу." },
+  { path: "/resursy/api", title: "Документация API", description: "Методы, лимиты и коды ошибок API INSONT. Доступ по ключу на тарифе «Рост»." },
   { path: "/resursy/indeks-reklamy", title: "Индекс рекламы в ответах ChatGPT", description: "Ежедневный срез по России: выборка, не весь рынок." },
   { path: "/blog", title: "Блог INSONT", description: "Статьи о Яндексе, Google, нейросетях и технике сайта." },
   { path: "/slovar", title: "Словарь SEO и GEO", description: "Термины простыми словами: определение, пример, проверка, ошибки." },
@@ -131,7 +138,7 @@ export function llmsShortText(): string {
 
   const featured = FEATURED_POSTS.map((slug) => POSTS.find((p) => p.slug === slug)).filter((p): p is (typeof POSTS)[number] => Boolean(p));
   section(
-    featured.map((p) => ({ path: `/blog/${p.slug}`, title: p.title, description: p.description })),
+    featured.map((p) => entry(`/blog/${p.slug}`, { title: p.title, description: p.description })),
     "Статьи по темам",
     lines,
     160
@@ -140,7 +147,7 @@ export function llmsShortText(): string {
   lines.push("");
 
   section(
-    TERMS.map((t) => ({ path: `/slovar/${t.slug}`, title: t.term, description: t.description })),
+    TERMS.map((t) => entry(`/slovar/${t.slug}`, { title: t.term, description: t.description })),
     "Словарь",
     lines,
     160
@@ -165,22 +172,22 @@ export function llmsFullText(): string {
   section(STATIC_PAGES, "Главное и разделы", lines);
   section(TOOLS, "Бесплатные инструменты", lines);
   section(
-    FEATURES.map((f) => ({ path: f.path, title: f.title, description: f.description })),
+    FEATURES.map((f) => entry(f.path, { title: f.title, description: f.description })),
     "Платформа",
     lines
   );
   section(
-    SOLUTIONS_PAGES.map((f) => ({ path: f.path, title: f.title, description: f.description })),
+    SOLUTIONS_PAGES.map((f) => entry(f.path, { title: f.title, description: f.description })),
     "Решения",
     lines
   );
   section(
-    longPages.map((p) => ({ path: p.path, title: p.title, description: p.description })),
+    longPages.map((p) => entry(p.path, { title: p.title, description: p.description })),
     "Услуги, города и отраслевые страницы",
     lines
   );
   section(
-    TERMS.map((t) => ({ path: `/slovar/${t.slug}`, title: t.term, description: t.description })),
+    TERMS.map((t) => entry(`/slovar/${t.slug}`, { title: t.term, description: t.description })),
     "Словарь",
     lines
   );
@@ -190,7 +197,7 @@ export function llmsFullText(): string {
     lines
   );
   section(
-    POSTS.map((p) => ({ path: `/blog/${p.slug}`, title: p.title, description: p.description })),
+    POSTS.map((p) => entry(`/blog/${p.slug}`, { title: p.title, description: p.description })),
     "Блог",
     lines
   );

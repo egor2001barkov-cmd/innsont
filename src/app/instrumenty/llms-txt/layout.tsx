@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Генератор llms.txt — бесплатно, без почты",
+  title: "Генератор llms.txt онлайн — бесплатно, без регистрации",
   description:
-    "Введите домен и страницы. Получите markdown для моделей: короткий список, не архив. Яндекс и Google файл не требуют.",
+    "Генератор llms.txt по адресу сайта: список страниц и фактов для GPTBot, GigaChat и YandexGPT. Скачать файл, пример и разбор каждой строки.",
   alternates: { canonical: "/instrumenty/llms-txt" },
 };
 

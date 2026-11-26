@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { FaqList } from "@/components/FaqList";
+import { seoOf } from "@/lib/seo-overrides";
 import { OG_IMAGE, SITE } from "@/lib/site";
 import type { Term } from "@/lib/slovar";
 
 export function termMetadata(term: Term) {
+  const { title, description } = seoOf(`/slovar/${term.slug}`, term);
   return {
-    title: term.title,
-    description: term.description,
+    title,
+    description,
     alternates: { canonical: `/slovar/${term.slug}` },
     openGraph: {
-      title: term.title,
-      description: term.description,
+      title,
+      description,
       url: `/slovar/${term.slug}`,
       locale: "ru_RU",
       type: "article" as const,

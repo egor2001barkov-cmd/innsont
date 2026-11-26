@@ -32,7 +32,7 @@ import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Продвижение сайта в Яндексе и Google — INSONT",
+    absolute: "Продвижение сайта в Яндексе, Google и нейросетях — INSONT",
   },
   description: SITE.description,
   keywords: [
@@ -52,8 +52,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     images: OG_IMAGE,
-    title: "Продвижение сайта в Яндексе и Google — INSONT",
-    description: SITE.description,
+    title: "Продвижение сайта в Яндексе, Google и нейросетях — INSONT",
+    description:
+      "Продвижение сайта в Яндексе, Google и ответах нейросетей: аудит, тексты, видимость в GigaChat и ChatGPT. Тарифы от 4 490 ₽ при годе.",
     url: "/",
     locale: "ru_RU",
     type: "website",

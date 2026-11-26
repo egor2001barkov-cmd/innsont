@@ -5,9 +5,9 @@ import { HumanizerTool } from "@/components/tools/HumanizerTool";
 import { PageAdvantages } from "@/components/Advantages";
 
 export const metadata: Metadata = {
-  title: "Очеловечиватель текста: проверить текст на ИИ-паттерны",
+  title: "Очеловечить текст от ИИ: бесплатный очеловечиватель",
   description:
-    "Бесплатный онлайн-инструмент: вставьте текст — найдём 18 ИИ-паттернов («не X, а Y», «Мораль:», «Давайте», «стоит отметить», триады). Скор, автоочистка, без регистрации.",
+    "Вставьте текст из ChatGPT или GigaChat — найдём и уберём 18 ИИ-шаблонов: «не X, а Y», «Мораль:», «Давайте», «стоит отметить». Без регистрации.",
   alternates: { canonical: "/instrumenty/ochelovechivatel" },
 };
 

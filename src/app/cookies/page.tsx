@@ -3,7 +3,7 @@ import { ResourceShell, resourceMeta } from "@/lib/resources";
 import { SITE } from "@/lib/site";
 
 export const metadata = resourceMeta(
-  "Политика cookies — INSONT",
+  "Политика cookies",
   "Какие файлы cookie использует сайт INSONT, зачем они нужны и как отключить их в браузере.",
   "/cookies"
 );

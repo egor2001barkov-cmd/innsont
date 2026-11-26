@@ -1,8 +1,8 @@
 import { ResourceShell, resourceMeta } from "@/lib/resources";
 
 export const metadata = resourceMeta(
-  "Интеграции INSONT — Метрика, Вебмастер, Search Console",
-  "Подключите Яндекс Метрику, Вебмастер, Google Search Console, WordPress, Битрикс, Tilda и API.",
+  "Интеграции INSONT — Метрика, Вебмастер, WordPress, API",
+  "Подключите к кабинету INSONT счётчик Метрики и Яндекс.Вебмастер: визиты, источники и индексация появятся в разделе «Видимость» и в отчёте.",
   "/resursy/integratsii"
 );
 

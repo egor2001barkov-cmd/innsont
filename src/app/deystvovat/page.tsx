@@ -7,7 +7,7 @@ import { PageAdvantages } from "@/components/Advantages";
 export const metadata: Metadata = {
   title: "Что делать на сайте: тексты, упоминания, роботы",
   description:
-    "Переписываем страницы, готовим ответы на VC и Дзен, открываем сайт роботам Яндекса, Google и GPTBot. Без покупки ссылок.",
+    "Очередь работ на сайте: переписать страницы, подготовить ответы на площадках, открыть сайт роботам Яндекса, Google и GPTBot. Без покупки ссылок.",
   alternates: { canonical: "/deystvovat" },
 };
 

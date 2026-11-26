@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Проверка обхода — что видят Яндекс, GPTBot и GigaChat",
   description:
-    "Сравните страницу в браузере и сырой HTML. Робот часто читает только первый ответ, без JavaScript. Бесплатно, без почты.",
+    "Сравните, что видят в странице человек и робот: браузер выполняет скрипты, а робот часто читает только первый ответ HTML. Без регистрации.",
   alternates: { canonical: "/instrumenty/proverka-krawlerov" },
 };
 

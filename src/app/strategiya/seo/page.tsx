@@ -7,7 +7,7 @@ import { PageAdvantages } from "@/components/Advantages";
 export const metadata: Metadata = {
   title: "SEO-стратегия роста сайта в Яндексе и Google",
   description:
-    "Как расти в поиске без покупки ссылок: спрос, витрина, регион, техника, замер. Яндекс и Google в одном цикле, не вместо друг друга.",
+    "Как расти в поиске без покупки ссылок: спрос, витрина, регион, техника и замер результата. Одна очередь работ двигает и Яндекс, и Google.",
   alternates: { canonical: "/strategiya/seo" },
 };
 
