@@ -17,7 +17,7 @@ export const SITE_SECTIONS: SiteSection[] = [
       { href: "/registratsiya", name: "Регистрация — 5 запросов" },
       { href: "/vhod", name: "Вход" },
       { href: "/karta-sayta", name: "Карта сайта" },
-      { href: "/priorizirovat", name: "Приоритизировать" },
+      { href: "/platforma/tsentr-deystviy", name: "Центр действий" },
       { href: "/deystvovat", name: "Действовать" },
       { href: "/pochemu-insont", name: "Почему INSONT" },
       { href: "/strategiya", name: "Стратегии роста" },

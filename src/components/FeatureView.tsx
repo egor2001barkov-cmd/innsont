@@ -111,7 +111,7 @@ export function FeatureView({ page }: { page: FeaturePage; section: string }) {
         <SeeAlso
           links={[
             ...page.related,
-            { href: "/priorizirovat", title: "Центр действий" },
+            { href: "/platforma/tsentr-deystviy", title: "Центр действий" },
             { href: "/seo", title: "Продвижение в поиске" },
             { href: "/tseny", title: "Тарифы" },
           ]}

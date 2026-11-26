@@ -157,7 +157,7 @@ export default function Page() {
           <p>
             Смотрим 12 точек, не обещаем предсказание курса. Если кривая ползёт
             вверх, а бренда в ответах нет — это очередь в{" "}
-            <Link href="/priorizirovat" className="font-semibold text-orange">
+            <Link href="/platforma/tsentr-deystviy" className="font-semibold text-orange">
               Центр действий
             </Link>
             , не повод покупать ссылки.
@@ -347,7 +347,7 @@ export default function Page() {
               title: "Кейс «Центр-инвест»",
               desc: "Когда ставки на сайте и ответы моделей наконец совпали",
             },
-            { href: "/priorizirovat", title: "Центр действий", desc: "Куда падает растущий запрос без вашей цитаты" },
+            { href: "/platforma/tsentr-deystviy", title: "Центр действий", desc: "Куда падает растущий запрос без вашей цитаты" },
             { href: "/tseny", title: "Тарифы", desc: "На Старте — 3 прогона объёма, этого хватает пощупать" },
           ]}
         />

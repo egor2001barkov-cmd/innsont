@@ -313,8 +313,8 @@ export default function Page() {
               desc: "Откуда очередь вообще берётся",
             },
             {
-              href: "/priorizirovat",
-              title: "Как выглядит кабинет",
+              href: "/kabinet/deystviya",
+              title: "Центр действий в кабинете",
               desc: "Короткий экран с той же очередью",
             },
             {

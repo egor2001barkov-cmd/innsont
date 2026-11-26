@@ -58,7 +58,6 @@ const STATIC_PAGES: Entry[] = [
   { path: "/pochemu-insont", title: "Зачем INSONT, если уже есть SEO-сервис", description: "Поиск и ответы моделей в одном кабинете." },
   { path: "/dlya-komand", title: "INSONT для команд", description: "Один кабинет для агентств, команд роста и магазинов." },
   { path: "/deystvovat", title: "Что делать на сайте", description: "Очередь работ: тексты, упоминания, доступ роботам." },
-  { path: "/priorizirovat", title: "Центр действий", description: "Что чинить первым на этой неделе." },
   { path: "/demo", title: "Демо", description: "Разбор сайта в поиске и нейросетях." },
   { path: "/registratsiya", title: "Регистрация", description: "Создание кабинета." },
   { path: "/oferta", title: "Публичная оферта", description: "Условия использования сервиса." },

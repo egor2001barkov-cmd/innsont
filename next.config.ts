@@ -17,6 +17,8 @@ const CANIBAL_REDIRECTS: { from: string; to: string }[] = [
   { from: "/seo/prodvizhenie", to: "/seo" },
   { from: "/seo/prodvizhenie-sayta", to: "/seo" },
   { from: "/seo/raskrutka-sayta", to: "/seo" },
+  // две страницы об одном продукте «Центр действий» (аудит 26.11.2026): дублирующая уходит на основную
+  { from: "/priorizirovat", to: "/platforma/tsentr-deystviy" },
 ];
 
 const nextConfig: NextConfig = {

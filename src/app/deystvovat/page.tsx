@@ -27,7 +27,7 @@ export default function Page() {
       <PageAdvantages path="/deystvovat" />
       <SeeAlso
         links={[
-          { href: "/priorizirovat", title: "Сначала очередь задач" },
+          { href: "/platforma/tsentr-deystviy", title: "Сначала очередь задач" },
           { href: "/platforma/avtor-statey", title: "Автор статей" },
           { href: "/seo/kontent", title: "Полезные тексты" },
           { href: "/blog/tehnicheskiy-audit-saita-samostoyatelno", title: "Технический аудит" },

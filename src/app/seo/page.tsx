@@ -192,7 +192,7 @@ export default function Page() {
             в акценте: в Яндексе без витрины вы стоите в стороне, в Google без
             покрытия и нормального title — тоже.
           </p>
-          <Link href="/priorizirovat" className="btn-primary mt-2 inline-flex bg-[#2b2118]">
+          <Link href="/platforma/tsentr-deystviy" className="btn-primary mt-2 inline-flex bg-[#2b2118]">
             Как устроена очередь
           </Link>
         </SeoStage>

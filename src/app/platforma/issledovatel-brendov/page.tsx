@@ -193,7 +193,7 @@ export default function Page() {
                   Сравнить себя с двумя-тремя конкурентами по теме, не по «всему
                   бренду». Понять, какие страницы писать, а какие сначала починить
                   на витрине. Дальше очередь в{" "}
-                  <Link href="/priorizirovat" className="font-semibold hover:underline">
+                  <Link href="/platforma/tsentr-deystviy" className="font-semibold hover:underline">
                     Центре действий
                   </Link>
                   .

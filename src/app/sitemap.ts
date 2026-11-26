@@ -30,7 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/seo", priority: 0.9 },
     { path: "/geo", priority: 0.9 },
     { path: "/karta-sayta", priority: 0.4 },
-    { path: "/priorizirovat", priority: 0.7 },
     { path: "/deystvovat", priority: 0.7 },
     { path: "/pochemu-insont", priority: 0.7 },
     { path: "/dlya-komand", priority: 0.7 },

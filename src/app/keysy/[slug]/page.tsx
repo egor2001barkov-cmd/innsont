@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs, CtaBand, JsonLd } from "@/components/SiteChrome";
 import { SeeAlso } from "@/components/SeeAlso";
 import { PageAdvantages } from "@/components/Advantages";
+import { MdLinks } from "@/components/MdLinks";
 import { CASES, getCase } from "@/lib/cases";
 import { CASE_STORIES } from "@/lib/case-stories";
 import { CASE_STORY_EXTRA } from "@/lib/case-stories-extra";
@@ -108,7 +109,7 @@ export default async function Page({
                 <h2 className="text-2xl">{block.title}</h2>
                 {block.paragraphs.map((p) => (
                   <p key={p.slice(0, 48)} className="mt-3 leading-relaxed text-[#3a3632]">
-                    {p}
+                    <MdLinks text={p} />
                   </p>
                 ))}
               </section>

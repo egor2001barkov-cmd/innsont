@@ -19,4 +19,5 @@ export const REDIRECTED_PATHS: ReadonlySet<string> = new Set([
   "/seo/prodvizhenie",
   "/seo/prodvizhenie-sayta",
   "/seo/raskrutka-sayta",
+  "/priorizirovat",
 ]);

@@ -103,7 +103,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/priorizirovat" className="hover:text-ink">
+              <Link href="/platforma/tsentr-deystviy" className="hover:text-ink">
                 Центр действий
               </Link>
             </li>
